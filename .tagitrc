@@ -3,7 +3,7 @@
 changelog = py:False
 
 ; Whether publish the package after the tag pushed to server.
-publish = py:False
+publish = py:True
 
 ; Whether check the version (__version__) in source file.
 checksource = py:False
