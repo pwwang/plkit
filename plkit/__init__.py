@@ -1,6 +1,6 @@
 """Even higher level wrapper based on pytorch-lightning"""
 from .data import Data
-from .module import Module
+from .module import Module, log_hparams
 from .trainer import Trainer
 
 __version__ = "0.0.3"
@@ -30,10 +30,7 @@ def run(config: dict, model_class: callable, data_class: callable):
                       config.get('train_test_val_ratio'),
                       num_workers=config.get('num_workers', 1),
                       seed=config.get('seed'))
-    model = model_class(config,
-                        num_classes=config.num_classes,
-                        optim=config.get('optim', 'adam'),
-                        loss=config.get('loss', 'auto'))
+    model = model_class(config)
     trainer = Trainer.from_dict(config, data=data)
     trainer.fit(model)
     trainer.test()

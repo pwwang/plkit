@@ -1,4 +1,5 @@
 """The core base module class based on pytorch_lightning.LightningModule"""
+from functools import wraps
 import torch
 from torch import nn
 from pytorch_lightning import LightningModule
@@ -7,6 +8,8 @@ from sklearn.metrics import roc_auc_score#, mean_squared_error
 from .exceptions import PlkitDataSizeException, PlkitMeasurementException
 
 # ------ Measurements --------
+# pytorch-lightning is implementing this
+# this will be finally replaced with pytorch-lightning's implementation
 def measure_accuracy(logits, labels):
     """Measuring accuracy for n-class classification"""
     predictions = torch.argmax(logits, dim=1).view(-1)
@@ -19,7 +22,22 @@ def measure_auc(logits, labels):
     probs = logits[:, 1]
     return roc_auc_score(labels.view(-1), probs)
 
+def log_hparams(func):
+    """A decorator for training_step, validation_epoch_end, etc to
+    log hyperparameters"""
+
+    @wraps(func)
+    def wrapper(self, *args, **kwargs):
+        ret = func(self, *args, **kwargs)
+        if 'log' in ret and self.hparams:
+            ret['log'][self.__class__.HPARAMS_PLACEHOLDER] = 0
+        return ret
+
+    return wrapper
+
 class Module(LightningModule):
+    HPARAMS_PLACEHOLDER = '__hparams_placeholder__'
+
     """Base Module"""
     def __init__(self, config, num_classes=None, optim=None, loss=None):
         super().__init__()
@@ -38,6 +56,16 @@ class Module(LightningModule):
                 self._loss_func = nn.CrossEntropyLoss()
         else:
             self._loss_func = loss
+
+        # the hyperparameters to be logged to tensorboard
+        self.hparams = {}
+
+    def on_train_start(self):
+        if self.hparams:
+            self.logger.log_hyperparams_metrics(
+                self.hparams,
+                {Module.HPARAMS_PLACEHOLDER: 0}
+            )
 
     def _check_logits(self, logits):
         """Check whether the logits is in right shape
