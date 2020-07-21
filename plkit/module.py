@@ -4,9 +4,8 @@ import torch
 from torch import nn
 from pytorch_lightning import LightningModule
 from pytorch_lightning.metrics.functional import regression, classification
-from sklearn.metrics import roc_auc_score#, mean_squared_error
 #from scipy.stats import spearmanr, pearsonr, kendalltau
-from .exceptions import PlkitDataSizeException, PlkitMeasurementException
+from .exceptions import PlkitMeasurementException
 
 def log_hparams(func):
     """A decorator for training_step, validation_epoch_end, etc to
@@ -28,9 +27,10 @@ def _check_logits_shape(logits, dim, dim_to_check=1):
                                         f"dimension {dim_to_check}")
 
 class Module(LightningModule):
+    """Base Module"""
+
     HPARAMS_PLACEHOLDER = '__hparams_placeholder__'
 
-    """Base Module"""
     def __init__(self, config, num_classes=None, optim=None, loss=None):
         super().__init__()
         self.config = config
