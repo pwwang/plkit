@@ -3,24 +3,10 @@ from functools import wraps
 import torch
 from torch import nn
 from pytorch_lightning import LightningModule
+from pytorch_lightning.metrics.functional import regression, classification
 from sklearn.metrics import roc_auc_score#, mean_squared_error
 #from scipy.stats import spearmanr, pearsonr, kendalltau
 from .exceptions import PlkitDataSizeException, PlkitMeasurementException
-
-# ------ Measurements --------
-# pytorch-lightning is implementing this
-# this will be finally replaced with pytorch-lightning's implementation
-def measure_accuracy(logits, labels):
-    """Measuring accuracy for n-class classification"""
-    predictions = torch.argmax(logits, dim=1).view(-1)
-    truth = labels.view(-1)
-    return torch.sum(predictions == truth).item() / (len(truth) * 1.0)
-
-def measure_auc(logits, labels):
-    """Measuring auc for 2-class classification"""
-    # probabilities predict to 1
-    probs = logits[:, 1]
-    return roc_auc_score(labels.view(-1), probs)
 
 def log_hparams(func):
     """A decorator for training_step, validation_epoch_end, etc to
@@ -34,6 +20,12 @@ def log_hparams(func):
         return ret
 
     return wrapper
+
+def _check_logits_shape(logits, dim, dim_to_check=1):
+    if logits.shape[dim_to_check] != dim:
+        # checking is done in measurements
+        raise PlkitMeasurementException(f"Logits require size of {dim} at "
+                                        f"dimension {dim_to_check}")
 
 class Module(LightningModule):
     HPARAMS_PLACEHOLDER = '__hparams_placeholder__'
@@ -67,18 +59,8 @@ class Module(LightningModule):
                 {Module.HPARAMS_PLACEHOLDER: 0}
             )
 
-    def _check_logits(self, logits):
-        """Check whether the logits is in right shape
-        [batch_size x num_classes]"""
-        shape = logits.shape
-        if len(shape) != 2 or shape[1] != self.num_classes:
-            raise PlkitDataSizeException('Excepting logits to be of shape '
-                                         '[batch_size x num_classes]')
-
     def loss_function(self, logits, labels):
         """Calculate the loss"""
-        # expect logits.shape == [batch_size x num_classes]
-        self._check_logits(logits)
         return self._loss_func(logits, labels)
 
     def configure_optimizers(self):
@@ -89,18 +71,43 @@ class Module(LightningModule):
 
         # more to support
 
-    def measure(self, logits, labels, method):
+    def measure(self, logits, labels, method, **kwargs):
         """Do some measurements"""
-        if method == 'accuracy':
-            if self.num_classes < 2:
+        # regression
+        if self.num_classes == 1:
+            if method not in ('mse', 'rmse', 'mae', 'rmsle'):
                 raise PlkitMeasurementException(
-                    'Cannot measure accuracy for regression.'
+                    f"Method not supported for regression: {method}"
                 )
-            return measure_accuracy(logits, labels)
 
-        if method == 'auc':
-            if self.num_classes != 2:
-                raise PlkitMeasurementException(
-                    'AUC can only be calculated for binary classification.'
+            _check_logits_shape(logits, 1, 1)
+            return getattr(regression, method)(logits.view(-1), labels.view(-1),
+                                               **kwargs)
+
+        # classification
+        else:
+            _check_logits_shape(logits, self.num_classes, 1)
+
+            if method in ('accuracy', 'precision', 'recall', 'f1_score', 'iou'):
+                return getattr(classification, method)(
+                    logits,
+                    labels.view(-1),
+                    num_classes=self.num_classes,
+                    **kwargs
                 )
-            return measure_auc(logits, labels)
+            if method == 'fbeta_score':
+                if 'beta' not in kwargs:
+                    raise PlkitMeasurementException(
+                        'fbeta_score requires a beta keyword argument.'
+                    )
+                return classification.fbeta_score(logits, labels.view(-1),
+                                                  **kwargs)
+
+            if method in ('auroc', 'average_precision', 'dice_score'):
+                return getattr(classification, method)(
+                    logits, labels.view(-1), **kwargs
+                )
+
+            raise PlkitMeasurementException(
+                f"Method not supported for classification: {method}"
+            )
