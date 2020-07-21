@@ -36,9 +36,10 @@ class Module(LightningModule):
         self.config = config
         self.optim = optim or config.get('optim', 'adam')
         self.num_classes = num_classes or config.get('num_classes')
-        if not self.num_classes:
-            raise ValueError('We need `num_classes` from config or passed in '
-                             'explictly to check final logits size.')
+        # We may run test only without measurement.
+        # if not self.num_classes:
+        #     raise ValueError('We need `num_classes` from config or passed in '
+        #                      'explictly to check final logits size.')
 
         loss = loss or config.get('loss', 'auto')
         if loss == 'auto':
@@ -67,7 +68,7 @@ class Module(LightningModule):
         """Configure the optimizers"""
         if self.optim == 'adam':
             return torch.optim.Adam(self.parameters(),
-                                    lr=self.config.learning_rate)
+                                    lr=self.config.get('learning_rate', 1e-3))
 
         # more to support
 
