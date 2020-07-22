@@ -69,7 +69,10 @@ class Module(LightningModule):
         if self.optim == 'adam':
             return torch.optim.Adam(self.parameters(),
                                     lr=self.config.get('learning_rate', 1e-3))
-
+        if self.optim == 'sgd':
+            return torch.optim.SGD(self.parameters(),
+                                   lr=self.config.get('learning_rate', 1e-3),
+                                   momentum=self.config.get('momentum', .9))
         # more to support
 
     def measure(self, logits, labels, method, **kwargs):
