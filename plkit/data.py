@@ -57,7 +57,7 @@ class Data:
         self.batch_size = config['batch_size']
         self.ratio = ratio or config.get('train_val_test_ratio')
         self.with_name = with_name or config.get('data_with_name', False)
-        self.num_workers = num_workers or config.get('num_workers', 1)
+        self.num_workers = num_workers or config.get('data_num_workers', 1)
 
         self._train_dataloader = None
         self._val_dataloader = None
