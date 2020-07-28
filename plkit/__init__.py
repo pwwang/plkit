@@ -6,7 +6,7 @@ from .data import Data
 from .module import Module, log_hparams
 from .trainer import Trainer
 
-__version__ = "0.0.3"
+__version__ = "0.0.4"
 
 def run(config: dict, model_class: callable, data_class: callable):
     """Run the pipeline by give configuration, model_class and data_class

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "plkit"
-version = "0.0.3"
+version = "0.0.4"
 description = "Deep learning boilerplates on pytorch-lightning"
 authors = ["pwwang <pwwang@pwwang.com>"]
 license = "MIT"
