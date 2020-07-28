@@ -1,9 +1,12 @@
 [tool.poetry]
 name = "plkit"
 version = "0.0.3"
-description = "A wrapper based on pytorch-lightning"
+description = "Deep learning boilerplates on pytorch-lightning"
 authors = ["pwwang <pwwang@pwwang.com>"]
 license = "MIT"
+homepage = "https://github.com/pwwang/plkit"
+repository  = "https://github.com/pwwang/plkit"
+readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.6"
