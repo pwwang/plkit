@@ -1,4 +1,7 @@
 """Even higher level wrapper based on pytorch-lightning"""
+# expose terminal logger
+# pylint: disable=unused-import
+from pytorch_lightning import _logger as logger
 from .data import Data
 from .module import Module, log_hparams
 from .trainer import Trainer
