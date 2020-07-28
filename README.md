@@ -1,6 +1,6 @@
 # plkit
 
-A wrapper based on pytorch-lightning
+Deep learning boilerplate based on pytorch-lightning
 
 ## Installation
 ```

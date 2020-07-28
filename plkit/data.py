@@ -28,8 +28,8 @@ class Data:
     Then you will be able to get train_dataloader, val_dataloader and
     test_dataloader from this.
     """
-    def __init__(self, sources, batch_size,
-                 ratio=None, with_name=False, num_workers=1, seed=None):
+    def __init__(self, sources, config,
+                 ratio=None, with_name=None, num_workers=None, seed=None):
         """Construct
 
         Args:
@@ -51,12 +51,13 @@ class Data:
                 To do this, you will have to return dictionaries for data and
                 labels, with the sample names as keys.
         """
-        seed_everything(seed)
+        seed_everything(seed or config.get('seed', None))
         self.sources = sources
-        self.batch_size = batch_size
-        self.ratio = ratio
-        self.with_name = with_name
-        self.num_workers = num_workers
+        self.config = config
+        self.batch_size = config['batch_size']
+        self.ratio = ratio or config.get('train_val_test_ratio')
+        self.with_name = with_name or config.get('data_with_name', False)
+        self.num_workers = num_workers or config.get('num_workers', 1)
 
         self._train_dataloader = None
         self._val_dataloader = None

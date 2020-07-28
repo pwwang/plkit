@@ -115,3 +115,8 @@ class Module(LightningModule):
             raise PlkitMeasurementException(
                 f"Method not supported for classification: {method}"
             )
+
+    @property
+    def device(self):
+        """Get the device of the model."""
+        return next(self.parameters()).device

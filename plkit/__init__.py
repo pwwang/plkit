@@ -25,11 +25,7 @@ def run(config: dict, model_class: callable, data_class: callable):
     if 'num_classes' not in config:
         raise ValueError('We need `num_classes` from `config`.')
 
-    data = data_class(config.sources,
-                      config.batch_size,
-                      config.get('train_test_val_ratio'),
-                      num_workers=config.get('num_workers', 1),
-                      seed=config.get('seed'))
+    data = data_class(config.sources, config)
     model = model_class(config)
     trainer = Trainer.from_dict(config, data=data)
     trainer.fit(model)
