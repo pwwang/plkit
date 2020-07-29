@@ -14,6 +14,7 @@ torch = "^1.5"
 pytorch-lightning = "^0.8"
 sklearn = "*"
 scipy = "^1.4"
+rich = "^4.2"
 
 [tool.poetry.dev-dependencies]
 

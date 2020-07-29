@@ -1,24 +1,10 @@
 """The core base module class based on pytorch_lightning.LightningModule"""
-from functools import wraps
 import torch
 from torch import nn
 from pytorch_lightning import LightningModule
 from pytorch_lightning.metrics.functional import regression, classification
 #from scipy.stats import spearmanr, pearsonr, kendalltau
 from .exceptions import PlkitMeasurementException
-
-def log_hparams(func):
-    """A decorator for training_step, validation_epoch_end, etc to
-    log hyperparameters"""
-
-    @wraps(func)
-    def wrapper(self, *args, **kwargs):
-        ret = func(self, *args, **kwargs)
-        if 'log' in ret and self.hparams:
-            ret['log'][self.__class__.HPARAMS_PLACEHOLDER] = 0
-        return ret
-
-    return wrapper
 
 def _check_logits_shape(logits, dim, dim_to_check=1):
     if logits.shape[dim_to_check] != dim:
