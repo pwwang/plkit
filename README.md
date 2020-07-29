@@ -140,14 +140,7 @@ This is because sometimes `config` will have config items other than the argumen
 
 As it showed in the above examples, you don't need to concern about `Dataset` and `Dataloader` stuff. What you only need to care about is how to read the data from the sources. `plkit` will take care of the `Dataset` and `Dataloader` for you.
 
-Usually, you need to return a list of `data` (features) as well as the corresponding `targets` (labels) from your `data_reader` function. In such a case, you will not be able to fetch the names of the samples by `data, targets = batch` in the `training_step`, `validation_step` and `test_setp`.
-
-To do that, you will need to provide `with_name=True` argument when instantialize `Data`: `data = Data(..., with_name=True)`, or in your config:
-```python
-config = {data_with_name=True, ...}
-data = Data(sources, config)
-```
-and then, return dictionaries of data and targets with keys as the names. Finally, you are able to fetch the names in any of the steps by `data, targets, names = batch`.
+What you can fetch from `a, b, c, ... = batch` in `training`, `validation` and `test` steps depends on what you return from `data_reader`. For example, if you return `(data, labels)` from `data_reader`, then you are able to fetch them by `data, labels = batch` in the steps.
 
 `plkit` can also split your data into `training`, `validation` and `test` parts, just by passing a ratio to `Data`: `data = Data(..., ratio=(.7, .2, .1))` (training: 70%, validation: 20%, test: 10%). Or in config: `config = {train_val_test_ratio: (.7, .2, .1)}`
 

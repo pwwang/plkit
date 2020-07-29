@@ -6,10 +6,15 @@ from .exceptions import PlkitDataException
 
 class Dataset(torch.utils.data.Dataset):
     """The dataset"""
-    def __init__(self, data, targets, ids, with_name=False):
+    def __init__(self, data, ids):
+        """Construct
+
+        Args:
+            data (tuple): A tuple of data, including targets that are read from
+                data_reader
+            ids (list): A list of ids corresponding to each of the data
+        """
         self.data = data
-        self.with_name = with_name
-        self.targets = targets
         self.ids = ids
 
     def __len__(self):
@@ -17,9 +22,7 @@ class Dataset(torch.utils.data.Dataset):
 
     def __getitem__(self, idx):
         gid = self.ids[idx]
-        if self.with_name:
-            return torch.Tensor(self.data[gid]), self.targets[gid], gid
-        return torch.Tensor(self.data[gid]), self.targets[gid]
+        return tuple(dat[gid] for dat in self.data)
 
 class Data:
     """Data manager
@@ -29,7 +32,7 @@ class Data:
     test_dataloader from this.
     """
     def __init__(self, sources, config,
-                 ratio=None, with_name=None, num_workers=None, seed=None):
+                 ratio=None, num_workers=None, seed=None):
         """Construct
 
         Args:
@@ -43,20 +46,12 @@ class Data:
                 If not provided, the data_reader should return a dictionary
                 with keys `train`, `val` or `test`, and values the data and
                 labels
-            with_name (bool): Whether to return name with each sample.
-                Normally, you can do `x, y = batch` to get the data and lables.
-                However, in some cases, you can also trace the name of those
-                samples: `x, y, names = batch`
-
-                To do this, you will have to return dictionaries for data and
-                labels, with the sample names as keys.
         """
         seed_everything(seed or config.get('seed', None))
         self.sources = sources
         self.config = config
         self.batch_size = config['batch_size']
         self.ratio = ratio or config.get('train_val_test_ratio')
-        self.with_name = with_name or config.get('data_with_name', False)
         self.num_workers = num_workers or config.get('data_num_workers', 1)
 
         self._train_dataloader = None
@@ -65,9 +60,9 @@ class Data:
 
         alldata = self.data_reader(sources)
 
-        (self._train_data, self._train_labels, self._train_ids,
-         self._val_data, self._val_labels, self._val_ids,
-         self._test_data, self._test_labels, self._test_ids) = (
+        (self._train_data, self._train_ids,
+         self._val_data, self._val_ids,
+         self._test_data, self._test_ids) = (
              self._parse_data_read(alldata)
          )
 
@@ -78,15 +73,6 @@ class Data:
     def _parse_data_read(self, data):
         """Check the returned value from data_reader"""
 
-        def check_with_name(dat):
-            """Check if the dat is a dictionary when self.with_name = True"""
-            if self.with_name and not isinstance(dat, dict):
-                raise PlkitDataException("Expecting a dictionary when "
-                                         "with_name = True")
-            if not self.with_name and not isinstance(dat, (tuple, list)):
-                raise PlkitDataException("Expecting a tuple/list when "
-                                         "with_name = False")
-
         if not self.ratio:
             if (
                     not isinstance(data, dict) or
@@ -96,80 +82,57 @@ class Data:
                     "No ratio specified, expecting data_reader to return "
                     "a dictionary with `train`, `val`, and/or `test` as keys."
                 )
-            for which, value in data.items():
-                if len(value) != 2:
-                    raise PlkitDataException("Expecting data and labels "
-                                             f"for {which} data.")
-                check_with_name(value[0])
-                check_with_name(value[1])
+            # data is dict
+            train_data = data.get('train')
+            val_data = data.get('val')
+            test_data = data.get('test')
 
-            train_datalabels = data.get('train', (None, None))
-            train_ids = (list(train_datalabels[0].keys())
-                         if isinstance(train_datalabels[0], dict)
-                         else list(range(len(train_datalabels[0])))
-                         if isinstance(train_datalabels[0], (tuple, list))
-                         else None)
+            if train_data and not isinstance(train_data, tuple):
+                train_data = (train_data, )
+            if val_data and not isinstance(val_data, tuple):
+                val_data = (val_data, )
+            if test_data and not isinstance(test_data, tuple):
+                test_data = (test_data, )
 
-            val_datalabels = data.get('val', (None, None))
-            val_ids = (list(val_datalabels[0].keys())
-                       if isinstance(val_datalabels[0], dict)
-                       else list(range(len(val_datalabels[0])))
-                       if isinstance(val_datalabels[0], (tuple, list))
-                       else None)
-
-            test_datalabels = data.get('test', (None, None))
-            test_ids = (list(test_datalabels[0].keys())
-                        if isinstance(test_datalabels[0], dict)
-                        else list(range(len(test_datalabels[0])))
-                        if isinstance(test_datalabels[0], (tuple, list))
-                        else None)
+            train_ids = list(range(len(train_data[0]))) if train_data else None
+            val_ids = list(range(len(val_data[0]))) if val_data else None
+            test_ids = list(range(len(test_data[0]))) if test_data else None
 
             return (
-                train_datalabels[0], train_datalabels[1], train_ids,
-                val_datalabels[0], val_datalabels[1], val_ids,
-                test_datalabels[0], test_datalabels[1], test_ids,
+                train_data, train_ids,
+                val_data, val_ids,
+                test_data, test_ids,
             )
 
         else: # ratio specified
+            if not isinstance(data, tuple):
+                data = (data, )
+
             if not (isinstance(self.ratio, (list, tuple)) and
                     1 <= len(self.ratio) <= 3 and
-                    sum(self.ratio) == 1.0):
+                    all(0 <= rat <= 1.0 for rat in self.ratio)):
                 raise PlkitDataException("Ratio should be a 2- or 3-element "
-                                         "tuple with sum of 1.0")
+                                         "tuple with floats <= 1.0")
 
-            if len(data) != 2:
-                raise PlkitDataException("Expecting data and targets from "
-                                         "data_reader")
-            check_with_name(data[0])
-            check_with_name(data[1])
-
-            all_ids = (list(data[0].keys())
-                       if isinstance(data[0], dict)
-                       else list(range(len(data[0])))
-                       if isinstance(data[0], (tuple, list))
-                       else None)
-
-            # all are training data
-            if len(self.ratio) == 1 and self.ratio[0] == 1.0:
-                return (data[0], data[1], all_ids,
-                        None, None, None,
-                        None, None, None)
+            all_ids = list(range(len(data[0])))
 
             train_ids, val_test_ids = train_test_split(
                 all_ids, train_size=self.ratio[0]
             )
+            # only training data
+            if len(self.ratio) == 1:
+                return (data, train_ids, None, None, None, None)
+
             if len(self.ratio) == 2:
-                return (data[0], data[1], train_ids,
-                        data[0], data[1], val_test_ids,
-                        None, None, None)
+                return (data, train_ids, data, val_test_ids, None, None)
 
             val_ids, test_ids = train_test_split(
                 val_test_ids,
                 train_size=(self.ratio[1]/(self.ratio[1]+self.ratio[2]))
             )
-            return (data[0], data[1], train_ids,
-                    data[0], data[1], val_ids,
-                    data[0], data[1], test_ids)
+            return (data, train_ids,
+                    data, val_ids,
+                    data, test_ids)
 
     @property
     def train_dataloader(self):
@@ -181,14 +144,12 @@ class Data:
         Returns:
             The train data loader
         """
-        if not self._train_data:
+        if not self._train_ids:
             return None
 
         return torch.utils.data.DataLoader(
             Dataset(self._train_data,
-                    self._train_labels,
-                    self._train_ids,
-                    with_name=self.with_name),
+                    self._train_ids),
             batch_size=self.batch_size,
             num_workers=self.num_workers,
             shuffle=True
@@ -204,14 +165,12 @@ class Data:
         Returns:
             The validation data loader
         """
-        if not self._val_data:
+        if not self._val_ids:
             return None
 
         return torch.utils.data.DataLoader(
             Dataset(self._val_data,
-                    self._val_labels,
-                    self._val_ids,
-                    with_name=self.with_name),
+                    self._val_ids),
             batch_size=self.batch_size,
             num_workers=self.num_workers
         )
@@ -226,14 +185,12 @@ class Data:
         Returns:
             The test data loader
         """
-        if not self._test_data:
+        if not self._test_ids:
             return None
 
         return torch.utils.data.DataLoader(
             Dataset(self._test_data,
-                    self._test_labels,
-                    self._test_ids,
-                    with_name=self.with_name),
+                    self._test_ids),
             batch_size=self.batch_size,
             num_workers=self.num_workers
         )
