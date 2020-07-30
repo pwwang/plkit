@@ -131,4 +131,11 @@ dmypy.json
 
 *.bak
 
+# data for Examples
+examples/data/
+
+# logs
+plkit_logs/
+hparams.yaml
+
 # End of https://www.gitignore.io/api/python

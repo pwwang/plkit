@@ -3,7 +3,7 @@ from .data import Data
 from .module import Module
 from .trainer import Trainer
 from .optuna import Optuna, OptunaSuggest
-from .utils import log_hparams, log_config, _check_config, logger
+from .utils import log_config, _check_config, logger
 
 __version__ = "0.0.4"
 
@@ -20,7 +20,6 @@ def run(config: dict,
                 1 means regression
         data_class (class): The data class subclassed from `Data`
         model_class (class): The model class subclassed from `Module`
-        optuna_class (class): The Optuna class for hyperparameters tuning
     """
     _check_config(config, 'batch_size')
 
@@ -29,3 +28,4 @@ def run(config: dict,
     trainer = Trainer.from_config(config, data=data)
     trainer.fit(model)
     trainer.test()
+    return trainer

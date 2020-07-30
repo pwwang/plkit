@@ -12,23 +12,27 @@ pip install plkit
 ### From pytorch-lightning's minimal example
 
 ```python
-from plkit import Module, Data, Trainner
+import os
+import torch
+from torchvision import transforms
+from torchvision.datasets import MNIST
+from plkit import Module, Data as PkData, run
 
-class MINISTData(Data):
+class Data(PkData):
 
-    def data_reader(self, sources):
-        minst = MNIST(sources, train=True, download=True,
-                      transform=transforms.ToTensor())
+    def data_reader(self):
+        minst = MNIST(self.sources, train=True,
+                      download=True, transform=transforms.ToTensor())
         return {'train': (minst.data, minst.targets)}
 
 class LitClassifier(Module):
 
-    def __init__(self, config, num_classes, optim='adam', loss='auto'):
-        super().__init__(config, num_classes, optim, loss)
+    def __init__(self, config):
+        super().__init__(config)
         self.l1 = torch.nn.Linear(28 * 28, 10)
 
     def forward(self, x):
-        return torch.relu(self.l1(x.view(x.size(0), -1)))
+        return torch.relu(self.l1(x.view(x.size(0), -1).float()))
 
     def training_step(self, batch, batch_nb):
         x, y = batch
@@ -36,39 +40,18 @@ class LitClassifier(Module):
         tensorboard_logs = {'train_loss': loss}
         return {'loss': loss, 'log': tensorboard_logs}
 
-    # we don't need configure_optimizers anymore
-
-config = {
-    'batch_size': 32,
-    'gpus': 8,
-    'precision': 16,
-    'num_classes': 2,
-    # other options to initial a pytorch-lightning Trainer
-}
-
-def main():
-    data = MINISTData(os.getcwd(), config['batch_size'])
-    model = LitClassifier(config)
-    trainer = Trainer.from_dict(config, data=data)
-    trainer.fit(model)
-
 if __name__ == '__main__':
-    main()
-```
-
-Or even simpler for `main`:
-```python
-from plkit import run
-
-# Data class and model class definition
-# ...
-
-def main():
-    run(config, LitClassifier, MINISTData)
-
+    config = {
+        'gpus': 1,
+        'batch_size': 32,
+        'max_epochs': 10,
+        'data_sources': os.path.join(os.path.dirname(__file__), 'data'),
+    }
+    run(config, Data, LitClassifier)
 ```
 
 ## Features
+- Compatible with `pytorch-lightning`
 - Exposed terminal logger
 - Even more abstracted boilerplace (What you only need to care is your data and model)
 - Trainer from a dictionary (not only from an `ArgumentParser` or a `Namespace`)
@@ -77,6 +60,7 @@ def main():
 - Running `test` automatically when `test_dataloader` is given
 - Auto loss function and optimizer
 - Builtin measurements (using `pytorch-lightning.metrics`)
+- Optuna integration
 
 ## Exposed terminal logger
 ```python
@@ -147,12 +131,8 @@ What you can fetch from `a, b, c, ... = batch` in `training`, `validation` and `
 If you don't specify a ratio, you will need to return dictionaries from `data_reader` with keys `train`, `val` and `test` for the data assigned to each part.
 
 ## hyperparameter logging
-
-To log hyperparameters using raw `pytorch-lightning` will be painful. See [#1228][2].
-
-Here instead of all those tweakings, we only need to use a decorator:
 ```python
-from plkit import log_hparams, Module
+from plkit import Module
 
 # ...
 class MyModel(Module):
@@ -164,10 +144,6 @@ class MyModel(Module):
             # hyperparameters you want to log
         }
 
-    @log_hparams
-    def validation_step(self, batch, batch_idx):
-        # do you logic
-        # return the logs as what you did with pytorch-lightning
 ```
 
 Keep in mind that, to enable this, you have to keep the default logger. Since we switched default logger from tensorboard logger to `HyperparamsSummaryTensorBoardLogger` implemented in `trainer.py` of `plkit`, whose idea was borrowed from [here][3].
@@ -178,8 +154,6 @@ from plkit.trainer import HyperparamsSummaryTensorBoardLogger
 
 trainer = Trainer(logger=HyperparamsSummaryTensorBoardLogger(...), ...)
 ```
-
-The only side effect of this is to have a `__hparams_placeholder__` metric to be logged, which is used to be inserted to identify the metrics logs together with the hyperparameters.
 
 ## Auto loss function and optimizer
 
@@ -198,7 +172,31 @@ You can get some of the measurements directly now by `self.measure(logits, label
 
 For extra `kwargs`, check the [source code][4] (Haven't found them documented yet).
 
+## Optuna integration
 
+```python
+config = {
+    # default value: 512, using suggest_catigorical,
+    # choosing one of 128, 256 and 512
+    'hidden_size': OptunaSuggest(512, 'cat', [128, 256, 512]),
+    # default value: 1, using suggest_int
+    # choosing between 1 and 10
+    'seed': OptunaSuggest(1, 'int', 1, 10),
+    # other configurations
+}
+```
+
+The default values don't master if you are running optuna:
+```python
+optuna = Optuna(on='val_loss', n_trials=100)
+# just like plkit.run
+optuna.run(config, Data, Model)
+```
+
+However, those default values will be used if you want opt optuna out, and we don't need to change anything from the `config`:
+```python
+plkit.run(config, Data, Model)
+```
 
 
 [1]: https://github.com/PyTorchLightning/pytorch-lightning

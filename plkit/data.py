@@ -1,12 +1,18 @@
 """Data manager for plkit"""
+import os
 import torch
 from sklearn.model_selection import train_test_split
 from pytorch_lightning import seed_everything
 from .exceptions import PlkitDataException
-from .utils import _check_config, _collapse_suggest_config
+from .utils import (
+    _check_config,
+    _collapse_suggest_config,
+    logger,
+)
 
 class Dataset(torch.utils.data.Dataset):
-    """The dataset"""
+    """The dataset that used internally by Data class
+    """
     def __init__(self, data, ids):
         """Construct
 
@@ -32,7 +38,7 @@ class Data:
     Then you will be able to get train_dataloader, val_dataloader and
     test_dataloader from this.
     """
-    def __init__(self, config):
+    def __init__(self, config, dataset_class=Dataset):
         """Construct
 
         Args:
@@ -47,18 +53,24 @@ class Data:
                 with keys `train`, `val` or `test`, and values the data and
                 labels
         """
-        config = _collapse_suggest_config(config)
-
         seed_everything(config.get('seed'))
+        config = _collapse_suggest_config(config)
 
         _check_config(config, 'data_sources')
         self.sources = config['data_sources']
+
+        self.dataset_class = dataset_class
 
         self.config = config
         self.batch_size = config['batch_size']
 
         self.ratio = config.get('tvt_ratio')
         self.num_workers = config.get('data_workers', 1)
+        avai_workers = len(os.sched_getaffinity(0))
+        if self.num_workers < avai_workers:
+            logger.warning('Consider increasing `data_workers`. Available: %d',
+                           avai_workers)
+
 
         self._train_dataloader = None
         self._val_dataloader = None
@@ -73,11 +85,21 @@ class Data:
          )
 
     def data_reader(self):
-        """Read the data and labels"""
+        """Read the data and labels, and return a tuple of data items
+        These data items will be then fetched in the steps in the way:
+            >>> x, y, z = batch
+        """
         raise NotImplementedError()
 
     def _parse_data_read(self, data):
-        """Check the returned value from data_reader"""
+        """Check the returned value from data_reader
+
+        Args:
+            data (tuple): The data returned from `data_reader`
+
+        Returns:
+            tuple: The train/val/test data and ids
+        """
 
         if not self.ratio:
             if (
@@ -144,18 +166,14 @@ class Data:
     def train_dataloader(self):
         """Get the train_dataloader
 
-        Raises:
-            When failed to fetch train data
-
         Returns:
-            The train data loader
+            DataLoader: The train data loader
         """
         if not self._train_ids:
             return None
 
         return torch.utils.data.DataLoader(
-            Dataset(self._train_data,
-                    self._train_ids),
+            self.dataset_class(self._train_data, self._train_ids),
             batch_size=self.batch_size,
             num_workers=self.num_workers,
             shuffle=True
@@ -165,18 +183,14 @@ class Data:
     def val_dataloader(self):
         """Get the val_dataloader
 
-        Raises:
-            When failed to fetch validation data
-
         Returns:
-            The validation data loader
+            DataLoader: The validation data loader if provided
         """
         if not self._val_ids:
             return None
 
         return torch.utils.data.DataLoader(
-            Dataset(self._val_data,
-                    self._val_ids),
+            self.dataset_class(self._val_data, self._val_ids),
             batch_size=self.batch_size,
             num_workers=self.num_workers
         )
@@ -185,18 +199,14 @@ class Data:
     def test_dataloader(self):
         """Get the test_dataloader
 
-        Raises:
-            When failed to fetch test data
-
         Returns:
-            The test data loader
+            DataLoader: The test data loader if test data provided
         """
         if not self._test_ids:
             return None
 
         return torch.utils.data.DataLoader(
-            Dataset(self._test_data,
-                    self._test_ids),
+            self.dataset_class(self._test_data, self._test_ids),
             batch_size=self.batch_size,
             num_workers=self.num_workers
         )

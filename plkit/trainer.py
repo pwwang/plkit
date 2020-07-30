@@ -1,11 +1,11 @@
-"""Wrapup the Trainer class"""
+"""Wrapper of the Trainer class"""
 import os
 import inspect
 from pytorch_lightning import Trainer as PlTrainer
 from pytorch_lightning.loggers import TensorBoardLogger
 from pytorch_lightning.loggers.base import rank_zero_only
 from torch.utils.tensorboard.summary import hparams
-from .utils import _collapse_suggest_config
+from .utils import _collapse_suggest_config, _suppress_warnings
 
 # in order to solve logging hyperparamters
 # See: https://github.com/PyTorchLightning/pytorch-lightning/issues/1228
@@ -29,15 +29,10 @@ class HyperparamsSummaryTensorBoardLogger(TensorBoardLogger):
     Then update this metric/key during the training.
 
     Examples:
-        def on_train_start(self):
-            self.logger.log_hyperparams_metrics(
-                self.hparams, {'best/val-loss': self.best_val_loss}
-            )
-
-        def validation_epoch_end(self, val_steps: List[dict]) -> dict:
-            ...
-            log = {'best/val-loss': best_loss}
-            return {'val_loss': current_loss, 'log': log}
+        >>> def on_train_start(self):
+        >>>     self.logger.log_hyperparams_metrics(
+        >>>         self.hparams, {}
+        >>>     )
     """
     # pylint: enable=line-too-long
     def __init__(self, *args, **kwargs):
@@ -69,7 +64,15 @@ class HyperparamsSummaryTensorBoardLogger(TensorBoardLogger):
         self.tags.update(sanitized_params)
 
 class Trainer(PlTrainer):
-    """The Trainner class"""
+    """The Trainner class
+
+    `from_config` (aka `from_dict`) added as classmethod to instantiate trainer
+    from configuration dictionaries.
+
+    Additional `data` argument added for construct to instiantiate trainer with
+    given `plkit.Data` object, whose `train_dataloader`, `val_dataloader` and
+    `test_dataloader` must be accessible.
+    """
 
     @classmethod
     def from_config(cls, config, **kwargs):
@@ -86,11 +89,14 @@ class Trainer(PlTrainer):
             >>> config = {'my_custom_arg': 'something'}
             >>> trainer = Trainer.from_dict(config, logger=False)
         """
+
         # we only want to pass in valid Trainer args,
         # the rest may be user specific
         valid_kwargs = inspect.signature(PlTrainer.__init__).parameters
         trainer_kwargs = dict((name, config[name])
                               for name in valid_kwargs if name in config)
+        trainer_kwargs.setdefault('max_epochs',
+                                  config.get('epochs') or 1000)
         trainer_kwargs = _collapse_suggest_config(trainer_kwargs)
         trainer_kwargs.update(**kwargs)
 
@@ -100,6 +106,8 @@ class Trainer(PlTrainer):
 
     def __init__(self, *args, **kwargs):
         self.data = kwargs.pop('data', None)
+        # alias of max_epochs
+        kwargs.setdefault('max_epochs', kwargs.pop('epochs', None) or 1000)
         # let's see if logger was specified, otherwise we default it to
         # HyperparamsSummaryTensorBoardLogger
         kwargs.setdefault(
@@ -111,16 +119,25 @@ class Trainer(PlTrainer):
         super().__init__(*args, **kwargs)
 
     def fit(self, model, train_dataloader=None, val_dataloaders=None):
+        """Wrapped fit to accept dataloaders from passed in `plkit.Data` object
+        """
         if not train_dataloader and self.data is not None:
             train_dataloader = self.data.train_dataloader
         if not val_dataloaders and self.data is not None:
             val_dataloaders = self.data.val_dataloader
-        super().fit(model, train_dataloader, val_dataloaders)
+
+        # suppress num_workers warning
+        with _suppress_warnings(UserWarning):
+            super().fit(model, train_dataloader, val_dataloaders)
 
     def test(self, model=None, test_dataloaders=None,
              ckpt_path='best'):
+        """Wrapped test to accept dataloaders from passed in `plkit.Data` object
+        """
         if not test_dataloaders and self.data is not None:
             test_dataloaders = self.data.test_dataloader
 
         if test_dataloaders is not None:
-            super().test(model, test_dataloaders, ckpt_path)
+            # suppress num_workers warning
+            with _suppress_warnings(UserWarning):
+                super().test(model, test_dataloaders, ckpt_path)
