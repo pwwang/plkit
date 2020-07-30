@@ -4,7 +4,7 @@ from torch import nn
 from pytorch_lightning import LightningModule
 from pytorch_lightning.metrics.functional import regression, classification
 from .exceptions import PlkitMeasurementException
-from .utils import _check_config, _collapse_suggest_config
+from .utils import _collapse_suggest_config
 
 def _check_logits_shape(logits, dim, dim_to_check=1):
     if logits.shape[dim_to_check] != dim:
@@ -14,8 +14,6 @@ def _check_logits_shape(logits, dim, dim_to_check=1):
 
 class Module(LightningModule):
     """Base Module"""
-
-    HPARAMS_PLACEHOLDER = '__hparams_placeholder__'
 
     def __init__(self, config):
         super().__init__()
@@ -43,11 +41,9 @@ class Module(LightningModule):
         self.hparams = {}
 
     def on_train_start(self):
+        """Log hyperparameters to tensorboard"""
         if self.hparams:
-            self.logger.log_hyperparams_metrics(
-                self.hparams,
-                {Module.HPARAMS_PLACEHOLDER: 0}
-            )
+            self.logger.log_hyperparams_metrics(self.hparams, {})
 
     def loss_function(self, logits, labels):
         """Calculate the loss"""
