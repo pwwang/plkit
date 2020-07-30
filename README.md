@@ -156,6 +156,13 @@ from plkit import log_hparams, Module
 
 # ...
 class MyModel(Module):
+    def __init__(self, config):
+        super().__init__(config)
+        # initialization
+        # ...
+        self.hparams = {
+            # hyperparameters you want to log
+        }
 
     @log_hparams
     def validation_step(self, batch, batch_idx):

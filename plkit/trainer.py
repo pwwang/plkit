@@ -5,6 +5,7 @@ from pytorch_lightning import Trainer as PlTrainer
 from pytorch_lightning.loggers import TensorBoardLogger
 from pytorch_lightning.loggers.base import rank_zero_only
 from torch.utils.tensorboard.summary import hparams
+from .utils import _collapse_suggest_config
 
 # in order to solve logging hyperparamters
 # See: https://github.com/PyTorchLightning/pytorch-lightning/issues/1228
@@ -71,7 +72,7 @@ class Trainer(PlTrainer):
     """The Trainner class"""
 
     @classmethod
-    def from_dict(cls, config, **kwargs):
+    def from_config(cls, config, **kwargs):
         """
         Create an instance from CLI arguments.
         Args:
@@ -90,9 +91,12 @@ class Trainer(PlTrainer):
         valid_kwargs = inspect.signature(PlTrainer.__init__).parameters
         trainer_kwargs = dict((name, config[name])
                               for name in valid_kwargs if name in config)
+        trainer_kwargs = _collapse_suggest_config(trainer_kwargs)
         trainer_kwargs.update(**kwargs)
 
         return cls(**trainer_kwargs)
+
+    from_dict = from_config
 
     def __init__(self, *args, **kwargs):
         self.data = kwargs.pop('data', None)
@@ -101,7 +105,7 @@ class Trainer(PlTrainer):
         kwargs.setdefault(
             'logger', HyperparamsSummaryTensorBoardLogger(
                 save_dir=kwargs.get('default_root_dir', os.getcwd()),
-                name='lightning_logs'
+                name='plkit_logs'
             )
         )
         super().__init__(*args, **kwargs)

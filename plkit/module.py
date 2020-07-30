@@ -3,8 +3,8 @@ import torch
 from torch import nn
 from pytorch_lightning import LightningModule
 from pytorch_lightning.metrics.functional import regression, classification
-#from scipy.stats import spearmanr, pearsonr, kendalltau
 from .exceptions import PlkitMeasurementException
+from .utils import _check_config, _collapse_suggest_config
 
 def _check_logits_shape(logits, dim, dim_to_check=1):
     if logits.shape[dim_to_check] != dim:
@@ -17,17 +17,20 @@ class Module(LightningModule):
 
     HPARAMS_PLACEHOLDER = '__hparams_placeholder__'
 
-    def __init__(self, config, num_classes=None, optim=None, loss=None):
+    def __init__(self, config):
         super().__init__()
+
+        config = _collapse_suggest_config(config)
+
         self.config = config
-        self.optim = optim or config.get('optim', 'adam')
-        self.num_classes = num_classes or config.get('num_classes')
+        self.optim = config.get('optim', 'adam')
+        self.num_classes = config.get('num_classes')
         # We may run test only without measurement.
         # if not self.num_classes:
         #     raise ValueError('We need `num_classes` from config or passed in '
         #                      'explictly to check final logits size.')
 
-        loss = loss or config.get('loss', 'auto')
+        loss = config.get('loss', 'auto')
         if loss == 'auto':
             if self.num_classes == 1: # regression
                 self._loss_func = nn.MSELoss()

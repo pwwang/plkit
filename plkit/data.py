@@ -3,6 +3,7 @@ import torch
 from sklearn.model_selection import train_test_split
 from pytorch_lightning import seed_everything
 from .exceptions import PlkitDataException
+from .utils import _check_config, _collapse_suggest_config
 
 class Dataset(torch.utils.data.Dataset):
     """The dataset"""
@@ -31,8 +32,7 @@ class Data:
     Then you will be able to get train_dataloader, val_dataloader and
     test_dataloader from this.
     """
-    def __init__(self, sources, config,
-                 ratio=None, num_workers=None, seed=None):
+    def __init__(self, config):
         """Construct
 
         Args:
@@ -47,18 +47,24 @@ class Data:
                 with keys `train`, `val` or `test`, and values the data and
                 labels
         """
-        seed_everything(seed or config.get('seed', None))
-        self.sources = sources
+        config = _collapse_suggest_config(config)
+
+        seed_everything(config.get('seed'))
+
+        _check_config(config, 'data_sources')
+        self.sources = config['data_sources']
+
         self.config = config
         self.batch_size = config['batch_size']
-        self.ratio = ratio or config.get('train_val_test_ratio')
-        self.num_workers = num_workers or config.get('data_num_workers', 1)
+
+        self.ratio = config.get('tvt_ratio')
+        self.num_workers = config.get('data_workers', 1)
 
         self._train_dataloader = None
         self._val_dataloader = None
         self._test_dataloader = None
 
-        alldata = self.data_reader(sources)
+        alldata = self.data_reader()
 
         (self._train_data, self._train_ids,
          self._val_data, self._val_ids,
@@ -66,7 +72,7 @@ class Data:
              self._parse_data_read(alldata)
          )
 
-    def data_reader(self, sources):
+    def data_reader(self):
         """Read the data and labels"""
         raise NotImplementedError()
 
