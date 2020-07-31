@@ -5,7 +5,7 @@ from .trainer import Trainer
 from .optuna import Optuna, OptunaSuggest
 from .utils import log_config, _check_config, logger
 
-__version__ = "0.0.4"
+__version__ = "0.0.5"
 
 def run(config: dict,
         data_class: callable,
