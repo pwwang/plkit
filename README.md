@@ -7,6 +7,10 @@ Deep learning boilerplate based on [pytorch-lightning][1]
 pip install plkit
 ```
 
+## API documentation
+
+https://pwwang.github.io/plkit/index.html
+
 ## Usage
 
 ### From pytorch-lightning's minimal example
