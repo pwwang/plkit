@@ -126,6 +126,9 @@ class Trainer(PlTrainer):
         if not val_dataloaders and self.data is not None:
             val_dataloaders = self.data.val_dataloader
 
+        if val_dataloaders is None and hasattr(model, 'validation_step'):
+            model.validation_step = None
+
         # suppress num_workers warning
         with _suppress_warnings(UserWarning):
             super().fit(model, train_dataloader, val_dataloaders)

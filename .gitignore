@@ -138,4 +138,6 @@ examples/data/
 plkit_logs/
 hparams.yaml
 
+workdir/
+
 # End of https://www.gitignore.io/api/python

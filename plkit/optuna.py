@@ -2,6 +2,7 @@
 from pytorch_lightning.callbacks import ModelCheckpoint
 import optuna
 from .trainer import Trainer
+from .module import Module
 from .utils import log_config, logger
 
 class OptunaSuggest:
@@ -101,6 +102,8 @@ class Optuna:
                  **kwargs):
         self.on = on
         self.n_trials = n_trials
+        self._best_trainer = None
+        self._best_model = None
         self.study = optuna.create_study(**kwargs)
         # trainers, used for retrieve the best one
         self.trainers = []
@@ -113,7 +116,7 @@ class Optuna:
         """Create the model object"""
         return model_class(conf)
 
-    def _create_objective(self, config, data_class, model_class):
+    def _create_objective(self, config, data, model_class):
         """Create objective function for the study to optimize
 
         The objective function is built to return the best value from
@@ -131,7 +134,6 @@ class Optuna:
         Returns:
             callable: The objective function
         """
-        data = self._create_data(data_class, config)
         def _objective(trial):
             logger.info('')
             logger.info('--------------------------------')
@@ -155,8 +157,10 @@ class Optuna:
                 data=data,
                 checkpoint_callback=checkpoint_callback
             )
-            self.trainers.append(trainer)
+
             trainer.fit(model)
+            self.trainers.append((checkpoint_callback.best_model_path,
+                                  config_copy))
             return checkpoint_callback.best_model_score
 
         return _objective
@@ -193,13 +197,26 @@ class Optuna:
                 `func` and `n_trials`.
                 See: https://optuna.readthedocs.io/en/stable/reference/generated/optuna.study.Study.html#optuna.study.Study.optimize
         """
-        objective = self._create_objective(config, data_class, model_class)
+        data = self._create_data(data_class, config)
+        objective = self._create_objective(config, data, model_class)
         self.study.optimize(objective, self.n_trials, **kwargs)
-        logger.info('')
-        logger.info('---------------------------------')
-        logger.info('Testing using best trial: #%s', self.best_trial.number)
-        logger.info('---------------------------------')
-        self.best_trainer.test()
+
+        self._best_trainer = Trainer.from_config(
+            self.trainers[self.best_trial.number][1]
+        )
+
+        self._best_model = model_class.load_from_checkpoint(
+            self.trainers[self.best_trial.number][0],
+            # https://github.com/PyTorchLightning/pytorch-lightning/issues/2550
+            config=self.trainers[self.best_trial.number][1]
+        )
+
+        if data.test_dataloader:
+            logger.info('')
+            logger.info('---------------------------------')
+            logger.info('Testing using best trial: #%s', self.best_trial.number)
+            logger.info('---------------------------------')
+            self.best_trainer.test(self.best_model, data.test_dataloader)
 
     optimize = run
 
@@ -237,7 +254,7 @@ class Optuna:
         Returns:
             Trainer: The trainer object of the best trial.
         """
-        return self.trainers[self.best_trial.number]
+        return self._best_trainer
 
     @property
     def best_model(self):
@@ -246,4 +263,4 @@ class Optuna:
         Returns:
             Module: The model of the best trial
         """
-        return self.best_trainer.model
+        return self._best_model

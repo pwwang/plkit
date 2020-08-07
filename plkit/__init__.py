@@ -1,5 +1,5 @@
 """Even higher level wrapper based on pytorch-lightning"""
-from .data import Data
+from .data import Data, IterData
 from .module import Module
 from .trainer import Trainer
 from .optuna import Optuna, OptunaSuggest
