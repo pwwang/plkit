@@ -85,13 +85,14 @@ class Module(LightningModule):
         # the hyperparameters to be logged to tensorboard
         self.hparams = {}
 
-    def on_train_start(self):
+    def on_fit_start(self):
         """Log hyperparameters to tensorboard"""
         if self.hparams:
             self.logger.log_hyperparams_metrics(self.hparams, {})
 
     def on_epoch_end(self):
-        """Keep the epoch progress bar"""
+        """Keep the epoch progress bar
+        This is not documented but working."""
         print()
 
     def loss_function(self, logits, labels):
