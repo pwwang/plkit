@@ -2,7 +2,6 @@
 from pytorch_lightning.callbacks import ModelCheckpoint
 import optuna
 from .trainer import Trainer
-from .module import Module
 from .utils import log_config, logger
 
 class OptunaSuggest:
@@ -182,6 +181,7 @@ class Optuna:
                 if isinstance(val, OptunaSuggest)}
 
     def run(self, config, data_class, model_class, **kwargs):
+        # pylint: disable=line-too-long
         """Run the optimization
 
         The optimization is running on fit of the trainer. If test data is
@@ -197,6 +197,7 @@ class Optuna:
                 `func` and `n_trials`.
                 See: https://optuna.readthedocs.io/en/stable/reference/generated/optuna.study.Study.html#optuna.study.Study.optimize
         """
+        # pylint: enable=line-too-long
         data = self._create_data(data_class, config)
         objective = self._create_objective(config, data, model_class)
         self.study.optimize(objective, self.n_trials, **kwargs)

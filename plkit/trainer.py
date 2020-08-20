@@ -96,7 +96,9 @@ class Trainer(PlTrainer):
         trainer_kwargs = dict((name, config[name])
                               for name in valid_kwargs if name in config)
         trainer_kwargs.setdefault('max_epochs',
-                                  config.get('epochs') or 1000)
+                                  config.get('epochs', 1000))
+        trainer_kwargs.setdefault('log_dir',
+                                  config.get('log_dir', 'plkit_logs'))
         trainer_kwargs = _collapse_suggest_config(trainer_kwargs)
         trainer_kwargs.update(**kwargs)
 
@@ -106,6 +108,7 @@ class Trainer(PlTrainer):
 
     def __init__(self, *args, **kwargs):
         self.data = kwargs.pop('data', None)
+        log_dir = kwargs.pop('log_dir', 'plkit_logs')
         # alias of max_epochs
         kwargs.setdefault('max_epochs', kwargs.pop('epochs', None) or 1000)
         # let's see if logger was specified, otherwise we default it to
@@ -113,7 +116,7 @@ class Trainer(PlTrainer):
         kwargs.setdefault(
             'logger', HyperparamsSummaryTensorBoardLogger(
                 save_dir=kwargs.get('default_root_dir', os.getcwd()),
-                name='plkit_logs'
+                name=log_dir
             )
         )
         super().__init__(*args, **kwargs)
