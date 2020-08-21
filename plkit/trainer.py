@@ -132,7 +132,8 @@ class Trainer(PlTrainer):
         if val_dataloaders is None and hasattr(model, 'validation_step'):
             model.validation_step = None
 
-        # suppress num_workers warning
+        # suppress The dataloader, val dataloader 0,
+        # does not have many workers which may be a bottleneck.
         with _suppress_warnings(UserWarning):
             super().fit(model, train_dataloader, val_dataloaders)
 
@@ -145,5 +146,6 @@ class Trainer(PlTrainer):
 
         if test_dataloaders is not None:
             # suppress num_workers warning
-            with _suppress_warnings(UserWarning):
-                super().test(model, test_dataloaders, ckpt_path)
+            # fixed at 0.9.0
+            # with _suppress_warnings(UserWarning):
+            super().test(model, test_dataloaders, ckpt_path)

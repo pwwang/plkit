@@ -60,9 +60,9 @@ class Module(LightningModule):
         _loss_func (callable): The loss function
     """
 
-    def __init__(self, config):
+    def __init__(self, config, ckpt_config=None):
         super().__init__()
-
+        config = ckpt_config or config
         config = _collapse_suggest_config(config)
 
         self.config = config

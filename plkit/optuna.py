@@ -209,7 +209,7 @@ class Optuna:
         self._best_model = model_class.load_from_checkpoint(
             self.trainers[self.best_trial.number][0],
             # https://github.com/PyTorchLightning/pytorch-lightning/issues/2550
-            config=self.trainers[self.best_trial.number][1]
+            ckpt_config=self.trainers[self.best_trial.number][1]
         )
 
         if data.test_dataloader:
