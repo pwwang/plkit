@@ -1,23 +1,31 @@
 """Utility functions for plkit"""
-import warnings
+from typing import Iterable, List, Optional, Tuple, Union
+import sys
 import logging
+import warnings
 from io import StringIO
 from contextlib import contextmanager
 
+from diot import FrozenDiot
 from rich.table import Table
 from rich.console import Console
+from rich.logging import RichHandler
 from pytorch_lightning import _logger as logger
 
 from .exceptions import PlkitConfigException
 
-logger.handlers[0].setFormatter(logging.Formatter(
-    '[%(levelname).1s %(asctime)s] %(message)s'
-))
+RatioType = Union[int, float]
 
-def _check_config(config,
-                  item,
-                  how=lambda conf, key: key in conf,
-                  msg="Configuration item {key} is required."):
+del logger.handlers[:]
+logger.addHandler(RichHandler(show_path=False))
+
+logging.getLogger('py.warnings').addHandler(RichHandler(show_path=False))
+
+
+def check_config(config,
+                 item,
+                 how=lambda conf, key: key in conf,
+                 msg="Configuration item {key} is required."):
     """Check configuration items
 
     Args:
@@ -34,15 +42,15 @@ def _check_config(config,
     if not checked:
         raise PlkitConfigException(msg.format(key=item))
 
-def _collapse_suggest_config(config):
+def collapse_suggest_config(config: dict) -> dict:
     """Use the default value of OptunaSuggest for config items.
     So that the configs can be used in the case that optuna is opted out.
 
     Args:
-        config (dict): The configuration dictionary
+        config: The configuration dictionary
 
     Returns:
-        dict: The collapsed configuration
+        The collapsed configuration
     """
     from .optuna import OptunaSuggest
     config = config.copy()
@@ -50,21 +58,87 @@ def _collapse_suggest_config(config):
                  for key, val in config.items()
                  if isinstance(val, OptunaSuggest)}
     config.update(collapsed)
-    return config
+    return FrozenDiot(config)
 
-@contextmanager
-def _suppress_warnings(warning_type):
-    """Suppress warning of a certain type
+def normalize_tvt_ratio(
+        tvt_ratio: Optional[Union[RatioType, Iterable[RatioType]]]
+) -> Optional[Tuple[RatioType, List[RatioType], List[RatioType]]]:
+    """Normalize the train-val-test data ratio into a format of
+    (.7, [.1, .1], [.05, .05]).
+
+    For `config.data_tvt`, the first element is required. If val or test ratios
+    are not provided, it will be filled with `None`
+
+    All numbers could be absolute numbers (>1) or ratios (<=1)
 
     Args:
-        warning_type: The class of the warning to suppress
+        tvt_ratio: The train-val-test ratio
 
-    Yield:
-        The context
+    Returns:
+        The normalized ratios
+
+    Raises:
+        PlkitConfigException: When the passed-in tvt_ratio is in malformat
     """
-    with warnings.catch_warnings():
-        warnings.filterwarnings("ignore", category=warning_type)
+    if not tvt_ratio:
+        return None
+
+    is_iter = lambda container: isinstance(container, (tuple, list))
+
+    if not is_iter(tvt_ratio):
+        tvt_ratio = [tvt_ratio]
+
+    tvt_ratio = list(tvt_ratio)
+
+    if len(tvt_ratio) < 3:
+        tvt_ratio += [None] * (3 - len(tvt_ratio))
+
+    if tvt_ratio[1] and not is_iter(tvt_ratio[1]):
+        tvt_ratio[1] = [tvt_ratio[1]]
+    if tvt_ratio[2] and not is_iter(tvt_ratio[2]):
+        tvt_ratio[2] = [tvt_ratio[2]]
+
+    return tuple(tvt_ratio)
+
+@contextmanager
+def warning_to_logging():
+    """Patch the warning message formatting to only show the message"""
+    orig_format = warnings.formatwarning
+    logging.captureWarnings(True)
+    warnings.formatwarning = (
+        lambda msg, category, *args, **kwargs: f'{category.__name__!r}: {msg}'
+    )
+    yield
+    warnings.formatwarning = orig_format
+    logging.captureWarnings(False)
+
+@contextmanager
+def capture_stdout():
+    """Capture the stdout"""
+    _stdout = sys.stdout
+    sys.stdout = stringio = StringIO()
+    yield stringio
+    del stringio
+    sys.stdout = _stdout
+
+@contextmanager
+def capture_stderr():
+    """Capture the stderr"""
+    _stderr = sys.stderr
+    sys.stderr = stringio = StringIO()
+    yield stringio
+    del stringio
+    sys.stderr = _stderr
+
+@contextmanager
+def output_to_logging(stdout_level: str = 'info', stderr_level: str = 'error'):
+    """Capture the stdout or stderr to logging"""
+    with capture_stderr() as err, capture_stdout() as out:
         yield
+
+    getattr(logger, stdout_level)(out.getvalue())
+    getattr(logger, stderr_level)(err.getvalue())
+
 
 def log_config(config, title='Configurations', items_per_row=2):
     """Log the configurations in a table in terminal

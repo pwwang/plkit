@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "plkit"
-version = "0.0.6"
-description = "Deep learning boilerplates on pytorch-lightning"
+version = "0.0.7"
+description = "A wrapper for pytorch-lightning to make you write even less code"
 authors = ["pwwang <pwwang@pwwang.com>"]
 license = "MIT"
 homepage = "https://github.com/pwwang/plkit"
@@ -10,14 +10,18 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.6"
-torch = "^1.5"
+torch = "1.*"
 pytorch-lightning = "^0.9"
-sklearn = "*"
-scipy = "^1.4"
-rich = "^4.2"
-optuna = "^1.3"
+diot = "*"
+rich = "8.*"
+cmdy = "*"
+optuna = "2.*"
 
 [tool.poetry.dev-dependencies]
+pytest = "*"
+pytest-cov = "*"
+torchvision = "*"
+numpy = "*"
 
 [build-system]
 requires = ["poetry>=0.12"]

@@ -1,8 +1,12 @@
 """Optuna wrapper for plkit"""
+from diot import FrozenDiot
 from pytorch_lightning.callbacks import ModelCheckpoint
 import optuna
 from .trainer import Trainer
 from .utils import log_config, logger
+
+# supress optuna logging
+optuna.logging._get_library_root_logger().handlers.clear()
 
 class OptunaSuggest:
     """Optuna suggests for configuration items
@@ -107,14 +111,6 @@ class Optuna:
         # trainers, used for retrieve the best one
         self.trainers = []
 
-    def _create_data(self, data_class, conf):
-        """Create the data object"""
-        return data_class(conf)
-
-    def _create_model(self, model_class, conf):
-        """Create the model object"""
-        return model_class(conf)
-
     def _create_objective(self, config, data, model_class):
         """Create objective function for the study to optimize
 
@@ -134,35 +130,65 @@ class Optuna:
             callable: The objective function
         """
         def _objective(trial):
-            logger.info('')
             logger.info('--------------------------------')
             logger.info('Start tuning trial #%s', len(self.trainers))
             logger.info('--------------------------------')
             suggested = self.suggests(trial, config)
-            config_copy = config.copy()
+
+            config_copy = config.copy().as_dict()
             config_copy.update(suggested)
 
             log_config(suggested, "Tunable parameters")
-            if 'batch_size' in config_copy:
-                data.batch_size = config_copy['batch_size']
 
-            model = self._create_model(model_class, config_copy)
+            model = model_class(config_copy)
             model.hparams.update(suggested)
 
             # expose filepath argument?
             checkpoint_callback = ModelCheckpoint(monitor=self.on)
             trainer = Trainer.from_config(
                 config_copy,
-                data=data,
                 checkpoint_callback=checkpoint_callback
             )
 
-            trainer.fit(model)
+            trainer.fit(model, data)
+            best_score = checkpoint_callback.best_model_score
+
             self.trainers.append((checkpoint_callback.best_model_path,
-                                  config_copy))
-            return checkpoint_callback.best_model_score
+                                  config_copy,
+                                  best_score))
+
+            logger.info('')
+            logger.info("'Optuna': trial #%s done with  %s = %s "
+                        "and parameters: %s",
+                        trial.number,
+                        self.on,
+                        best_score,
+                        trial.params)
+            number, score, params = self._current_best
+            params = {key: val for key, val in params.items()
+                      if key in suggested}
+            logger.info("'Optuna': the best is #%s with %s = %s "
+                        "and parameters: %s",
+                        number,
+                        self.on,
+                        score,
+                        params)
+            logger.info('')
+            return best_score
 
         return _objective
+
+    @property
+    def _current_best(self):
+        """Get the current best trial number and parameters when the tuning
+        is incomplete"""
+        func = (max
+                if self.study.direction == optuna.study.StudyDirection.MAXIMIZE
+                else min)
+        values = [trainer[2] for trainer in self.trainers]
+        number = values.index(func(values))
+        trainer = self.trainers[number]
+        return number, trainer[2], trainer[1]
 
     def suggests(self, trial, conf):
         """Collect the hyperparameters from the trial suggestions
@@ -198,7 +224,8 @@ class Optuna:
                 See: https://optuna.readthedocs.io/en/stable/reference/generated/optuna.study.Study.html#optuna.study.Study.optimize
         """
         # pylint: enable=line-too-long
-        data = self._create_data(data_class, config)
+        config = FrozenDiot(config)
+        data = data_class(config=config)
         objective = self._create_objective(config, data, model_class)
         self.study.optimize(objective, self.n_trials, **kwargs)
 
@@ -209,15 +236,23 @@ class Optuna:
         self._best_model = model_class.load_from_checkpoint(
             self.trainers[self.best_trial.number][0],
             # https://github.com/PyTorchLightning/pytorch-lightning/issues/2550
-            ckpt_config=self.trainers[self.best_trial.number][1]
+            config=self.trainers[self.best_trial.number][1]
         )
 
-        if data.test_dataloader:
+        if hasattr(data, 'test_dataloader'):
+            test_dataloader = data.test_dataloader()
+        else: # pragma: no cover
+            test_dataloader = None
+
+        if test_dataloader:
             logger.info('')
             logger.info('---------------------------------')
             logger.info('Testing using best trial: #%s', self.best_trial.number)
             logger.info('---------------------------------')
-            self.best_trainer.test(self.best_model, data.test_dataloader)
+            self.best_trainer.test(self.best_model,
+                                   test_dataloaders=test_dataloader)
+
+        return self.best_trainer
 
     optimize = run
 

@@ -140,4 +140,14 @@ hparams.yaml
 
 workdir/
 
+**/t-*.ipynb
+.in.fish
+.out.fish
+
+# local history for vscode
+.history/
+
+# lightning_logs, plkit_logs
+*_logs/
+
 # End of https://www.gitignore.io/api/python

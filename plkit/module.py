@@ -4,7 +4,7 @@ from torch import nn
 from pytorch_lightning import LightningModule
 from pytorch_lightning.metrics.functional import regression, classification
 from .exceptions import PlkitMeasurementException
-from .utils import _collapse_suggest_config, _suppress_warnings
+from .utils import collapse_suggest_config, warning_to_logging
 
 def _check_logits_shape(logits, dim, dim_to_check=1):
     """Check if the logits are in the right shape
@@ -23,11 +23,8 @@ def _check_logits_shape(logits, dim, dim_to_check=1):
         raise PlkitMeasurementException(f"Logits require size of {dim} at "
                                         f"dimension {dim_to_check}")
 
-class Module(LightningModule):
+class Module(LightningModule): # pylint: disable=too-many-ancestors
     """The Module class
-
-    `on_train_start` is added to log hyperparameters to tensorboard if
-    `model.hparams` is set.
 
     `on_epoch_end` is added to print a newline to keep the progress bar and the
     stats on it for each epoch. If you don't want this, just overwrite it with:
@@ -44,28 +41,23 @@ class Module(LightningModule):
     `measure` added for convinience to get some metrics between logits
     and targets.
 
-    `device` added as a property to get the device where the model is running
-        on, according to the first parameter of this model.
-
     Args:
-        config (dict): The configuration dictionary
+        config: The configuration dictionary
 
     Attributes:
         Apart from attributes of `LightningModule`, following attributes added:
-        config (dict): The configs
-        optim (str): The optimizer name. currently only `adam` and `sgd`
+        config: The configs
+        optim: The optimizer name. currently only `adam` and `sgd`
             are supported. With this, of course you can, but you don't need to
             write `configure_optimizers`.
-        num_classes (int): Number of classes to predict. 1 for regression
-        _loss_func (callable): The loss function
+        num_classes: Number of classes to predict. 1 for regression
+        _loss_func: The loss function
     """
 
-    def __init__(self, config, ckpt_config=None):
+    def __init__(self, config):
         super().__init__()
-        config = ckpt_config or config
-        config = _collapse_suggest_config(config)
+        self.config = collapse_suggest_config(config)
 
-        self.config = config
         self.optim = config.get('optim', 'adam')
         self.num_classes = config.get('num_classes')
         # We may run test only without measurement.
@@ -84,11 +76,6 @@ class Module(LightningModule):
 
         # the hyperparameters to be logged to tensorboard
         self.hparams = {}
-
-    def on_fit_start(self):
-        """Log hyperparameters to tensorboard"""
-        if self.hparams:
-            self.logger.log_hyperparams_metrics(self.hparams, {})
 
     def on_epoch_end(self):
         """Keep the epoch progress bar
@@ -126,7 +113,7 @@ class Module(LightningModule):
                 See pytorhc-lightning's doc for the metrics.
         """
         # See: https://github.com/PyTorchLightning/pytorch-lightning/issues/2768
-        with _suppress_warnings(UserWarning):
+        with warning_to_logging():
             # regression
             if self.num_classes == 1:
                 if method not in ('mse', 'rmse', 'mae', 'rmsle'):
@@ -154,7 +141,7 @@ class Module(LightningModule):
                         **kwargs
                     )
                 if method == 'fbeta_score':
-                    if 'beta' not in kwargs:
+                    if 'beta' not in kwargs: # pragma: no cover
                         raise PlkitMeasurementException(
                             'fbeta_score requires a beta keyword argument.'
                         )
@@ -169,8 +156,3 @@ class Module(LightningModule):
                 raise PlkitMeasurementException(
                     f"Method not supported for classification: {method}"
                 )
-
-    @property
-    def device(self):
-        """Get the device of the model."""
-        return next(self.parameters()).device

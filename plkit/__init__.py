@@ -1,31 +1,34 @@
-"""Even higher level wrapper based on pytorch-lightning"""
-from .data import Data, IterData
+"""Superset of pytorch-lightning"""
+from typing import Any, Dict, Optional, Type
+from .data import DataModule
 from .module import Module
 from .trainer import Trainer
 from .optuna import Optuna, OptunaSuggest
-from .utils import log_config, _check_config, logger
+from .runner import Runner, LocalRunner, SGERunner
+from .utils import logger
 
-__version__ = "0.0.6"
+__version__ = "0.0.7"
 
-def run(config: dict,
-        data_class: callable,
-        model_class: callable):
-    """Run the pipeline by give configuration, model_class and data_class
+def run(config: Dict[str, Any],
+        data_class: Type[DataModule],
+        model_class: Type[Module],
+        optuna: Optional[Optuna] = None,
+        runner: Runner = LocalRunner()) -> Trainer:
+    """Run the pipeline by give configuration, model_class, data_class, optuna
+    and runner
 
     Args:
-        config (dict): A dictionary of configuration, must have following items:
-            - sources: The sources to read data from
+        config: A dictionary of configuration, must have following items:
             - batch_size: The batch size
             - num_classes: The number of classes for classification
                 1 means regression
-        data_class (class): The data class subclassed from `Data`
-        model_class (class): The model class subclassed from `Module`
-    """
-    _check_config(config, 'batch_size')
+        data_class: The data class subclassed from `Data`
+        model_class: The model class subclassed from `Module`
+        optuna: The optuna object
+        runner: The runner object
 
-    data = data_class(config)
-    model = model_class(config)
-    trainer = Trainer.from_config(config, data=data)
-    trainer.fit(model)
-    trainer.test()
-    return trainer
+    Returns:
+        The trainer object
+    """
+
+    return runner.run(config, data_class, model_class, optuna)

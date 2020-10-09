@@ -1,15 +1,14 @@
 # plkit
 
-Deep learning boilerplate based on [pytorch-lightning][1]
+A wrapper of [pytorch-lightning][1] that makes you write even less code.
+
+
 
 ## Installation
 ```
-pip install plkit
+pip install -U plkit
 ```
 
-## API documentation
-
-https://pwwang.github.io/plkit/index.html
 
 ## Usage
 
