@@ -1,4 +1,4 @@
-site_name: diot
+site_name: plkit
 theme:
     name: 'material'
 markdown_extensions:
