@@ -10,12 +10,13 @@ from .utils import collapse_suggest_config, warning_to_logging
 class ProgressBar(PlProgressBar):
     """Align the Epoch in progress bar"""
     def on_epoch_start(self, trainer, pl_module):
+        """Try to align the epoch number"""
         super().on_epoch_start(trainer, pl_module)
 
         if self.max_epochs:
             nchar = len(str(self.max_epochs))
             self.main_progress_bar.set_description(
-                f'Epoch11 {str(trainer.current_epoch).rjust(nchar)}'
+                f'Epoch {str(trainer.current_epoch).rjust(nchar)}'
             )
 
 class Trainer(PlTrainer): # pylint: disable=too-many-ancestors
@@ -86,13 +87,11 @@ class Trainer(PlTrainer): # pylint: disable=too-many-ancestors
 
 
     def fit(self, *args, **kwargs):
+        """Train and validate the model"""
         with warning_to_logging():
             super().fit(*args, **kwargs)
 
     def test(self, *args, **kwargs):
+        """Test the model"""
         with warning_to_logging():
             super().test(*args, **kwargs)
-
-    def train(self):
-        with warning_to_logging():
-            super().train()

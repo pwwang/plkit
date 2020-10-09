@@ -6,10 +6,10 @@ import warnings
 from io import StringIO
 from contextlib import contextmanager
 
-from diot import FrozenDiot
 from rich.table import Table
 from rich.console import Console
 from rich.logging import RichHandler
+from diot import FrozenDiot
 from pytorch_lightning import _logger as logger
 
 from .exceptions import PlkitConfigException

@@ -86,6 +86,7 @@ class Module(LightningModule): # pylint: disable=too-many-ancestors
         """Calculate the loss"""
         return self._loss_func(logits, labels)
 
+    # pylint: disable=inconsistent-return-statements
     def configure_optimizers(self):
         """Configure the optimizers"""
         if self.optim == 'adam':
@@ -129,30 +130,29 @@ class Module(LightningModule): # pylint: disable=too-many-ancestors
                 )
 
             # classification
-            else:
-                _check_logits_shape(logits, self.num_classes, 1)
+            _check_logits_shape(logits, self.num_classes, 1)
 
-                if method in ('accuracy', 'precision',
-                              'recall', 'f1_score', 'iou'):
-                    return getattr(classification, method)(
-                        logits,
-                        labels.view(-1),
-                        num_classes=self.num_classes,
-                        **kwargs
-                    )
-                if method == 'fbeta_score':
-                    if 'beta' not in kwargs: # pragma: no cover
-                        raise PlkitMeasurementException(
-                            'fbeta_score requires a beta keyword argument.'
-                        )
-                    return classification.fbeta_score(logits, labels.view(-1),
-                                                      **kwargs)
-
-                if method in ('auroc', 'average_precision', 'dice_score'):
-                    return getattr(classification, method)(
-                        logits, labels.view(-1), **kwargs
-                    )
-
-                raise PlkitMeasurementException(
-                    f"Method not supported for classification: {method}"
+            if method in ('accuracy', 'precision',
+                          'recall', 'f1_score', 'iou'):
+                return getattr(classification, method)(
+                    logits,
+                    labels.view(-1),
+                    num_classes=self.num_classes,
+                    **kwargs
                 )
+            if method == 'fbeta_score':
+                if 'beta' not in kwargs: # pragma: no cover
+                    raise PlkitMeasurementException(
+                        'fbeta_score requires a beta keyword argument.'
+                    )
+                return classification.fbeta_score(logits, labels.view(-1),
+                                                  **kwargs)
+
+            if method in ('auroc', 'average_precision', 'dice_score'):
+                return getattr(classification, method)(
+                    logits, labels.view(-1), **kwargs
+                )
+
+            raise PlkitMeasurementException(
+                f"Method not supported for classification: {method}"
+            )

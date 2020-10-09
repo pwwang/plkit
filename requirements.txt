@@ -1,0 +1,10 @@
+cmdy
+diot
+numpy
+optuna==2.*
+pytest
+pytest-cov
+pytorch-lightning==0.*,>=0.9.0
+rich==8.*
+torch==1.*
+torchvision

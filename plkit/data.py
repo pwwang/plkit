@@ -14,9 +14,10 @@ from .exceptions import PlkitDataException
 from .utils import (
     normalize_tvt_ratio,
     check_config,
-    warning_to_logging,
     logger
 )
+
+# pylint: disable=unused-argument
 
 # The ids or keys for the data
 DatasetType = Union[TorchDataset, TorchIterableDataset]
@@ -190,7 +191,7 @@ class DataModule(LightningDataModule):
             ret['test'] = []
             for test_ratio in self.tvt_ratio[2]:
                 test_len = (round(test_ratio * float(self.length))
-                           if is_ratio else test_ratio)
+                            if is_ratio else test_ratio)
                 test_ids, rest_ids = random_split(
                     rest_ids, [test_len, len(rest_ids) - test_len]
                 )
@@ -228,10 +229,12 @@ class DataModule(LightningDataModule):
         return self._split_data_list(data)
 
     def prepare_data(self, *args, **kwargs) -> None:
+        """Prepare data"""
         logger.info('Reading data ...')
         self.data = self.data_reader()
 
     def setup(self, stage: Optional[str] = None) -> None:
+        """Setup data"""
         if stage == 'fit':
             # Only do it once.
             # If you want it to be separate
@@ -247,6 +250,7 @@ class DataModule(LightningDataModule):
                 )
 
     def train_dataloader(self, *args, **kwargs) -> DataLoader:
+        """Train data loaders"""
         if 'train' not in self.splits:
             return None
 
@@ -257,6 +261,7 @@ class DataModule(LightningDataModule):
     def val_dataloader(self,
                        *args,
                        **kwargs) -> Union[DataLoader, List[DataLoader]]:
+        """Validation data loaders"""
         if 'val' not in self.splits:
             return None
         ret = []
@@ -269,6 +274,7 @@ class DataModule(LightningDataModule):
     def test_dataloader(self,
                         *args,
                         **kwargs) -> Union[DataLoader, List[DataLoader]]:
+        """Test data loaders"""
         if 'test' not in self.splits:
             return None
         ret = []

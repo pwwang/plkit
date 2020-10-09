@@ -240,17 +240,17 @@ class Optuna:
         )
 
         if hasattr(data, 'test_dataloader'):
-            test_dataloader = data.test_dataloader()
+            test_dataloaders = data.test_dataloader()
         else: # pragma: no cover
-            test_dataloader = None
+            test_dataloaders = None
 
-        if test_dataloader:
+        if test_dataloaders:
             logger.info('')
             logger.info('---------------------------------')
             logger.info('Testing using best trial: #%s', self.best_trial.number)
             logger.info('---------------------------------')
             self.best_trainer.test(self.best_model,
-                                   test_dataloaders=test_dataloader)
+                                   test_dataloaders=test_dataloaders)
 
         return self.best_trainer
 

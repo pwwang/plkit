@@ -206,5 +206,3 @@ plkit.run(config, Data, Model)
 [2]: https://github.com/PyTorchLightning/pytorch-lightning/issues/1228
 [3]: https://github.com/mRcSchwering/pytorch_lightning_test/blob/master/src/loggers.py
 [4]: https://github.com/PyTorchLightning/pytorch-lightning/tree/master/pytorch_lightning/metrics
-
-
