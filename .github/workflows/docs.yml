@@ -27,7 +27,7 @@ jobs:
           python -m pip install -r docs/requirements.txt
 
           # disable inheritance of mkapi
-          mkapi_dir=$(dirname $(python -c 'import mkapi; print(mkapi.__file)'))
+          mkapi_dir=$(dirname $(python -c 'import mkapi; print(mkapi.__file__)'))
           pagefile=$mkapi_dir/core/page.py
           sed -i 's/inherit(node)//' $pagefile
 
