@@ -25,6 +25,12 @@ jobs:
         run: |
           python -m pip install mkdocs
           python -m pip install -r docs/requirements.txt
+
+          # disable inheritance of mkapi
+          mkapi_dir=$(dirname $(python -c 'import mkapi; print(mkapi.__file)'))
+          pagefile=$mkapi_dir/core/page.py
+          sed -i 's/inherit(node)//' $pagefile
+
           cd docs
           cp ../README.md index.md
           cd ..
