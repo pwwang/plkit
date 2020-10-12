@@ -14,4 +14,10 @@ extra_css:
     - style.css
 nav:
     - 'Home': 'index.md'
+    - 'Configurations': 'configurations.md'
+    - 'DataModule': 'datamodule.md'
+    - 'Module': 'module.md'
+    - 'Trainer': 'trainer.md'
+    - 'Runner': 'runner.md'
+    - 'Optuna integration': 'optuna.md'
     - 'API': mkapi/api/plkit

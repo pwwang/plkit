@@ -1,15 +1,16 @@
-import os
+"""A minimal example for plkit"""
+
+from pathlib import Path
 import torch
 from torchvision import transforms
 from torchvision.datasets import MNIST
-from plkit import Module, Data as PkData, run
+from plkit import Module, DataModule, run
 
-class Data(PkData):
+class Data(DataModule):
 
     def data_reader(self):
-        minst = MNIST(self.sources, train=True,
-                      download=True, transform=transforms.ToTensor())
-        return {'train': (minst.data, minst.targets)}
+        return MNIST(Path(__file__).parent / 'data', train=True,
+                     download=True, transform=transforms.ToTensor())
 
 class LitClassifier(Module):
 
@@ -20,17 +21,16 @@ class LitClassifier(Module):
     def forward(self, x):
         return torch.relu(self.l1(x.view(x.size(0), -1).float()))
 
-    def training_step(self, batch, batch_nb):
+    def training_step(self, batch, _):
         x, y = batch
         loss = self.loss_function(self(x), y)
-        tensorboard_logs = {'train_loss': loss}
-        return {'loss': loss, 'log': tensorboard_logs}
+        return {'loss': loss}
 
 if __name__ == '__main__':
-    config = {
+    configuration = {
         'gpus': 1,
+        'data_tvt': .05, # use a small proportion for training
         'batch_size': 32,
-        'max_epochs': 10,
-        'data_sources': os.path.join(os.path.dirname(__file__), 'data'),
+        'max_epochs': 11
     }
-    run(config, Data, LitClassifier)
+    run(configuration, Data, LitClassifier)

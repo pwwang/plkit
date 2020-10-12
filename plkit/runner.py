@@ -4,12 +4,13 @@ import sys
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Optional, Type
 from uuid import uuid4
+from diot import FrozenDiot
 import cmdy
 from .data import DataModule
 from .module import Module
 from .optuna import Optuna
 from .trainer import Trainer
-from .utils import logger, warning_to_logging
+from .utils import logger, warning_to_logging, plkit_seed_everything
 
 class Runner(ABC):
     """The base class for runner"""
@@ -45,8 +46,13 @@ class LocalRunner(Runner):
             model_class: Type[Module],
             optuna: Optional[Optuna] = None) -> Trainer:
         """Run the pipeline locally"""
+        if not isinstance(config, FrozenDiot):
+            config = FrozenDiot(config)
+
         if optuna: # pragma: no cover
             return optuna.run(config, data_class, model_class)
+
+        plkit_seed_everything(config)
 
         data = data_class(config=config)
         model = model_class(config)
@@ -65,13 +71,27 @@ class LocalRunner(Runner):
         return trainer
 
 class SGERunner(LocalRunner):
-    """The SGE runner for the pipeline"""
+    """The SGE runner for the pipeline
+
+    Args:
+        opts: The options for SGE runner, which will be translated as arguments
+            for `qsub`. For example `opts={'notify': True}` will be translated
+            as `qsub --notify ...` from command line.
+
+            there are two special options `qsub` and `workdir`. `qsub` specified
+            the path to `qsub` executable and `workdir` specifies a location to
+            save outputs, errors and scripts of each job.
+
+    Attributes:
+        qsub: The path to qsub executable
+        workdir: The path to the workdir
+    """
 
     ENV_FLAG_PREFIX = "PLKIT_SGE_RUNNER_"
 
     def __init__(self, **opts):
-        self.qsub = opts.pop("qsub", "qsub")
-        self.workdir = opts.pop("workdir", "./workdir")
+        self.qsub = opts.pop("qsub", "qsub") # type: str
+        self.workdir = opts.pop("workdir", "./workdir") # type: str
         os.makedirs(self.workdir, exist_ok=True)
 
         self.opts = opts

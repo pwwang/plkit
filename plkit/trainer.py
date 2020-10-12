@@ -14,7 +14,7 @@ class ProgressBar(PlProgressBar):
         super().on_epoch_start(trainer, pl_module)
 
         if self.max_epochs:
-            nchar = len(str(self.max_epochs))
+            nchar = len(str(self.max_epochs - 1))
             self.main_progress_bar.set_description(
                 f'Epoch {str(trainer.current_epoch).rjust(nchar)}'
             )

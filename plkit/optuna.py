@@ -3,7 +3,7 @@ from diot import FrozenDiot
 from pytorch_lightning.callbacks import ModelCheckpoint
 import optuna
 from .trainer import Trainer
-from .utils import log_config, logger
+from .utils import log_config, logger, plkit_seed_everything
 
 # supress optuna logging
 optuna.logging._get_library_root_logger().handlers.clear()
@@ -135,8 +135,10 @@ class Optuna:
             logger.info('--------------------------------')
             suggested = self.suggests(trial, config)
 
-            config_copy = config.copy().as_dict()
-            config_copy.update(suggested)
+            config_copy = config.copy()
+
+            with config_copy.thaw():
+                config_copy.update(suggested)
 
             log_config(suggested, "Tunable parameters")
 
@@ -224,7 +226,11 @@ class Optuna:
                 See: https://optuna.readthedocs.io/en/stable/reference/generated/optuna.study.Study.html#optuna.study.Study.optimize
         """
         # pylint: enable=line-too-long
-        config = FrozenDiot(config)
+        if not isinstance(config, FrozenDiot):
+            config = FrozenDiot(config)
+
+        plkit_seed_everything(config)
+
         data = data_class(config=config)
         objective = self._create_objective(config, data, model_class)
         self.study.optimize(objective, self.n_trials, **kwargs)

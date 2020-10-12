@@ -1,15 +1,12 @@
-from plkit.optuna import OptunaSuggest
 import pytest
+from diot import Diot, FrozenDiot, DiotFrozenError
 
-import os
-import torch
 from torch import nn
-from torch.utils.data import random_split
 import torch.nn.functional as F
 from torchvision.datasets import MNIST
 from torchvision import transforms
 
-from plkit import DataModule, Module, Optuna, Trainer
+from plkit import DataModule, Module, Optuna, Trainer, OptunaSuggest, run
 from plkit.utils import output_to_logging
 
 class Data(DataModule):
@@ -59,17 +56,35 @@ class Model(Module):
                         for output in outputs) / float(len(outputs))
         self.log('val_avg_loss', mean_loss, on_epoch=True, prog_bar=True)
 
-def test_run(tmp_path):
-    config = dict(
-        datadir=str(tmp_path),
+@pytest.mark.parametrize('config', [
+    FrozenDiot(
         batch_size=32,
         max_epochs=5,
+        seed=8525,
+        # take a small set
+        data_tvt=(300, 100, 100),
+        learning_rate=OptunaSuggest(1e-4, 'float', 1e-5, 1e-3)
+    ),
+    dict(
+        batch_size=32,
+        max_epochs=5,
+        seed=8525,
         # take a small set
         data_tvt=(300, 100, 100),
         learning_rate=OptunaSuggest(1e-4, 'float', 1e-5, 1e-3)
     )
+])
+def test_run(config, tmp_path):
+    try:
+        config['datadir'] = str(tmp_path)
+    except DiotFrozenError:
+        with config.thaw():
+            config.datadir = str(tmp_path)
     optuna = Optuna(on='val_avg_loss', n_trials=3)
-    trainer = optuna.run(config, Data, Model)
+    if isinstance(config, FrozenDiot):
+        trainer = run(config, Data, Model, optuna)
+    else:
+        trainer = optuna.run(config, Data, Model)
     assert isinstance(trainer, Trainer)
 
     assert len(optuna.best_params) == 1

@@ -10,7 +10,7 @@ from rich.table import Table
 from rich.console import Console
 from rich.logging import RichHandler
 from diot import FrozenDiot
-from pytorch_lightning import _logger as logger
+from pytorch_lightning import seed_everything, _logger as logger
 
 from .exceptions import PlkitConfigException
 
@@ -57,6 +57,10 @@ def collapse_suggest_config(config: dict) -> dict:
     collapsed = {key: val.default
                  for key, val in config.items()
                  if isinstance(val, OptunaSuggest)}
+    if isinstance(config, FrozenDiot):
+        with config.thaw():
+            config.update(collapsed)
+        return config
     config.update(collapsed)
     return FrozenDiot(config)
 
@@ -171,3 +175,17 @@ def log_config(config, title='Configurations', items_per_row=2):
     logger.info('')
     for line in console.file.getvalue().splitlines():
         logger.info(line)
+
+def plkit_seed_everything(config: FrozenDiot):
+    """Try to seed everything and set deterministic to True
+    if seed in config has been set
+
+    Args:
+        config: The configurations
+    """
+    if config.get('seed') is None:
+        return
+
+    seed_everything(config.seed)
+    with config.thaw():
+        config.setdefault('deterministic', True)

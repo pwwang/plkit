@@ -1,21 +1,15 @@
-import os
+"""Integration with optuna"""
+from pathlib import Path
 import torch
-# pip install diot
-from diot import Diot
 from torchvision import transforms
 from torchvision.datasets import MNIST
-from plkit import Module, Data as PkData, run, OptunaSuggest, Optuna
+from plkit import Module, DataModule, OptunaSuggest, Optuna, logger
 
-class Data(PkData):
+class Data(DataModule):
 
     def data_reader(self):
-        minst = MNIST(self.sources, train=True,
-                      download=True, transform=transforms.ToTensor())
-        minst_test = MNIST(self.sources, train=False,
-                           download=True, transform=transforms.ToTensor())
-        return {'train': (minst.data, minst.targets),
-                'val': (minst.data, minst.targets),
-                'test': (minst_test.data, minst_test.targets)}
+        return MNIST(Path(__file__).parent / 'data',
+                     download=True, transform=transforms.ToTensor())
 
 class LitClassifier(Module):
 
@@ -30,27 +24,27 @@ class LitClassifier(Module):
         out = self.relu(out)
         return self.fc2(out)
 
-    def training_step(self, batch, batch_nb):
+    def training_step(self, batch, _):
         x, y = batch
         loss = self.loss_function(self(x), y)
-        tensorboard_logs = {'train_loss': loss}
-        return {'loss': loss, 'log': tensorboard_logs}
+        return {'loss': loss}
 
-    def validation_step(self, batch, batch_nb):
+    def validation_step(self, batch, _):
         x, y = batch
         y_hat = self(x)
         acc = self.measure(y_hat, y, 'accuracy')
-        return {'val_loss': torch.nn.functional.cross_entropy(y_hat, y),
-                'val_acc': acc}
+        ret = {'val_loss': torch.nn.functional.cross_entropy(y_hat, y),
+               'val_acc': acc}
+        self.log_dict(ret, prog_bar=True)
+        return ret
 
     def validation_epoch_end(self, outputs):
         avg_loss = torch.stack([x['val_loss'] for x in outputs]).mean()
         avg_acc = torch.stack([x['val_acc'] for x in outputs]).mean()
-        tensorboard_logs = {'val_loss': avg_loss, 'val_acc': avg_acc}
-        return {'val_loss': avg_loss, 'val_acc': avg_acc,
-                'log': tensorboard_logs}
+        ret = {'val_loss': avg_loss, 'val_acc': avg_acc}
+        self.log_dict(ret, prog_bar=True)
 
-    def test_step(self, batch, batch_nb):
+    def test_step(self, batch, _):
         x, y = batch
         y_hat = self(x)
         acc = self.measure(y_hat, y, 'accuracy')
@@ -58,20 +52,28 @@ class LitClassifier(Module):
 
     def test_epoch_end(self, outputs):
         avg_acc = torch.stack([x['test_acc'] for x in outputs]).mean()
-        tensorboard_logs = {'test_acc': avg_acc}
-        return {'test_acc': avg_acc, 'log': tensorboard_logs}
+        self.log('test_acc', avg_acc, logger=True)
+        logger.info('test_acc: %s', avg_acc)
 
 if __name__ == '__main__':
-    config = Diot({
+    configuration = {
         'gpus': 1,
         'batch_size': 32,
         'max_epochs': 20,
         'num_classes': 10,
+        'data_tvt': (300, 100, 100), # use a small proportion for example.
+        'input_size': 28*28,
+        # Let's say we are tuning hidden_size and seed
         'hidden_size': OptunaSuggest(512, 'cat', [128, 256, 512]),
         'seed': OptunaSuggest(1, 'int', 1, 10),
-        'input_size': 28*28,
-        'data_sources': os.path.join(os.path.dirname(__file__), 'data'),
-    }) # so that we can do config.input_size
+    }
 
     optuna = Optuna(on='val_acc', n_trials=10, direction='maximize')
-    optuna.run(config, Data, LitClassifier)
+    optuna.run(configuration, Data, LitClassifier)
+
+    # if you want to run without optuna, you don't have change
+    # any configurations, which OptunaSuggest objects will be collpased
+    # into the default values
+    #
+    # from plkit import run
+    # run(configuration, Data, LitClassifier)

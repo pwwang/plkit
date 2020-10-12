@@ -33,6 +33,7 @@ jobs:
 
           cd docs
           cp ../README.md index.md
+          cp ../mnist_minimal.png ./
           cd ..
           mkdocs gh-deploy --clean --force
         if: success()

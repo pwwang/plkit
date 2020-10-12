@@ -13,7 +13,7 @@ def run(config: Dict[str, Any],
         data_class: Type[DataModule],
         model_class: Type[Module],
         optuna: Optional[Optuna] = None,
-        runner: Runner = LocalRunner()) -> Trainer:
+        runner: Optional[Runner] = None) -> Trainer:
     """Run the pipeline by give configuration, model_class, data_class, optuna
     and runner
 
@@ -30,5 +30,6 @@ def run(config: Dict[str, Any],
     Returns:
         The trainer object
     """
+    runner = runner or LocalRunner()
 
     return runner.run(config, data_class, model_class, optuna)

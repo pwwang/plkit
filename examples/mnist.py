@@ -62,7 +62,7 @@ class LitClassifier(Module):
 if __name__ == '__main__':
     configuration = Diot(
         gpus=1,
-        data_tvt=(.007, .0015, .0015),
+        data_tvt=(.7, .15, .15),
         batch_size=32,
         max_epochs=20,
         num_classes=10,
