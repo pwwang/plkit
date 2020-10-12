@@ -40,6 +40,6 @@ See all avaiable suggest types [here][3] and corresponding names (aliases) for t
 |`uni`|`suggest_uniform`|
 
 
-[1]: ../home/best-practice
+[1]: ../#best-practice-boilerplate
 [2]: https://optuna.readthedocs.io/en/stable/reference/generated/optuna.study.create_study.html#optuna.study.create_study
 [3]: https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial

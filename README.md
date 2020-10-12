@@ -2,6 +2,7 @@
 
 A wrapper of [pytorch-lightning][1] that makes you write even less code.
 
+[![pypi version][3]][4] [![github tag][5]][6] [![codacy quality][7]][8] [![coverage][8]][9] ![docs][10] ![building][11]
 
 ## Installation
 
@@ -157,3 +158,12 @@ See more examples in `./examples` and [full documentation][2]
 
 [1]: https://github.com/PyTorchLightning/pytorch-lightning
 [2]: https://pwwang.github.com/plkit
+[3]: https://img.shields.io/pypi/v/plkit?style=flat-square
+[4]: https://pypi.org/project/plkit/
+[5]: https://img.shields.io/github/v/tag/pwwang/plkit?style=flat-square
+[6]: https://github.com/pwwang/plkit
+[7]: https://img.shields.io/codacy/grade/60b6b06fa06c4539b4a7b48ba30fd2bb?style=flat-square
+[8]: https://app.codacy.com/gh/pwwang/plkit
+[9]: https://img.shields.io/codacy/coverage/60b6b06fa06c4539b4a7b48ba30fd2bb?style=flat-square
+[10]: https://img.shields.io/github/workflow/status/pwwang/plkit/Build%20Docs?label=docs&style=flat-square
+[11]: https://img.shields.io/github/workflow/status/pwwang/plkit/Build%20and%20Deploy?style=flat-square

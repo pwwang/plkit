@@ -12,7 +12,7 @@ If you don't want `deterministic` to be `True` when a `seed` is specified, you c
 
 ## num_classes
 
-Specification of `num_classes` in configuration ensures the builtin measurement calling the right loss function and metric for the output and labels (see [configuration loss](./loss) and [Builtin measurement][3] for more details).
+Specification of `num_classes` in configuration ensures the builtin measurement calling the right loss function and metric for the output and labels (see [configuration loss](#loss) and [Builtin measurement][3] for more details).
 
 ## data_num_workers
 
