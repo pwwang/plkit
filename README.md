@@ -2,7 +2,7 @@
 
 A wrapper of [pytorch-lightning][1] that makes you write even less code.
 
-[![pypi version][3]][4] [![github tag][5]][6] [![codacy quality][7]][8] [![coverage][8]][9] ![docs][10] ![building][11]
+[![pypi version][3]][4] [![github tag][5]][6] [![codacy quality][7]][8] [![coverage][9]][8] ![docs][10] ![building][11]
 
 ## Installation
 
