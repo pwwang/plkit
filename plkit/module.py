@@ -57,15 +57,14 @@ class Module(LightningModule): # pylint: disable=too-many-ancestors
     def __init__(self, config):
         super().__init__()
         self.config = collapse_suggest_config(config)
-
-        self.optim = config.get('optim', 'adam')
-        self.num_classes = config.get('num_classes')
+        self.optim = self.config.get('optim', 'adam')
+        self.num_classes = self.config.get('num_classes')
         # We may run test only without measurement.
         # if not self.num_classes:
         #     raise ValueError('We need `num_classes` from config or passed in '
         #                      'explictly to check final logits size.')
 
-        loss = config.get('loss', 'auto')
+        loss = self.config.get('loss', 'auto')
         if loss == 'auto':
             if self.num_classes == 1: # regression
                 self._loss_func = nn.MSELoss()

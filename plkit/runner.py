@@ -1,9 +1,9 @@
 """Run jobs via non-local runners."""
 import os
 import sys
+import uuid
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Optional, Type
-from uuid import uuid4
 from diot import FrozenDiot
 import cmdy
 from .data import DataModule
@@ -89,13 +89,14 @@ class SGERunner(LocalRunner):
 
     ENV_FLAG_PREFIX = "PLKIT_SGE_RUNNER_"
 
-    def __init__(self, **opts):
+    def __init__(self, *args, **opts):
         self.qsub = opts.pop("qsub", "qsub") # type: str
         self.workdir = opts.pop("workdir", "./workdir") # type: str
         os.makedirs(self.workdir, exist_ok=True)
 
+        self.args = args
         self.opts = opts
-        self.uid = uuid4()
+        self.uid = uuid.uuid5(uuid.NAMESPACE_DNS, str(sys.argv))
         self.envname = SGERunner.ENV_FLAG_PREFIX + str(self.uid).split('-')[0]
 
 
@@ -126,12 +127,14 @@ class SGERunner(LocalRunner):
             opts.setdefault('N', os.path.basename(workdir))
 
             logger.info('Submitting the job ...')
-            cmd = cmdy.qsub(opts,
+            cmd = cmdy.qsub(*self.args,
+                            opts,
                             script,
                             cmdy_dupkey=True,
                             cmdy_prefix='-',
-                            cmdy_exe=self.qsub)
-            logger.info('  - %s', cmd.stdout.strip())
+                            cmdy_exe=self.qsub).h()
+            logger.info('  - Running: %s', cmd.strcmd)
+            logger.info('  - %s', cmd.run().stdout.strip())
 
             cmdy.touch(opts['o'])
             logger.info('Streaming content from %s', opts['o'])

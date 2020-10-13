@@ -75,9 +75,6 @@ class IterDataset(TorchIterableDataset):
         self.data = data
         self.length = length
 
-    def __len__(self) -> int:
-        return self.length
-
     def __iter__(self) -> Iterable[Any]:
         return iter(self.data)
 

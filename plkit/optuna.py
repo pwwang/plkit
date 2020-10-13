@@ -131,7 +131,8 @@ class Optuna:
         """
         def _objective(trial):
             logger.info('--------------------------------')
-            logger.info('Start tuning trial #%s', len(self.trainers))
+            logger.info('Start optuna trial #%s / %s',
+                        len(self.trainers), self.n_trials - 1)
             logger.info('--------------------------------')
             suggested = self.suggests(trial, config)
 

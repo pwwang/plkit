@@ -144,7 +144,7 @@ def output_to_logging(stdout_level: str = 'info', stderr_level: str = 'error'):
     getattr(logger, stderr_level)(err.getvalue())
 
 
-def log_config(config, title='Configurations', items_per_row=2):
+def log_config(config, title='Configurations', items_per_row=1):
     """Log the configurations in a table in terminal
 
     Args:
