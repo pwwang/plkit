@@ -4,12 +4,58 @@ plkit
 
 A wrapper of `pytorch-lightning <https://github.com/PyTorchLightning/pytorch-lightning>`_ that makes you write even less code.
 
+`
+.. image:: https://img.shields.io/pypi/v/plkit?style=flat-square
+   :target: https://img.shields.io/pypi/v/plkit?style=flat-square
+   :alt: pypi version
+ <https://pypi.org/project/plkit/>`_ `
+.. image:: https://img.shields.io/github/v/tag/pwwang/plkit?style=flat-square
+   :target: https://img.shields.io/github/v/tag/pwwang/plkit?style=flat-square
+   :alt: github tag
+ <https://github.com/pwwang/plkit>`_ `
+.. image:: https://img.shields.io/codacy/grade/60b6b06fa06c4539b4a7b48ba30fd2bb?style=flat-square
+   :target: https://img.shields.io/codacy/grade/60b6b06fa06c4539b4a7b48ba30fd2bb?style=flat-square
+   :alt: codacy quality
+ <https://app.codacy.com/gh/pwwang/plkit>`_ `
+.. image:: https://img.shields.io/codacy/coverage/60b6b06fa06c4539b4a7b48ba30fd2bb?style=flat-square
+   :target: https://img.shields.io/codacy/coverage/60b6b06fa06c4539b4a7b48ba30fd2bb?style=flat-square
+   :alt: coverage
+ <https://app.codacy.com/gh/pwwang/plkit>`_ 
+.. image:: https://img.shields.io/github/workflow/status/pwwang/plkit/Build%20Docs?label=docs&style=flat-square
+   :target: https://img.shields.io/github/workflow/status/pwwang/plkit/Build%20Docs?label=docs&style=flat-square
+   :alt: docs
+ 
+.. image:: https://img.shields.io/github/workflow/status/pwwang/plkit/Build%20and%20Deploy?style=flat-square
+   :target: https://img.shields.io/github/workflow/status/pwwang/plkit/Build%20and%20Deploy?style=flat-square
+   :alt: building
+
+
 Installation
 ------------
 
 .. code-block::
 
    pip install -U plkit
+
+Principles
+----------
+
+
+* Being compatible with pytorch-lightning
+* Using configurations instead of coding if possible
+
+Features
+--------
+
+
+* Compatible with ``pytorch-lightning``
+* Exposed terminal logger
+* Better formatted warnings and errors from ``pytorch-lightning``
+* Trainer from a dictionary (not only from an ``ArgumentParser`` or a ``Namespace``\ )
+* Data module with automatic split for train, val and test datasets
+* Auto loss function and optimizer
+* Builtin measurements (using ``pytorch-lightning.metrics``\ )
+* Optuna integration
 
 Usage
 -----
@@ -19,18 +65,19 @@ From pytorch-lightning's minimal example
 
 .. code-block:: python
 
-   import os
+   """A minimal example for plkit"""
+
+   from pathlib import Path
    import torch
    from torchvision import transforms
    from torchvision.datasets import MNIST
-   from plkit import Module, Data as PkData, run
+   from plkit import Module, DataModule, run
 
-   class Data(PkData):
+   class Data(DataModule):
 
        def data_reader(self):
-           minst = MNIST(self.sources, train=True,
-                         download=True, transform=transforms.ToTensor())
-           return {'train': (minst.data, minst.targets)}
+           return MNIST(Path(__file__).parent / 'data', train=True,
+                        download=True, transform=transforms.ToTensor())
 
    class LitClassifier(Module):
 
@@ -41,184 +88,113 @@ From pytorch-lightning's minimal example
        def forward(self, x):
            return torch.relu(self.l1(x.view(x.size(0), -1).float()))
 
-       def training_step(self, batch, batch_nb):
+       def training_step(self, batch, _):
            x, y = batch
            loss = self.loss_function(self(x), y)
-           tensorboard_logs = {'train_loss': loss}
-           return {'loss': loss, 'log': tensorboard_logs}
+           return {'loss': loss}
 
    if __name__ == '__main__':
-       config = {
+       configuration = {
            'gpus': 1,
+           'data_tvt': .05, # use a small proportion for training
            'batch_size': 32,
-           'max_epochs': 10,
-           'data_sources': os.path.join(os.path.dirname(__file__), 'data'),
+           'max_epochs': 11
        }
-       run(config, Data, LitClassifier)
-
-Features
---------
+       run(configuration, Data, LitClassifier)
 
 
-* Compatible with ``pytorch-lightning``
-* Exposed terminal logger
-* Even more abstracted boilerplace (What you only need to care is your data and model)
-* Trainer from a dictionary (not only from an ``ArgumentParser`` or a ``Namespace``\ )
-* Abstraction of data manager
-* Easy hyperparameter logging
-* Running ``test`` automatically when ``test_dataloader`` is given
-* Auto loss function and optimizer
-* Builtin measurements (using ``pytorch-lightning.metrics``\ )
-* Optuna integration
+.. image:: ./mnist_minimal.png
+   :target: ./mnist_minimal.png
+   :alt: MNIST_minimal
 
-Exposed terminal logger
------------------------
+
+Using exposed logger
+^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: python
 
    from plkit import logger
 
-   # You logic
+   # Your logic
 
    if __name__ == "__main__":
+       # Now you are able to log something outside Modules
        logger.info('Fantastic starts ...')
        # ...
        logger.info('Pipeline done.')
 
-More abstracted boilerplate
----------------------------
+Best practice (Boilerplate)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You can use each objects (trainer, module, datamodule) as the way you do with ``pytorch-lightning``\ , but we suggest you use them in the following ways:
+
+Running locally
+~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
-   from plkit import Module, Data, run
+   from plkit import Module, DataModule, run
 
-   # Data manager
-   class MyData(Data):
+   class MyData(DataModule):
+       ...
 
-       def data_reader(self, sources):
-           """Read your data from sources
-           Return a list of data
-           """
-           # your logic
-
-   # Model
    class MyModel(Module):
-       # Your model definition
+       ...
 
-   if __name__ == "__main__":
+   if __name__ == '__main__':
        config = {
-           batch_size=32,
-           # other configs
+           ...
        }
-       run(config, MyModel, MyData)
+       run(config, MyData, MyModel)
 
-Trainer from a configuration dictionary
----------------------------------------
-
-Apart from ``Trainer.from_argparse_args`` to create a trainer, we also added a way to create a trainer by ``Trainer.from_dict``\ , which enables possibilities to use other argument parser packages. For example:
+Running via SGE
+~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
-   from pyparam import params
-   params.gpus = 1
-   params.gpus.desc = 'Number of GPUs to use.'
+   from plkit import Module, DataModule, SGERunner, run
 
-   config = params._parse()
+   # MyData and MyModel definitions
 
-   trainer = Trainer.from_dict(config)
-   # ...
+   if __name__ == '__main__':
+       config = {
+           ...
+       }
+       sge = SGERunner(...)
+       run(config, MyData, MyModel, runner=sge)
+       # or
+       sge.run(config, MyData, MyModel)
 
-Why not using ``**config`` to create a trainer?
-
-.. code-block:: python
-
-   trainer = Trainer(**config)
-
-This is because sometimes ``config`` will have config items other than the arguments that ``Trainer`` constructor needs, which will raise an error. ``Trainer.from_dict`` filters the items only the ``Trainer`` needs.
-
-Data manager
-------------
-
-As it showed in the above examples, you don't need to concern about ``Dataset`` and ``Dataloader`` stuff. What you only need to care about is how to read the data from the sources. ``plkit`` will take care of the ``Dataset`` and ``Dataloader`` for you.
-
-What you can fetch from ``a, b, c, ... = batch`` in ``training``\ , ``validation`` and ``test`` steps depends on what you return from ``data_reader``. For example, if you return ``(data, labels)`` from ``data_reader``\ , then you are able to fetch them by ``data, labels = batch`` in the steps.
-
-``plkit`` can also split your data into ``training``\ , ``validation`` and ``test`` parts, just by passing a ratio to `Data`: `data = Data(..., ratio=(.7, .2, .1))` (training: 70%, validation: 20%, test: 10%). Or in config: ``config = {train_val_test_ratio: (.7, .2, .1)}``
-
-If you don't specify a ratio, you will need to return dictionaries from ``data_reader`` with keys ``train``\ , ``val`` and ``test`` for the data assigned to each part.
-
-hyperparameter logging
-----------------------
+With optuna
+~~~~~~~~~~~
 
 .. code-block:: python
 
-   from plkit import Module
+   from plkit import (
+       Module,
+       DataModule,
+       Optuna,
+       OptunaSuggest,
+       LocalRunner,
+       run
+   )
 
-   # ...
-   class MyModel(Module):
-       def __init__(self, config):
-           super().__init__(config)
-           # initialization
-           # ...
-           self.hparams = {
-               # hyperparameters you want to log
-           }
+   # MyData and MyModel definitions
 
-Keep in mind that, to enable this, you have to keep the default logger. Since we switched default logger from tensorboard logger to ``HyperparamsSummaryTensorBoardLogger`` implemented in ``trainer.py`` of ``plkit``\ , whose idea was borrowed from `here <https://github.com/mRcSchwering/pytorch_lightning_test/blob/master/src/loggers.py>`_.
+   if __name__ == '__main__':
+       config = {
+           ...
+           hparam1=OptunaSuggest(<default>, <type>, *args, **kwargs),
+           hparam2=OptunaSuggest(<default>, <type>, *args, **kwargs),
+       }
+       runner = LocalRunner()
+       # requires `val_acc` to be logged in `validation_epoch_end`
+       optuna = Optuna(on='val_acc', n_trials=10, direction='maximize')
+       run(config, MyData, MyModel, runner=runner, optuna=optuna)
+       # or
+       runner.run(config, MyData, MyModel, optuna)
 
-To custom a logger, you have to subclass ``HyperparamsSummaryTensorBoardLogger``\ , or just use it:
+Resources
+---------
 
-.. code-block:: python
-
-   from plkit.trainer import HyperparamsSummaryTensorBoardLogger
-
-   trainer = Trainer(logger=HyperparamsSummaryTensorBoardLogger(...), ...)
-
-Auto loss function and optimizer
---------------------------------
-
-A loss function will be initialized according to the ``optim`` and ``loss`` configurations.
-
-``optim`` supports ``adam`` and ``sgd``\ , corresponding to ``torch.optim.Adam`` and ``torch.optim.SGD``\ , respectively. You can specify ``learning_rate`` in the configuration
-
-If ``loss`` is ``auto``\ , ``MSELoss`` will be used for ``num_classes==1`` and ``CrossEntropyLoss`` otherwise. You can also specify the loss function by ``loss=L1Loss()``.
-
-Builtin measurements
---------------------
-
-You can get some of the measurements directly now by ``self.measure(logits, labels, method, **kwargs)``\ , which calls metrics implemented in ``pytorch_lightning.metrics``.
-
-
-* For ``num_classes == 1`` (regression), ``mse``\ , ``rmse``\ , ``mae`` and ``rmsle`` are available.
-* Otherwise, ``accuracy``\ , ``precision``\ , ``recall``\ , ``f1_score`` and ``iou``.
-
-For extra ``kwargs``\ , check the `source code <https://github.com/PyTorchLightning/pytorch-lightning/tree/master/pytorch_lightning/metrics>`_ (Haven't found them documented yet).
-
-Optuna integration
-------------------
-
-.. code-block:: python
-
-   config = {
-       # default value: 512, using suggest_catigorical,
-       # choosing one of 128, 256 and 512
-       'hidden_size': OptunaSuggest(512, 'cat', [128, 256, 512]),
-       # default value: 1, using suggest_int
-       # choosing between 1 and 10
-       'seed': OptunaSuggest(1, 'int', 1, 10),
-       # other configurations
-   }
-
-The default values don't master if you are running optuna:
-
-.. code-block:: python
-
-   optuna = Optuna(on='val_loss', n_trials=100)
-   # just like plkit.run
-   optuna.run(config, Data, Model)
-
-However, those default values will be used if you want opt optuna out, and we don't need to change anything from the ``config``\ :
-
-.. code-block:: python
-
-   plkit.run(config, Data, Model)
+See more examples in ``./examples`` and `full documentation <https://pwwang.github.com/plkit>`_
