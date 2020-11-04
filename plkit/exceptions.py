@@ -6,8 +6,5 @@ class PlkitException(Exception):
 class PlkitDataException(PlkitException):
     """Something wrong when preparing data"""
 
-class PlkitMeasurementException(PlkitException):
-    """Measurement is wrong"""
-
 class PlkitConfigException(PlkitException):
     """When certain config items are missing"""

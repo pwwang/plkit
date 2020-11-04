@@ -2,26 +2,7 @@
 import torch
 from torch import nn
 from pytorch_lightning import LightningModule
-from pytorch_lightning.metrics.functional import regression, classification
-from .exceptions import PlkitMeasurementException
-from .utils import collapse_suggest_config, warning_to_logging
-
-def _check_logits_shape(logits, dim, dim_to_check=1):
-    """Check if the logits are in the right shape
-
-    Args:
-        logits (Tensor): The logits to check
-        dim (int): The expected size
-        dim_to_check (int): The dimension to check
-
-    Raises:
-        PlkitMeasurementException: when the size at dimension
-            `dim_to_check` != `dim`
-    """
-    if logits.shape[dim_to_check] != dim:
-        # checking is done in measurements
-        raise PlkitMeasurementException(f"Logits require size of {dim} at "
-                                        f"dimension {dim_to_check}")
+from .utils import collapse_suggest_config
 
 class Module(LightningModule): # pylint: disable=too-many-ancestors
     """The Module class
@@ -96,62 +77,3 @@ class Module(LightningModule): # pylint: disable=too-many-ancestors
                                    lr=self.config.get('learning_rate', 1e-3),
                                    momentum=self.config.get('momentum', .9))
         # more to support
-
-    def measure(self, logits, labels, method, **kwargs):
-        """Do some measurements with logits and labels
-
-        Args:
-            logits (Tensor): The logits from the model
-                It's usually in the shape of [batch_size x num_classes]
-            labels (Tensor): The labels of the batch
-            method (str): The method for the metric
-                For regression, supported methods are:
-                `'mse', 'rmse', 'mae', 'rmsle'`
-                For classification, supported methods are:
-                `'accuracy', 'precision', 'recall', 'f1_score', 'iou'`
-            **kwargs: Other arguments for the method.
-                See pytorhc-lightning's doc for the metrics.
-        """
-        # See: https://github.com/PyTorchLightning/pytorch-lightning/issues/2768
-        with warning_to_logging():
-            # regression
-            if self.num_classes == 1:
-                if method not in ('mse', 'rmse', 'mae', 'rmsle'):
-                    raise PlkitMeasurementException(
-                        f"Method not supported for regression: {method}"
-                    )
-
-                _check_logits_shape(logits, 1, 1)
-                return getattr(regression, method)(
-                    logits.view(-1),
-                    labels.view(-1),
-                    **kwargs
-                )
-
-            # classification
-            _check_logits_shape(logits, self.num_classes, 1)
-
-            if method in ('accuracy', 'precision',
-                          'recall', 'f1_score', 'iou'):
-                return getattr(classification, method)(
-                    logits,
-                    labels.view(-1),
-                    num_classes=self.num_classes,
-                    **kwargs
-                )
-            if method == 'fbeta_score':
-                if 'beta' not in kwargs: # pragma: no cover
-                    raise PlkitMeasurementException(
-                        'fbeta_score requires a beta keyword argument.'
-                    )
-                return classification.fbeta_score(logits, labels.view(-1),
-                                                  **kwargs)
-
-            if method in ('auroc', 'average_precision', 'dice_score'):
-                return getattr(classification, method)(
-                    logits, labels.view(-1), **kwargs
-                )
-
-            raise PlkitMeasurementException(
-                f"Method not supported for classification: {method}"
-            )

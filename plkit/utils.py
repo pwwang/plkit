@@ -164,7 +164,7 @@ def log_config(config, title='Configurations', items_per_row=1):
             try:
                 row_items.append(items[i + x][0])
                 row_items.append(repr(items[i + x][1]))
-            except IndexError:
+            except IndexError: # pragma: no cover
                 row_items.append('')
                 row_items.append('')
 

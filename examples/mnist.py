@@ -4,6 +4,7 @@ import torch
 from diot import Diot
 from torchvision import transforms
 from torchvision.datasets import MNIST
+from pytorch_lightning import metrics
 from plkit import Module, DataModule, run, logger
 
 HERE = Path(__file__).parent
@@ -22,6 +23,8 @@ class LitClassifier(Module):
         self.fc1 = torch.nn.Linear(config.input_size, config.hidden_size)
         self.relu = torch.nn.ReLU()
         self.fc2 = torch.nn.Linear(config.hidden_size, config.num_classes)
+        self.val_acc = metrics.Accuracy()
+        self.test_acc = metrics.Accuracy(compute_on_step=False)
 
     def forward(self, x):
         out = self.fc1(x.view(x.size(0), -1).float())
@@ -36,28 +39,26 @@ class LitClassifier(Module):
     def validation_step(self, batch, _):
         x, y = batch
         y_hat = self(x)
-        acc = self.measure(y_hat, y, 'accuracy')
-        return {'val_loss': torch.nn.functional.cross_entropy(y_hat, y),
-                'val_acc': acc}
+        self.val_acc(y_hat, y)
+        return {'val_loss': self.loss_function(y_hat, y),
+                'val_acc': self.val_acc}
 
     def validation_epoch_end(self, outputs):
         avg_loss = torch.stack([x['val_loss'] for x in outputs]).mean()
-        avg_acc = torch.stack([x['val_acc'] for x in outputs]).mean()
-        self.log_dict({'val_loss': avg_loss.item(),
-                       'val_acc': avg_acc.item()}, prog_bar=True, logger=True)
-        # return {'val_loss': avg_loss, 'val_acc': avg_acc}
+        avg_acc = self.val_acc.compute()
+        ret = {'val_loss': avg_loss, 'val_acc': avg_acc}
+        self.log_dict(ret, prog_bar=True)
 
     def test_step(self, batch, _):
         x, y = batch
         y_hat = self(x)
-        acc = self.measure(y_hat, y, 'accuracy')
-        return {'test_acc': acc}
+        self.test_acc(y_hat, y)
 
     def test_epoch_end(self, outputs):
-        avg_acc = torch.stack([x['test_acc'] for x in outputs]).mean()
+        test_acc = self.test_acc.compute()
         # also log it to terminal
-        logger.info('TEST AVERAGE ACCURACY: %s', avg_acc.item())
-        self.log('test_acc', avg_acc.item(), on_epoch=True)
+        logger.info('TEST AVERAGE ACCURACY: %s', test_acc)
+        self.log('test_acc', test_acc, on_epoch=True)
 
 if __name__ == '__main__':
     configuration = Diot(
