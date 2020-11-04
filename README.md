@@ -22,7 +22,6 @@ pip install -U plkit
 - Trainer from a dictionary (not only from an `ArgumentParser` or a `Namespace`)
 - Data module with automatic split for train, val and test datasets
 - Auto loss function and optimizer
-- Builtin measurements (using `pytorch-lightning.metrics`)
 - Optuna integration
 
 ## Usage
