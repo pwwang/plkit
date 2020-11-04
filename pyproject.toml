@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "plkit"
-version = "0.0.8"
+version = "0.0.9"
 description = "A wrapper for pytorch-lightning to make you write even less code"
 authors = ["pwwang <pwwang@pwwang.com>"]
 license = "MIT"

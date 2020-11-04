@@ -24,7 +24,7 @@ if os.path.exists(readme_path):
 setup(
     long_description=readme,
     name='plkit',
-    version='0.0.8',
+    version='0.0.9',
     description='A wrapper for pytorch-lightning to make you write even less code',
     python_requires='==3.*,>=3.6.0',
     project_urls={"homepage": "https://github.com/pwwang/plkit", "repository": "https://github.com/pwwang/plkit"},
