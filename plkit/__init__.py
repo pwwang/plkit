@@ -7,7 +7,7 @@ from .optuna import Optuna, OptunaSuggest
 from .runner import Runner, LocalRunner, SGERunner
 from .utils import logger
 
-__version__ = "0.0.9"
+__version__ = "0.0.10"
 
 def run(config: Dict[str, Any],
         data_class: Type[DataModule],
