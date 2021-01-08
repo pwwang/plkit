@@ -1,5 +1,6 @@
 """Optuna wrapper for plkit"""
 from diot import FrozenDiot
+from torch import Tensor
 from pytorch_lightning.callbacks import ModelCheckpoint
 import optuna
 from .trainer import Trainer
@@ -188,7 +189,9 @@ class Optuna:
         func = (max
                 if self.study.direction == optuna.study.StudyDirection.MAXIMIZE
                 else min)
-        values = [trainer[2] for trainer in self.trainers]
+        values = [trainer[2] if not isinstance(trainer[2], Tensor)
+                  else trainer[2].cpu()
+                  for trainer in self.trainers]
         number = values.index(func(values))
         trainer = self.trainers[number]
         return number, trainer[2], trainer[1]
