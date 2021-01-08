@@ -1,0 +1,1721 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.3">
+    
+    
+      
+        <title>plkit.data - plkit</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.3b61ea93.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.39b8e14a.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.1/css/all.css">
+    
+      <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css">
+    
+      <link rel="stylesheet" href="../../css/mkapi-common.css">
+    
+      <link rel="stylesheet" href="../../style.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#plkitdata" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="../.." title="plkit" class="md-header-nav__button md-logo" aria-label="plkit">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      <div class="md-header-nav__ellipsis">
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
+            plkit
+          </span>
+        </div>
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
+            
+              plkit.data
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="plkit" class="md-nav__button md-logo" aria-label="plkit">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    plkit
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../.." class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../configurations/" class="md-nav__link">
+      Configurations
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../datamodule/" class="md-nav__link">
+      DataModule
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../module/" class="md-nav__link">
+      Module
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../trainer/" class="md-nav__link">
+      Trainer
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../runner/" class="md-nav__link">
+      Runner
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../optuna/" class="md-nav__link">
+      Optuna integration
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  
+
+
+  
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8" checked>
+    
+    <label class="md-nav__link" for="nav-8">
+      API
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="API" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        <span class="md-nav__icon md-icon"></span>
+        API
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  
+
+
+  
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8-1" type="checkbox" id="nav-8-1" checked>
+    
+    <label class="md-nav__link" for="nav-8-1">
+      plkit
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="plkit" data-md-level="2">
+      <label class="md-nav__title" for="nav-8-1">
+        <span class="md-nav__icon md-icon"></span>
+        plkit
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../plkit/" class="md-nav__link">
+      plkit
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../plkit.trainer/" class="md-nav__link">
+      plkit.trainer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../plkit.runner/" class="md-nav__link">
+      plkit.runner
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../plkit.exceptions/" class="md-nav__link">
+      plkit.exceptions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../plkit.module/" class="md-nav__link">
+      plkit.module
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        plkit.data
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
+      plkit.data
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#plkitdata" class="md-nav__link">
+    data
+  </a>
+  
+    <nav class="md-nav" aria-label="data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#plkitdatadataset" class="md-nav__link">
+    Dataset
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plkitdataiterdataset" class="md-nav__link">
+    IterDataset
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plkitdatadatamodule" class="md-nav__link">
+    DataModule
+  </a>
+  
+    <nav class="md-nav" aria-label="DataModule">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_lightningcorehookscheckpointhookson_load_checkpoint" class="md-nav__link">
+    on_load_checkpoint
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_lightningcorehookscheckpointhookson_save_checkpoint" class="md-nav__link">
+    on_save_checkpoint
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_lightningcoredatamodule_datamodulewrapper" class="md-nav__link">
+    _DataModuleWrapper
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_lightningcoredatamodulelightningdatamodulesize" class="md-nav__link">
+    size
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_lightningcoredatamodulelightningdatamoduletransfer_batch_to_device" class="md-nav__link">
+    transfer_batch_to_device
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_lightningcoredatamodulelightningdatamoduleadd_argparse_args" class="md-nav__link">
+    add_argparse_args
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_lightningcoredatamodulelightningdatamodulefrom_argparse_args" class="md-nav__link">
+    from_argparse_args
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_lightningcoredatamodulelightningdatamoduleget_init_arguments_and_types" class="md-nav__link">
+    get_init_arguments_and_types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plkitdatadatamoduledata_reader" class="md-nav__link">
+    data_reader
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plkitdatadatamoduledata_splits" class="md-nav__link">
+    data_splits
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plkitdatadatamoduleprepare_data" class="md-nav__link">
+    prepare_data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plkitdatadatamodulesetup" class="md-nav__link">
+    setup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plkitdatadatamoduletrain_dataloader" class="md-nav__link">
+    train_dataloader
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plkitdatadatamoduleval_dataloader" class="md-nav__link">
+    val_dataloader
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plkitdatadatamoduletest_dataloader" class="md-nav__link">
+    test_dataloader
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../plkit.optuna/" class="md-nav__link">
+      plkit.optuna
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../plkit.utils/" class="md-nav__link">
+      plkit.utils
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#plkitdata" class="md-nav__link">
+    data
+  </a>
+  
+    <nav class="md-nav" aria-label="data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#plkitdatadataset" class="md-nav__link">
+    Dataset
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plkitdataiterdataset" class="md-nav__link">
+    IterDataset
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plkitdatadatamodule" class="md-nav__link">
+    DataModule
+  </a>
+  
+    <nav class="md-nav" aria-label="DataModule">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_lightningcorehookscheckpointhookson_load_checkpoint" class="md-nav__link">
+    on_load_checkpoint
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_lightningcorehookscheckpointhookson_save_checkpoint" class="md-nav__link">
+    on_save_checkpoint
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_lightningcoredatamodule_datamodulewrapper" class="md-nav__link">
+    _DataModuleWrapper
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_lightningcoredatamodulelightningdatamodulesize" class="md-nav__link">
+    size
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_lightningcoredatamodulelightningdatamoduletransfer_batch_to_device" class="md-nav__link">
+    transfer_batch_to_device
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_lightningcoredatamodulelightningdatamoduleadd_argparse_args" class="md-nav__link">
+    add_argparse_args
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_lightningcoredatamodulelightningdatamodulefrom_argparse_args" class="md-nav__link">
+    from_argparse_args
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch_lightningcoredatamodulelightningdatamoduleget_init_arguments_and_types" class="md-nav__link">
+    get_init_arguments_and_types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plkitdatadatamoduledata_reader" class="md-nav__link">
+    data_reader
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plkitdatadatamoduledata_splits" class="md-nav__link">
+    data_splits
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plkitdatadatamoduleprepare_data" class="md-nav__link">
+    prepare_data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plkitdatadatamodulesetup" class="md-nav__link">
+    setup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plkitdatadatamoduletrain_dataloader" class="md-nav__link">
+    train_dataloader
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plkitdatadatamoduleval_dataloader" class="md-nav__link">
+    val_dataloader
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plkitdatadatamoduletest_dataloader" class="md-nav__link">
+    test_dataloader
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  <h1>plkit.data</h1>
+                
+                <div class="mkapi-node" id="plkit.data">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object module plain top">
+    <div class="mkapi-object-kind module top">module</div>
+    <h2 id="plkitdata" class="mkapi-object-body module top"><span class="mkapi-object-prefix"><a href="../plkit/#plkit">plkit</a>.</span><span class="mkapi-object-name">data</span></h2>
+  </div>
+  <div class="mkapi-src-link">
+    <a class="mkapi-src-link" href="../source/plkit.data/#plkit.data" title="Source for plkit.data">&lt;/&gt;</a>
+  </div>
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Data module for plkit</p></div>
+    </div>
+  <div class="mkapi-section classes">
+      <div class="mkapi-section-name classes">
+          <span class="mkapi-section-name-body classes">Classes</span> 
+        </div>
+      <div class="mkapi-section-body classes"><ul class="mkapi-items">
+<li class="class"><code class="mkapi-item-name"><a href="#plkit.data.Dataset">Dataset</a></code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">The dataset that used internally by Data class<a class="mkapi-src-link" href="../source/plkit.data/#plkit.data.Dataset" title="Source for plkit.data.Dataset">&lt;/&gt;</a></span></li>
+
+<li class="class"><code class="mkapi-item-name"><a href="#plkit.data.IterDataset">IterDataset</a></code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Iterable dataset<a class="mkapi-src-link" href="../source/plkit.data/#plkit.data.IterDataset" title="Source for plkit.data.IterDataset">&lt;/&gt;</a></span></li>
+
+<li class="class"><code class="mkapi-item-name"><a href="#plkit.data.DataModule">DataModule</a></code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Data module for plkit<a class="mkapi-src-link" href="../source/plkit.data/#plkit.data.DataModule" title="Source for plkit.data.DataModule">&lt;/&gt;</a></span></li>
+
+
+</ul></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="mkapi-node" id="plkit.data.Dataset">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object class code top">
+    <div class="mkapi-object-kind class top">class</div>
+    <h3 id="plkitdatadataset" class="mkapi-object-body class top"><code class="mkapi-object-prefix"><a href="#plkit.data">plkit.data</a>.</code><code class="mkapi-object-name">Dataset</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">data</code>, <code class="mkapi-object-signature">ids=None</code><code class="mkapi-object-parenthesis">)</code></h3>
+  </div>
+  <div class="mkapi-src-link">
+    <a class="mkapi-src-link" href="../source/plkit.data/#plkit.data.Dataset" title="Source for plkit.data.Dataset">&lt;/&gt;</a>
+  </div>
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section bases">
+      <div class="mkapi-section-name bases">
+          <span class="mkapi-section-name-body bases">Bases</span> 
+        </div>
+      <div class="mkapi-section-body bases">
+<span class="mkapi-base">torch.utils.data.dataset.Dataset</span>
+</div>
+    </div>
+  <div class="mkapi-section">
+      <div class="mkapi-section-body"><p>The dataset that used internally by Data class</p></div>
+    </div>
+  <div class="mkapi-section examples">
+      <div class="mkapi-section-name examples">
+          <span class="mkapi-section-name-body examples">Examples</span> 
+        </div>
+      <div class="mkapi-section-body examples"><div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">ds</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">[(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">)],</span> <span class="n">ids</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">ds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">ds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># The features are what you get by</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># x, y = batch</span>
+</code></pre></div></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">data</code>
+<span class="mkapi-item-type">(iterable of tuple)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">The data for the dataset.
+It could be a tuple of features. Each one should be an iterable,
+which could be accessed by index</span></li>
+
+<li><code class="mkapi-item-name">ids</code>
+<span class="mkapi-item-type">(list of int, optional)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">The ids or keys of the data, which should be in the same order
+of each feature in the iterable.</span></li>
+
+
+</ul></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="mkapi-node" id="plkit.data.IterDataset">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object class code top">
+    <div class="mkapi-object-kind class top">class</div>
+    <h3 id="plkitdataiterdataset" class="mkapi-object-body class top"><code class="mkapi-object-prefix"><a href="#plkit.data">plkit.data</a>.</code><code class="mkapi-object-name">IterDataset</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">data</code>, <code class="mkapi-object-signature">length</code><code class="mkapi-object-parenthesis">)</code></h3>
+  </div>
+  <div class="mkapi-src-link">
+    <a class="mkapi-src-link" href="../source/plkit.data/#plkit.data.IterDataset" title="Source for plkit.data.IterDataset">&lt;/&gt;</a>
+  </div>
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section bases">
+      <div class="mkapi-section-name bases">
+          <span class="mkapi-section-name-body bases">Bases</span> 
+        </div>
+      <div class="mkapi-section-body bases">
+<span class="mkapi-base">torch.utils.data.dataset.IterableDataset</span>
+
+<span class="mkapi-base">torch.utils.data.dataset.Dataset</span>
+</div>
+    </div>
+  <div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Iterable dataset</p>
+<p>The iterable dataset where each feature of the data is an iterable</p></div>
+    </div>
+  <div class="mkapi-section examples">
+      <div class="mkapi-section-name examples">
+          <span class="mkapi-section-name-body examples">Examples</span> 
+        </div>
+      <div class="mkapi-section-body examples"><div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">feat1</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">feat2</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">ds</span> <span class="o">=</span> <span class="n">IterDataset</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">feat1</span><span class="p">,</span> <span class="n">feat2</span><span class="p">),</span> <span class="n">ids</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</code></pre></div></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">data</code>
+<span class="mkapi-item-type">(iterable of tuple)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">a tuple of iterable features</span></li>
+
+<li><code class="mkapi-item-name">length</code>
+<span class="mkapi-item-type">(int)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">The length of the iterables</span></li>
+
+
+</ul></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="mkapi-node" id="plkit.data.DataModule">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object class code top">
+    <div class="mkapi-object-kind class top">class</div>
+    <h3 id="plkitdatadatamodule" class="mkapi-object-body class top"><code class="mkapi-object-prefix"><a href="#plkit.data">plkit.data</a>.</code><code class="mkapi-object-name">DataModule</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">*args</code>, <code class="mkapi-object-signature">**kwargs</code><code class="mkapi-object-parenthesis">)</code></h3>
+  </div>
+  <div class="mkapi-src-link">
+    <a class="mkapi-src-link" href="../source/plkit.data/#plkit.data.DataModule" title="Source for plkit.data.DataModule">&lt;/&gt;</a>
+  </div>
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section bases">
+      <div class="mkapi-section-name bases">
+          <span class="mkapi-section-name-body bases">Bases</span> 
+        </div>
+      <div class="mkapi-section-body bases">
+<span class="mkapi-base">pytorch_lightning.core.datamodule.LightningDataModule</span>
+
+<span class="mkapi-base">pytorch_lightning.core.hooks.DataHooks</span>
+
+<span class="mkapi-base">pytorch_lightning.core.hooks.CheckpointHooks</span>
+</div>
+    </div>
+  <div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Data module for plkit</p></div>
+    </div>
+  <div class="mkapi-section attributes">
+      <div class="mkapi-section-name attributes">
+          <span class="mkapi-section-name-body attributes">Attributes</span> 
+        </div>
+      <div class="mkapi-section-body attributes"><ul class="mkapi-items">
+
+
+
+<li class="readwrite-property"><code class="mkapi-item-name">dims</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">A tuple describing the shape of your data. Extra functionality exposed in <code>size</code>.<span id="pytorch_lightning.core.datamodule.LightningDataModule.dims"></span><a class="mkapi-src-link" href="../source/pytorch_lightning.core.datamodule/#pytorch_lightning.core.datamodule.LightningDataModule.dims" title="Source for pytorch_lightning.core.datamodule.LightningDataModule.dims">&lt;/&gt;</a></span></li>
+
+<li class="readonly-property"><code class="mkapi-item-name">has_prepared_data</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Return bool letting you know if datamodule.prepare_data() has been called or not.<span id="pytorch_lightning.core.datamodule.LightningDataModule.has_prepared_data"></span><a class="mkapi-src-link" href="../source/pytorch_lightning.core.datamodule/#pytorch_lightning.core.datamodule.LightningDataModule.has_prepared_data" title="Source for pytorch_lightning.core.datamodule.LightningDataModule.has_prepared_data">&lt;/&gt;</a></span></li>
+
+<li class="readonly-property"><code class="mkapi-item-name">has_setup_fit</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Return bool letting you know if datamodule.setup('fit') has been called or not.<span id="pytorch_lightning.core.datamodule.LightningDataModule.has_setup_fit"></span><a class="mkapi-src-link" href="../source/pytorch_lightning.core.datamodule/#pytorch_lightning.core.datamodule.LightningDataModule.has_setup_fit" title="Source for pytorch_lightning.core.datamodule.LightningDataModule.has_setup_fit">&lt;/&gt;</a></span></li>
+
+<li class="readonly-property"><code class="mkapi-item-name">has_setup_test</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Return bool letting you know if datamodule.setup('test') has been called or not.<span id="pytorch_lightning.core.datamodule.LightningDataModule.has_setup_test"></span><a class="mkapi-src-link" href="../source/pytorch_lightning.core.datamodule/#pytorch_lightning.core.datamodule.LightningDataModule.has_setup_test" title="Source for pytorch_lightning.core.datamodule.LightningDataModule.has_setup_test">&lt;/&gt;</a></span></li>
+
+<li class="readonly-property"><code class="mkapi-item-name">length</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">The length of the data<br>
+This is required when <code>self.data_reader()</code> yields (it is a generator)<span id="plkit.data.DataModule.length"></span><a class="mkapi-src-link" href="../source/plkit.data/#plkit.data.DataModule.length" title="Source for plkit.data.DataModule.length">&lt;/&gt;</a></span></li>
+
+
+
+<li class="readwrite-property"><code class="mkapi-item-name">test_transforms</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Optional transforms (or collection of transforms) you can apply to test dataset<span id="pytorch_lightning.core.datamodule.LightningDataModule.test_transforms"></span><a class="mkapi-src-link" href="../source/pytorch_lightning.core.datamodule/#pytorch_lightning.core.datamodule.LightningDataModule.test_transforms" title="Source for pytorch_lightning.core.datamodule.LightningDataModule.test_transforms">&lt;/&gt;</a></span></li>
+
+<li class="readwrite-property"><code class="mkapi-item-name">train_transforms</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Optional transforms (or collection of transforms) you can apply to train dataset<span id="pytorch_lightning.core.datamodule.LightningDataModule.train_transforms"></span><a class="mkapi-src-link" href="../source/pytorch_lightning.core.datamodule/#pytorch_lightning.core.datamodule.LightningDataModule.train_transforms" title="Source for pytorch_lightning.core.datamodule.LightningDataModule.train_transforms">&lt;/&gt;</a></span></li>
+
+
+<li class="readwrite-property"><code class="mkapi-item-name">val_transforms</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Optional transforms (or collection of transforms) you can apply to validation dataset<span id="pytorch_lightning.core.datamodule.LightningDataModule.val_transforms"></span><a class="mkapi-src-link" href="../source/pytorch_lightning.core.datamodule/#pytorch_lightning.core.datamodule.LightningDataModule.val_transforms" title="Source for pytorch_lightning.core.datamodule.LightningDataModule.val_transforms">&lt;/&gt;</a></span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section classes">
+      <div class="mkapi-section-name classes">
+          <span class="mkapi-section-name-body classes">Classes</span> 
+        </div>
+      <div class="mkapi-section-body classes"><ul class="mkapi-items">
+<li class="class"><code class="mkapi-item-name"><a href="#pytorch_lightning.core.datamodule._DataModuleWrapper">_DataModuleWrapper</a></code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">type(object_or_name, bases, dict)
+type(object) -&gt; the object's type
+type(name, bases, dict) -&gt; a new type<a class="mkapi-src-link" href="../source/pytorch_lightning.core.datamodule/#pytorch_lightning.core.datamodule._DataModuleWrapper" title="Source for pytorch_lightning.core.datamodule._DataModuleWrapper">&lt;/&gt;</a></span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section methods">
+      <div class="mkapi-section-name methods">
+          <span class="mkapi-section-name-body methods">Methods</span> 
+        </div>
+      <div class="mkapi-section-body methods"><ul class="mkapi-items">
+<li class="classmethod"><code class="mkapi-item-name"><a href="#pytorch_lightning.core.datamodule.LightningDataModule.add_argparse_args">add_argparse_args</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">parent_parser</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(ArgumentParser)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Extends existing argparse by default <code>LightningDataModule</code> attributes.<a class="mkapi-src-link" href="../source/pytorch_lightning.core.datamodule/#pytorch_lightning.core.datamodule.LightningDataModule.add_argparse_args" title="Source for pytorch_lightning.core.datamodule.LightningDataModule.add_argparse_args">&lt;/&gt;</a></span></li>
+
+<li class="method"><code class="mkapi-item-name"><a href="#plkit.data.DataModule.data_reader">data_reader</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(Union(iterable of any, (iterator of any)))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Read the data<a class="mkapi-src-link" href="../source/plkit.data/#plkit.data.DataModule.data_reader" title="Source for plkit.data.DataModule.data_reader">&lt;/&gt;</a></span></li>
+
+<li class="method"><code class="mkapi-item-name"><a href="#plkit.data.DataModule.data_splits">data_splits</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">data</code>, <code class="mkapi-object-signature">stage</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(dict(str: Union(dataset, iterabledataset, list of dataset or iterabledataset)))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Split data from data_source for each dataloader<a class="mkapi-src-link" href="../source/plkit.data/#plkit.data.DataModule.data_splits" title="Source for plkit.data.DataModule.data_splits">&lt;/&gt;</a></span></li>
+
+<li class="classmethod"><code class="mkapi-item-name"><a href="#pytorch_lightning.core.datamodule.LightningDataModule.from_argparse_args">from_argparse_args</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">args</code>, <code class="mkapi-object-signature">**kwargs</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Create an instance from CLI arguments.<a class="mkapi-src-link" href="../source/pytorch_lightning.core.datamodule/#pytorch_lightning.core.datamodule.LightningDataModule.from_argparse_args" title="Source for pytorch_lightning.core.datamodule.LightningDataModule.from_argparse_args">&lt;/&gt;</a></span></li>
+
+<li class="classmethod"><code class="mkapi-item-name"><a href="#pytorch_lightning.core.datamodule.LightningDataModule.get_init_arguments_and_types">get_init_arguments_and_types</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(List with tuples of 3 values)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Scans the DataModule signature and returns argument names, types and default values.<a class="mkapi-src-link" href="../source/pytorch_lightning.core.datamodule/#pytorch_lightning.core.datamodule.LightningDataModule.get_init_arguments_and_types" title="Source for pytorch_lightning.core.datamodule.LightningDataModule.get_init_arguments_and_types">&lt;/&gt;</a></span></li>
+
+<li class="method"><code class="mkapi-item-name"><a href="#pytorch_lightning.core.hooks.CheckpointHooks.on_load_checkpoint">on_load_checkpoint</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">checkpoint</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Called by Lightning to restore your model.
+If you saved something with :meth:<code>on_save_checkpoint</code> this is your chance to restore this.<a class="mkapi-src-link" href="../source/pytorch_lightning.core.hooks/#pytorch_lightning.core.hooks.CheckpointHooks.on_load_checkpoint" title="Source for pytorch_lightning.core.hooks.CheckpointHooks.on_load_checkpoint">&lt;/&gt;</a></span></li>
+
+<li class="method"><code class="mkapi-item-name"><a href="#pytorch_lightning.core.hooks.CheckpointHooks.on_save_checkpoint">on_save_checkpoint</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">checkpoint</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Called by Lightning when saving a checkpoint to give you a chance to store anything
+else you might want to save.<a class="mkapi-src-link" href="../source/pytorch_lightning.core.hooks/#pytorch_lightning.core.hooks.CheckpointHooks.on_save_checkpoint" title="Source for pytorch_lightning.core.hooks.CheckpointHooks.on_save_checkpoint">&lt;/&gt;</a></span></li>
+
+<li class="method"><code class="mkapi-item-name"><a href="#plkit.data.DataModule.prepare_data">prepare_data</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">*args</code>, <code class="mkapi-object-signature">**kwargs</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Prepare data<a class="mkapi-src-link" href="../source/plkit.data/#plkit.data.DataModule.prepare_data" title="Source for plkit.data.DataModule.prepare_data">&lt;/&gt;</a></span></li>
+
+<li class="method"><code class="mkapi-item-name"><a href="#plkit.data.DataModule.setup">setup</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">stage</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Setup data<a class="mkapi-src-link" href="../source/plkit.data/#plkit.data.DataModule.setup" title="Source for plkit.data.DataModule.setup">&lt;/&gt;</a></span></li>
+
+<li class="method"><code class="mkapi-item-name"><a href="#pytorch_lightning.core.datamodule.LightningDataModule.size">size</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">dim</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(tuple or int)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Return the dimension of each input either as a tuple or list of tuples. You can index this
+just as you would with a torch tensor.<a class="mkapi-src-link" href="../source/pytorch_lightning.core.datamodule/#pytorch_lightning.core.datamodule.LightningDataModule.size" title="Source for pytorch_lightning.core.datamodule.LightningDataModule.size">&lt;/&gt;</a></span></li>
+
+<li class="method"><code class="mkapi-item-name"><a href="#plkit.data.DataModule.test_dataloader">test_dataloader</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">*args</code>, <code class="mkapi-object-signature">**kwargs</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(Union(dataloader, list of dataloader))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Test data loaders<a class="mkapi-src-link" href="../source/plkit.data/#plkit.data.DataModule.test_dataloader" title="Source for plkit.data.DataModule.test_dataloader">&lt;/&gt;</a></span></li>
+
+<li class="method"><code class="mkapi-item-name"><a href="#plkit.data.DataModule.train_dataloader">train_dataloader</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">*args</code>, <code class="mkapi-object-signature">**kwargs</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(DataLoader)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Train data loaders<a class="mkapi-src-link" href="../source/plkit.data/#plkit.data.DataModule.train_dataloader" title="Source for plkit.data.DataModule.train_dataloader">&lt;/&gt;</a></span></li>
+
+<li class="abstract-method"><code class="mkapi-item-name"><a href="#pytorch_lightning.core.datamodule.LightningDataModule.transfer_batch_to_device">transfer_batch_to_device</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">batch</code>, <code class="mkapi-object-signature">device</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(any)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Override this hook if your :class:<code>~torch.utils.data.DataLoader</code> returns tensors
+wrapped in a custom data structure.<a class="mkapi-src-link" href="../source/pytorch_lightning.core.datamodule/#pytorch_lightning.core.datamodule.LightningDataModule.transfer_batch_to_device" title="Source for pytorch_lightning.core.datamodule.LightningDataModule.transfer_batch_to_device">&lt;/&gt;</a></span></li>
+
+<li class="method"><code class="mkapi-item-name"><a href="#plkit.data.DataModule.val_dataloader">val_dataloader</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">*args</code>, <code class="mkapi-object-signature">**kwargs</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(Union(dataloader, list of dataloader))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Validation data loaders<a class="mkapi-src-link" href="../source/plkit.data/#plkit.data.DataModule.val_dataloader" title="Source for plkit.data.DataModule.val_dataloader">&lt;/&gt;</a></span></li>
+
+
+</ul></div>
+    </div>
+  </div>
+
+  <div class="mkapi-members">
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="pytorch_lightning.core.hooks.CheckpointHooks.on_load_checkpoint">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <h4 id="pytorch_lightningcorehookscheckpointhookson_load_checkpoint" class="mkapi-object-body method"><code class="mkapi-object-name">on_load_checkpoint</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">checkpoint</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  <div class="mkapi-src-link">
+    <a class="mkapi-src-link" href="../source/pytorch_lightning.core.hooks/#pytorch_lightning.core.hooks.CheckpointHooks.on_load_checkpoint" title="Source for pytorch_lightning.core.hooks.CheckpointHooks.on_load_checkpoint">&lt;/&gt;</a>
+  </div>
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Called by Lightning to restore your model.
+If you saved something with :meth:<code>on_save_checkpoint</code> this is your chance to restore this.</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">checkpoint</code>
+<span class="mkapi-item-type">(dict(str: any))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Loaded checkpoint</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section example">
+      <div class="mkapi-section-name example">
+          <span class="mkapi-section-name-body example">Example</span> 
+        </div>
+      <div class="mkapi-section-body example"><p>.. code-block:: python</p>
+<pre><code>def on_load_checkpoint(self, checkpoint):
+    # 99% of the time you don't need to implement this method
+    self.something_cool_i_want_to_save = checkpoint['something_cool_i_want_to_save']
+</code></pre></div>
+    </div>
+  <div class="mkapi-section">
+      <div class="mkapi-section-body"><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Lightning auto-restores global step, epoch, and train state including amp scaling.
+There is no need for you to restore anything regarding training.</p>
+</div></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="pytorch_lightning.core.hooks.CheckpointHooks.on_save_checkpoint">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <h4 id="pytorch_lightningcorehookscheckpointhookson_save_checkpoint" class="mkapi-object-body method"><code class="mkapi-object-name">on_save_checkpoint</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">checkpoint</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  <div class="mkapi-src-link">
+    <a class="mkapi-src-link" href="../source/pytorch_lightning.core.hooks/#pytorch_lightning.core.hooks.CheckpointHooks.on_save_checkpoint" title="Source for pytorch_lightning.core.hooks.CheckpointHooks.on_save_checkpoint">&lt;/&gt;</a>
+  </div>
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Called by Lightning when saving a checkpoint to give you a chance to store anything
+else you might want to save.</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">checkpoint</code>
+<span class="mkapi-item-type">(dict(str: any))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Checkpoint to be saved</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section example">
+      <div class="mkapi-section-name example">
+          <span class="mkapi-section-name-body example">Example</span> 
+        </div>
+      <div class="mkapi-section-body example"><p>.. code-block:: python</p>
+<pre><code>def on_save_checkpoint(self, checkpoint):
+    # 99% of use cases you don't need to implement this method
+    checkpoint['something_cool_i_want_to_save'] = my_cool_pickable_object
+</code></pre></div>
+    </div>
+  <div class="mkapi-section">
+      <div class="mkapi-section-body"><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Lightning saves all aspects of training (epoch, global step, etc...)
+including amp scaling.
+There is no need for you to store anything about training.</p>
+</div></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="pytorch_lightning.core.datamodule._DataModuleWrapper">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object class code top">
+    <div class="mkapi-object-kind class top">class</div>
+    <h4 id="pytorch_lightningcoredatamodule_datamodulewrapper" class="mkapi-object-body class top"><code class="mkapi-object-prefix">pytorch_lightning.core.datamodule.</code><code class="mkapi-object-name">_DataModuleWrapper</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">*args</code>, <code class="mkapi-object-signature">**kwargs</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  <div class="mkapi-src-link">
+    <a class="mkapi-src-link" href="../source/pytorch_lightning.core.datamodule/#pytorch_lightning.core.datamodule._DataModuleWrapper" title="Source for pytorch_lightning.core.datamodule._DataModuleWrapper">&lt;/&gt;</a>
+  </div>
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>type(object_or_name, bases, dict)
+type(object) -&gt; the object's type
+type(name, bases, dict) -&gt; a new type</p></div>
+    </div>
+  <div class="mkapi-section methods">
+      <div class="mkapi-section-name methods">
+          <span class="mkapi-section-name-body methods">Methods</span> 
+        </div>
+      <div class="mkapi-section-body methods"><ul class="mkapi-items">
+<li class="staticmethod"><code class="mkapi-item-name"><a href="#pytorch_lightning.core.datamodule._DataModuleWrapper.__call__">__call__</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">cls</code>, <code class="mkapi-object-signature">*args</code>, <code class="mkapi-object-signature">**kwargs</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">A wrapper for LightningDataModule that:<a class="mkapi-src-link" href="../source/pytorch_lightning.core.datamodule/#pytorch_lightning.core.datamodule._DataModuleWrapper.__call__" title="Source for pytorch_lightning.core.datamodule._DataModuleWrapper.__call__">&lt;/&gt;</a></span></li>
+
+
+</ul></div>
+    </div>
+  </div>
+
+  <div class="mkapi-members">
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="pytorch_lightning.core.datamodule._DataModuleWrapper.__call__">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object staticmethod code">
+    <div class="mkapi-object-kind staticmethod">staticmethod</div>
+    <div class="mkapi-object-body staticmethod"><code class="mkapi-object-name">__call__</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">cls</code>, <code class="mkapi-object-signature">*args</code>, <code class="mkapi-object-signature">**kwargs</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  <div class="mkapi-src-link">
+    <a class="mkapi-src-link" href="../source/pytorch_lightning.core.datamodule/#pytorch_lightning.core.datamodule._DataModuleWrapper.__call__" title="Source for pytorch_lightning.core.datamodule._DataModuleWrapper.__call__">&lt;/&gt;</a>
+  </div>
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>A wrapper for LightningDataModule that:</p>
+<ol>
+<li>Runs user defined subclass's <strong>init</strong></li>
+<li>Assures prepare_data() runs on rank 0</li>
+<li>Lets you check prepare_data and setup to see if they've been called</li>
+</ol></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="pytorch_lightning.core.datamodule.LightningDataModule.size">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <h4 id="pytorch_lightningcoredatamodulelightningdatamodulesize" class="mkapi-object-body method"><code class="mkapi-object-name">size</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">dim=None</code><code class="mkapi-object-parenthesis">)</code><span class="mkapi-item-type"> &#x2192; tuple or int</span></h4>
+  </div>
+  <div class="mkapi-src-link">
+    <a class="mkapi-src-link" href="../source/pytorch_lightning.core.datamodule/#pytorch_lightning.core.datamodule.LightningDataModule.size" title="Source for pytorch_lightning.core.datamodule.LightningDataModule.size">&lt;/&gt;</a>
+  </div>
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Return the dimension of each input either as a tuple or list of tuples. You can index this
+just as you would with a torch tensor.</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="pytorch_lightning.core.datamodule.LightningDataModule.transfer_batch_to_device">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object abstract-method code">
+    <div class="mkapi-object-kind abstract-method">abstract method</div>
+    <h4 id="pytorch_lightningcoredatamodulelightningdatamoduletransfer_batch_to_device" class="mkapi-object-body abstract-method"><code class="mkapi-object-name">transfer_batch_to_device</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">batch</code>, <code class="mkapi-object-signature">device</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  <div class="mkapi-src-link">
+    <a class="mkapi-src-link" href="../source/pytorch_lightning.core.datamodule/#pytorch_lightning.core.datamodule.LightningDataModule.transfer_batch_to_device" title="Source for pytorch_lightning.core.datamodule.LightningDataModule.transfer_batch_to_device">&lt;/&gt;</a>
+  </div>
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Override this hook if your :class:<code>~torch.utils.data.DataLoader</code> returns tensors
+wrapped in a custom data structure.</p>
+<p>The data types listed below (and any arbitrary nesting of them) are supported out of the box:</p>
+<ul>
+<li>:class:<code>torch.Tensor</code> or anything that implements <code>.to(...)</code></li>
+<li>:class:<code>list</code></li>
+<li>:class:<code>dict</code></li>
+<li>:class:<code>tuple</code></li>
+<li>:class:<code>torchtext.data.batch.Batch</code></li>
+</ul>
+<p>For anything else, you need to define how the data is moved to the target device (CPU, GPU, TPU, ...).</p>
+<p>Example::</p>
+<pre><code>def transfer_batch_to_device(self, batch, device)
+    if isinstance(batch, CustomBatch):
+        # move all tensors in your custom data structure to the device
+        batch.samples = batch.samples.to(device)
+        batch.targets = batch.targets.to(device)
+    else:
+        batch = super().transfer_batch_to_device(data, device)
+    return batch
+</code></pre></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">batch</code>
+<span class="mkapi-item-type">(any)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">A batch of data that needs to be transferred to a new device.</span></li>
+
+<li><code class="mkapi-item-name">device</code>
+<span class="mkapi-item-type">(device)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">The target device as defined in PyTorch.</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> <span class="mkapi-item-type">(any)</span>
+        </div>
+      <div class="mkapi-section-body returns"><p>A reference to the data on the new device.</p></div>
+    </div>
+  <div class="mkapi-section">
+      <div class="mkapi-section-body"><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This hook should only transfer the data and not modify it, nor should it move the data to
+any other device than the one passed in as argument (unless you know what you are doing).</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This hook only runs on single GPU training (no data-parallel). If you need multi-GPU support
+for your custom batch objects, you need to define your custom
+:class:<code>~torch.nn.parallel.DistributedDataParallel</code> or
+:class:<code>~pytorch_lightning.overrides.data_parallel.LightningDistributedDataParallel</code> and
+override :meth:<code>~pytorch_lightning.core.lightning.LightningModule.configure_ddp</code>.</p>
+</div></div>
+    </div>
+  <div class="mkapi-section see-also">
+      <div class="mkapi-section-name see-also">
+          <span class="mkapi-section-name-body see-also">See Also</span> 
+        </div>
+      <div class="mkapi-section-body see-also"><ul>
+<li>:func:<code>~pytorch_lightning.utilities.apply_func.move_data_to_device</code></li>
+<li>:func:<code>~pytorch_lightning.utilities.apply_func.apply_to_collection</code></li>
+</ul></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="pytorch_lightning.core.datamodule.LightningDataModule.add_argparse_args">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object classmethod code">
+    <div class="mkapi-object-kind classmethod">classmethod</div>
+    <h4 id="pytorch_lightningcoredatamodulelightningdatamoduleadd_argparse_args" class="mkapi-object-body classmethod"><code class="mkapi-object-name">add_argparse_args</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">parent_parser</code><code class="mkapi-object-parenthesis">)</code><span class="mkapi-item-type"> &#x2192; ArgumentParser</span></h4>
+  </div>
+  <div class="mkapi-src-link">
+    <a class="mkapi-src-link" href="../source/pytorch_lightning.core.datamodule/#pytorch_lightning.core.datamodule.LightningDataModule.add_argparse_args" title="Source for pytorch_lightning.core.datamodule.LightningDataModule.add_argparse_args">&lt;/&gt;</a>
+  </div>
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Extends existing argparse by default <code>LightningDataModule</code> attributes.</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="pytorch_lightning.core.datamodule.LightningDataModule.from_argparse_args">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object classmethod code">
+    <div class="mkapi-object-kind classmethod">classmethod</div>
+    <h4 id="pytorch_lightningcoredatamodulelightningdatamodulefrom_argparse_args" class="mkapi-object-body classmethod"><code class="mkapi-object-name">from_argparse_args</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">args</code>, <code class="mkapi-object-signature">**kwargs</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  <div class="mkapi-src-link">
+    <a class="mkapi-src-link" href="../source/pytorch_lightning.core.datamodule/#pytorch_lightning.core.datamodule.LightningDataModule.from_argparse_args" title="Source for pytorch_lightning.core.datamodule.LightningDataModule.from_argparse_args">&lt;/&gt;</a>
+  </div>
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Create an instance from CLI arguments.</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">args</code>
+<span class="mkapi-item-type">(Namespace or ArgumentParser)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">The parser or namespace to take arguments from. Only known arguments will be
+parsed and passed to the :class:<code>LightningDataModule</code>.</span></li>
+
+<li><code class="mkapi-item-name">**kwargs</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Additional keyword arguments that may override ones in the parser or namespace.
+These must be valid DataModule arguments.</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Example::</p>
+<pre><code>parser = ArgumentParser(add_help=False)
+parser = LightningDataModule.add_argparse_args(parser)
+module = LightningDataModule.from_argparse_args(args)
+</code></pre></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="pytorch_lightning.core.datamodule.LightningDataModule.get_init_arguments_and_types">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object classmethod code">
+    <div class="mkapi-object-kind classmethod">classmethod</div>
+    <h4 id="pytorch_lightningcoredatamodulelightningdatamoduleget_init_arguments_and_types" class="mkapi-object-body classmethod"><code class="mkapi-object-name">get_init_arguments_and_types</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  <div class="mkapi-src-link">
+    <a class="mkapi-src-link" href="../source/pytorch_lightning.core.datamodule/#pytorch_lightning.core.datamodule.LightningDataModule.get_init_arguments_and_types" title="Source for pytorch_lightning.core.datamodule.LightningDataModule.get_init_arguments_and_types">&lt;/&gt;</a>
+  </div>
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Scans the DataModule signature and returns argument names, types and default values.</p></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> <span class="mkapi-item-type">(List with tuples of 3 values)</span>
+        </div>
+      <div class="mkapi-section-body returns"><p>.</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="plkit.data.DataModule.data_reader">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <h4 id="plkitdatadatamoduledata_reader" class="mkapi-object-body method"><code class="mkapi-object-name">data_reader</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  <div class="mkapi-src-link">
+    <a class="mkapi-src-link" href="../source/plkit.data/#plkit.data.DataModule.data_reader" title="Source for plkit.data.DataModule.data_reader">&lt;/&gt;</a>
+  </div>
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Read the data</p></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> <span class="mkapi-item-type">(Union(iterable of any, (iterator of any)))</span>
+        </div>
+      <div class="mkapi-section-body returns"><p>A tuple of iterables of features. Or it yields the following</p></div>
+    </div>
+  <div class="mkapi-section yields">
+      <div class="mkapi-section-name yields">
+          <span class="mkapi-section-name-body yields">Yields</span> <span class="mkapi-item-type">(Union(iterable of any, (iterator of any)))</span>
+        </div>
+      <div class="mkapi-section-body yields"><p>An iterable of tuple of features. In such a case, self.length
+property is required to be defined.</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="plkit.data.DataModule.data_splits">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <h4 id="plkitdatadatamoduledata_splits" class="mkapi-object-body method"><code class="mkapi-object-name">data_splits</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">data=None</code>, <code class="mkapi-object-signature">stage=None</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  <div class="mkapi-src-link">
+    <a class="mkapi-src-link" href="../source/plkit.data/#plkit.data.DataModule.data_splits" title="Source for plkit.data.DataModule.data_splits">&lt;/&gt;</a>
+  </div>
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Split data from data_source for each dataloader</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">data</code>
+<span class="mkapi-item-type">(iterable of tuple, optional)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">The data read by self.data_reader()</span></li>
+
+<li><code class="mkapi-item-name">stage</code>
+<span class="mkapi-item-type">(str, optional)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">The stage argument same as the one from
+<code>LightningDataModule.setup(...)</code></span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> <span class="mkapi-item-type">(dict(str: Union(dataset, iterabledataset, list of dataset or iterabledataset)))</span>
+        </div>
+      <div class="mkapi-section-body returns"><p>A dictionary with keys <code>train</code>, <code>val</code> and <code>test</code>, and values a
+Dataset or an IterDataset (config.data_tvt will be ignored)</p>
+<p>Or if config.data_tvt is specified, one could just return an
+iterable of features, then the dataset will be automatically
+split by config.data_tvt</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="plkit.data.DataModule.prepare_data">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <h4 id="plkitdatadatamoduleprepare_data" class="mkapi-object-body method"><code class="mkapi-object-name">prepare_data</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">*args</code>, <code class="mkapi-object-signature">**kwargs</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  <div class="mkapi-src-link">
+    <a class="mkapi-src-link" href="../source/plkit.data/#plkit.data.DataModule.prepare_data" title="Source for plkit.data.DataModule.prepare_data">&lt;/&gt;</a>
+  </div>
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Prepare data</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="plkit.data.DataModule.setup">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <h4 id="plkitdatadatamodulesetup" class="mkapi-object-body method"><code class="mkapi-object-name">setup</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">stage=None</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  <div class="mkapi-src-link">
+    <a class="mkapi-src-link" href="../source/plkit.data/#plkit.data.DataModule.setup" title="Source for plkit.data.DataModule.setup">&lt;/&gt;</a>
+  </div>
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Setup data</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="plkit.data.DataModule.train_dataloader">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <h4 id="plkitdatadatamoduletrain_dataloader" class="mkapi-object-body method"><code class="mkapi-object-name">train_dataloader</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">*args</code>, <code class="mkapi-object-signature">**kwargs</code><code class="mkapi-object-parenthesis">)</code><span class="mkapi-item-type"> &#x2192; DataLoader</span></h4>
+  </div>
+  <div class="mkapi-src-link">
+    <a class="mkapi-src-link" href="../source/plkit.data/#plkit.data.DataModule.train_dataloader" title="Source for plkit.data.DataModule.train_dataloader">&lt;/&gt;</a>
+  </div>
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Train data loaders</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="plkit.data.DataModule.val_dataloader">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <h4 id="plkitdatadatamoduleval_dataloader" class="mkapi-object-body method"><code class="mkapi-object-name">val_dataloader</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">*args</code>, <code class="mkapi-object-signature">**kwargs</code><code class="mkapi-object-parenthesis">)</code><span class="mkapi-item-type"> &#x2192; Union(dataloader, list of dataloader)</span></h4>
+  </div>
+  <div class="mkapi-src-link">
+    <a class="mkapi-src-link" href="../source/plkit.data/#plkit.data.DataModule.val_dataloader" title="Source for plkit.data.DataModule.val_dataloader">&lt;/&gt;</a>
+  </div>
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Validation data loaders</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="plkit.data.DataModule.test_dataloader">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <h4 id="plkitdatadatamoduletest_dataloader" class="mkapi-object-body method"><code class="mkapi-object-name">test_dataloader</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">*args</code>, <code class="mkapi-object-signature">**kwargs</code><code class="mkapi-object-parenthesis">)</code><span class="mkapi-item-type"> &#x2192; Union(dataloader, list of dataloader)</span></h4>
+  </div>
+  <div class="mkapi-src-link">
+    <a class="mkapi-src-link" href="../source/plkit.data/#plkit.data.DataModule.test_dataloader" title="Source for plkit.data.DataModule.test_dataloader">&lt;/&gt;</a>
+  </div>
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Test data loaders</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+  </div>
+
+</div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../plkit.module/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                plkit.module
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../plkit.optuna/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                plkit.optuna
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.08c56446.min.js"></script>
+      <script src="../../assets/javascripts/bundle.6ced434e.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: [],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.8c7e0a7e.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+        <script src="../../js/mkapi.js"></script>
+      
+    
+  </body>
+</html>

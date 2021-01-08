@@ -1,0 +1,826 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="shortcut icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.3">
+    
+    
+      
+        <title>plkit.optuna - plkit</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.3b61ea93.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.39b8e14a.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.1/css/all.css">
+    
+      <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css">
+    
+      <link rel="stylesheet" href="../../../css/mkapi-common.css">
+    
+      <link rel="stylesheet" href="../../../style.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#plkitoptuna" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="../../.." title="plkit" class="md-header-nav__button md-logo" aria-label="plkit">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      <div class="md-header-nav__ellipsis">
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
+            plkit
+          </span>
+        </div>
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
+            
+              plkit.optuna
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="plkit" class="md-nav__button md-logo" aria-label="plkit">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    plkit
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../.." class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../../configurations/" class="md-nav__link">
+      Configurations
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../../datamodule/" class="md-nav__link">
+      DataModule
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../../module/" class="md-nav__link">
+      Module
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../../trainer/" class="md-nav__link">
+      Trainer
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../../runner/" class="md-nav__link">
+      Runner
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../../optuna/" class="md-nav__link">
+      Optuna integration
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  
+  <li class="md-nav__item md-nav__item--nested">
+    
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8" >
+    
+    <label class="md-nav__link" for="nav-8">
+      API
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="API" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        <span class="md-nav__icon md-icon"></span>
+        API
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+
+  
+  <li class="md-nav__item md-nav__item--nested">
+    
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8-1" type="checkbox" id="nav-8-1" >
+    
+    <label class="md-nav__link" for="nav-8-1">
+      plkit
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="plkit" data-md-level="2">
+      <label class="md-nav__title" for="nav-8-1">
+        <span class="md-nav__icon md-icon"></span>
+        plkit
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../plkit/" class="md-nav__link">
+      plkit
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../plkit.trainer/" class="md-nav__link">
+      plkit.trainer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../plkit.runner/" class="md-nav__link">
+      plkit.runner
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../plkit.exceptions/" class="md-nav__link">
+      plkit.exceptions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../plkit.module/" class="md-nav__link">
+      plkit.module
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../plkit.data/" class="md-nav__link">
+      plkit.data
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../plkit.optuna/" class="md-nav__link">
+      plkit.optuna
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../plkit.utils/" class="md-nav__link">
+      plkit.utils
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <div class="mkapi-node">
+<h1 id="" class="mkapi-object mkapi-object-code plain">
+<span class="mkapi-object-kind mkapi-object-kind-code">SOURCE CODE</span>
+<span class="mkapi-object-prefix">plkit.</span><span class="mkapi-object-name">optuna</span>
+<span id="plkit.optuna"></span><a class="mkapi-docs-link" href="../../plkit.optuna">DOCS</a>
+</h1>
+
+<div class="mkapi-code">
+<div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;Optuna wrapper for plkit&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">diot</span> <span class="kn">import</span> <span class="n">FrozenDiot</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
+<span class="kn">from</span> <span class="nn">pytorch_lightning.callbacks</span> <span class="kn">import</span> <span class="n">ModelCheckpoint</span>
+<span class="kn">import</span> <span class="nn">optuna</span>
+<span class="kn">from</span> <span class="nn">.trainer</span> <span class="kn">import</span> <span class="n">Trainer</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">log_config</span><span class="p">,</span> <span class="n">logger</span><span class="p">,</span> <span class="n">plkit_seed_everything</span>
+
+<span class="c1"># supress optuna logging</span>
+<span class="n">optuna</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">_get_library_root_logger</span><span class="p">()</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">OptunaSuggest</span><span class="p">:</span><span id="plkit.optuna.OptunaSuggest"></span><a class="mkapi-docs-link" title="plkit.optuna.OptunaSuggest" href="../../plkit.optuna/#plkit.optuna.OptunaSuggest">DOCS</a>
+    <span class="sd">&quot;&quot;&quot;Optuna suggests for configuration items</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        default (any): The default value, which the value will be collapsed to</span>
+<span class="sd">            when optuna is opted out. So that you don&#39;t have to change your</span>
+<span class="sd">            code if you don&#39;t run optuna.</span>
+<span class="sd">        suggtype (str): The type of suggestion</span>
+<span class="sd">            For example, `cat` refers to `trial.suggest_categorical`</span>
+<span class="sd">            The mappings are:</span>
+<span class="sd">            cat -&gt; &#39;suggest_categorical&#39;,</span>
+<span class="sd">            categorical -&gt; &#39;suggest_categorical&#39;,</span>
+<span class="sd">            distuni -&gt; &#39;suggest_discrete_uniform&#39;,</span>
+<span class="sd">            dist_uni -&gt; &#39;suggest_discrete_uniform&#39;,</span>
+<span class="sd">            discrete_uniform -&gt; &#39;suggest_discrete_uniform&#39;,</span>
+<span class="sd">            float -&gt; &#39;suggest_float&#39;,</span>
+<span class="sd">            int -&gt; &#39;suggest_int&#39;,</span>
+<span class="sd">            loguni -&gt; &#39;suggest_loguniform&#39;,</span>
+<span class="sd">            log_uni -&gt; &#39;suggest_loguniform&#39;,</span>
+<span class="sd">            uni -&gt; &#39;suggest_uniform&#39;</span>
+<span class="sd">        *args: The args used in `trial.suggest_xxx(name, *args, **kwargs)`</span>
+<span class="sd">        **kwargs: The kwargs used in `trial.suggest_xxx(name, *args, **kwargs)`</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        default (any): The default from Args</span>
+<span class="sd">        suggfunc (str): The transformed suggestion name according to `suggtype`</span>
+<span class="sd">        args: *args from Args</span>
+<span class="sd">        kwargs: **kwargs from Args</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">default</span><span class="p">,</span> <span class="n">suggtype</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default</span> <span class="o">=</span> <span class="n">default</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">suggfunc</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">cat</span><span class="o">=</span><span class="s1">&#39;suggest_categorical&#39;</span><span class="p">,</span>
+            <span class="n">categorical</span><span class="o">=</span><span class="s1">&#39;suggest_categorical&#39;</span><span class="p">,</span>
+            <span class="n">distuni</span><span class="o">=</span><span class="s1">&#39;suggest_discrete_uniform&#39;</span><span class="p">,</span>
+            <span class="n">dist_uni</span><span class="o">=</span><span class="s1">&#39;suggest_discrete_uniform&#39;</span><span class="p">,</span>
+            <span class="n">discrete_uniform</span><span class="o">=</span><span class="s1">&#39;suggest_discrete_uniform&#39;</span><span class="p">,</span>
+            <span class="nb">float</span><span class="o">=</span><span class="s1">&#39;suggest_float&#39;</span><span class="p">,</span>
+            <span class="nb">int</span><span class="o">=</span><span class="s1">&#39;suggest_int&#39;</span><span class="p">,</span>
+            <span class="n">loguni</span><span class="o">=</span><span class="s1">&#39;suggest_loguniform&#39;</span><span class="p">,</span>
+            <span class="n">log_uni</span><span class="o">=</span><span class="s1">&#39;suggest_loguniform&#39;</span><span class="p">,</span>
+            <span class="n">uni</span><span class="o">=</span><span class="s1">&#39;suggest_uniform&#39;</span>
+        <span class="p">)[</span><span class="n">suggtype</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span>
+
+    <span class="k">def</span> <span class="nf">suggest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">trial</span><span class="p">):</span><span id="plkit.optuna.OptunaSuggest.suggest"></span><a class="mkapi-docs-link" title="plkit.optuna.OptunaSuggest.suggest" href="../../plkit.optuna/#plkit.optuna.OptunaSuggest.suggest">DOCS</a>
+        <span class="sd">&quot;&quot;&quot;Get the suggested value</span>
+
+<span class="sd">        This is used in Optuna class, you don&#39;t have to call this</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): The name of the parameter</span>
+<span class="sd">            trial (optuna.Trial): The trial to get the suggested value from</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Any: The suggested value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">trial</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">suggfunc</span><span class="p">)(</span><span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Optuna</span><span class="p">:</span><span id="plkit.optuna.Optuna"></span><a class="mkapi-docs-link" title="plkit.optuna.Optuna" href="../../plkit.optuna/#plkit.optuna.Optuna">DOCS</a>
+    <span class="sd">&quot;&quot;&quot;The class uses optuna to automate hyperparameter tuning</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; from plkit import Data, Module, Optuna</span>
+<span class="sd">        &gt;&gt;&gt; class MyData(Data):</span>
+<span class="sd">        &gt;&gt;&gt;     ...</span>
+<span class="sd">        &gt;&gt;&gt; class MyModel(Module):</span>
+<span class="sd">        &gt;&gt;&gt;     ...</span>
+<span class="sd">        &gt;&gt;&gt; class MyOptuna(Optuna):</span>
+<span class="sd">        &gt;&gt;&gt;     def suggests(self, config):</span>
+<span class="sd">        &gt;&gt;&gt;         ...</span>
+<span class="sd">        &gt;&gt;&gt;         return new_config</span>
+<span class="sd">        &gt;&gt;&gt; optuna = MyOptuna(&#39;val_loss&#39;, 100)</span>
+<span class="sd">        &gt;&gt;&gt; optuna.run(config, model_class, data_class)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        on (str): On which value to optimize. Should be one of the keys of</span>
+<span class="sd">            dictionary that is returned from `validation_epoch_end`.</span>
+<span class="sd">            `val_acc` or `val_loss` for example.</span>
+<span class="sd">        n_trials (int): Number of trials</span>
+<span class="sd">        **kwargs: Other keyword arguments for `optuna.create_study`</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        on (str): on from Args</span>
+<span class="sd">        n_trials (int): n_trials from Args</span>
+<span class="sd">        study (optuna.Study): study object created from kwargs</span>
+<span class="sd">        trainers (list): list of trainers to keep track of the best one</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">on</span><span class="p">,</span>
+                 <span class="n">n_trials</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on</span> <span class="o">=</span> <span class="n">on</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_trials</span> <span class="o">=</span> <span class="n">n_trials</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_best_trainer</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_best_model</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span> <span class="o">=</span> <span class="n">optuna</span><span class="o">.</span><span class="n">create_study</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="c1"># trainers, used for retrieve the best one</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trainers</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">_create_objective</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">model_class</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create objective function for the study to optimize</span>
+
+<span class="sd">        The objective function is built to return the best value from</span>
+<span class="sd">        `validation_epoch_end` based on `self.on`. To implement this, a</span>
+<span class="sd">        `ModelCheckpoint` callback is used and `best_model_score` is returned</span>
+<span class="sd">        from it.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config (dict): The configuration dictionary</span>
+<span class="sd">            data_class (class): The data class subclassed from `plkit.Data`</span>
+<span class="sd">                Note it&#39;s the class itself, not instantiated object</span>
+<span class="sd">            model_class (class): The model class subclassed from `plkit.Module`</span>
+<span class="sd">                Note it&#39;s the class itself, not instantiated object</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            callable: The objective function</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">_objective</span><span class="p">(</span><span class="n">trial</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;--------------------------------&#39;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Start optuna trial #</span><span class="si">%s</span><span class="s1"> / </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+                        <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trainers</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_trials</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;--------------------------------&#39;</span><span class="p">)</span>
+            <span class="n">suggested</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">suggests</span><span class="p">(</span><span class="n">trial</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
+
+            <span class="n">config_copy</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+            <span class="k">with</span> <span class="n">config_copy</span><span class="o">.</span><span class="n">thaw</span><span class="p">():</span>
+                <span class="n">config_copy</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">suggested</span><span class="p">)</span>
+
+            <span class="n">log_config</span><span class="p">(</span><span class="n">suggested</span><span class="p">,</span> <span class="s2">&quot;Tunable parameters&quot;</span><span class="p">)</span>
+
+            <span class="n">model</span> <span class="o">=</span> <span class="n">model_class</span><span class="p">(</span><span class="n">config_copy</span><span class="p">)</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">suggested</span><span class="p">)</span>
+
+            <span class="c1"># expose filepath argument?</span>
+            <span class="n">checkpoint_callback</span> <span class="o">=</span> <span class="n">ModelCheckpoint</span><span class="p">(</span><span class="n">monitor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">on</span><span class="p">)</span>
+            <span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="o">.</span><span class="n">from_config</span><span class="p">(</span>
+                <span class="n">config_copy</span><span class="p">,</span>
+                <span class="n">checkpoint_callback</span><span class="o">=</span><span class="n">checkpoint_callback</span>
+            <span class="p">)</span>
+
+            <span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+            <span class="n">best_score</span> <span class="o">=</span> <span class="n">checkpoint_callback</span><span class="o">.</span><span class="n">best_model_score</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">trainers</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">checkpoint_callback</span><span class="o">.</span><span class="n">best_model_path</span><span class="p">,</span>
+                                  <span class="n">config_copy</span><span class="p">,</span>
+                                  <span class="n">best_score</span><span class="p">))</span>
+
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;&#39;Optuna&#39;: trial #</span><span class="si">%s</span><span class="s2"> done with  </span><span class="si">%s</span><span class="s2"> = </span><span class="si">%s</span><span class="s2"> &quot;</span>
+                        <span class="s2">&quot;and parameters: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                        <span class="n">trial</span><span class="o">.</span><span class="n">number</span><span class="p">,</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">on</span><span class="p">,</span>
+                        <span class="n">best_score</span><span class="p">,</span>
+                        <span class="n">trial</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+            <span class="n">number</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_best</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">val</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                      <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">suggested</span><span class="p">}</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;&#39;Optuna&#39;: the best is #</span><span class="si">%s</span><span class="s2"> with </span><span class="si">%s</span><span class="s2"> = </span><span class="si">%s</span><span class="s2"> &quot;</span>
+                        <span class="s2">&quot;and parameters: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                        <span class="n">number</span><span class="p">,</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">on</span><span class="p">,</span>
+                        <span class="n">score</span><span class="p">,</span>
+                        <span class="n">params</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">best_score</span>
+
+        <span class="k">return</span> <span class="n">_objective</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_current_best</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the current best trial number and parameters when the tuning</span>
+<span class="sd">        is incomplete&quot;&quot;&quot;</span>
+        <span class="n">func</span> <span class="o">=</span> <span class="p">(</span><span class="nb">max</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="n">optuna</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">StudyDirection</span><span class="o">.</span><span class="n">MAXIMIZE</span>
+                <span class="k">else</span> <span class="nb">min</span><span class="p">)</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">trainer</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">trainer</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">Tensor</span><span class="p">)</span>
+                  <span class="k">else</span> <span class="n">trainer</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
+                  <span class="k">for</span> <span class="n">trainer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">trainers</span><span class="p">]</span>
+        <span class="n">number</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
+        <span class="n">trainer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trainers</span><span class="p">[</span><span class="n">number</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">number</span><span class="p">,</span> <span class="n">trainer</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">trainer</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">suggests</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trial</span><span class="p">,</span> <span class="n">conf</span><span class="p">):</span><span id="plkit.optuna.Optuna.suggests"></span><a class="mkapi-docs-link" title="plkit.optuna.Optuna.suggests" href="../../plkit.optuna/#plkit.optuna.Optuna.suggests">DOCS</a>
+        <span class="sd">&quot;&quot;&quot;Collect the hyperparameters from the trial suggestions</span>
+<span class="sd">        if any configuration item is an `OptunaSuggest` object</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            trial (optuna.Trial): the trial object</span>
+<span class="sd">            conf (dict): The configuration dictionary</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary of suggested parameters</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">val</span><span class="o">.</span><span class="n">suggest</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">trial</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">conf</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">OptunaSuggest</span><span class="p">)}</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">data_class</span><span class="p">,</span> <span class="n">model_class</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span><span id="plkit.optuna.Optuna.run"></span><a class="mkapi-docs-link" title="plkit.optuna.Optuna.run" href="../../plkit.optuna/#plkit.optuna.Optuna.run">DOCS</a>
+        <span class="c1"># pylint: disable=line-too-long</span>
+        <span class="sd">&quot;&quot;&quot;Run the optimization</span>
+
+<span class="sd">        The optimization is running on fit of the trainer. If test data is</span>
+<span class="sd">        provided. Test will be performed as well.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config (dict): The configuation dictionary</span>
+<span class="sd">            data_class (class): The data class subclassed from `plkit.Data`</span>
+<span class="sd">                Note that this is the class itself, not the instantized object.</span>
+<span class="sd">            model_class (class): The data class subclassed from `plkit.Module`</span>
+<span class="sd">                Note that this is the class itself, not the instantized object.</span>
+<span class="sd">            **kwargs: Other arguments for `study.optimize` other than</span>
+<span class="sd">                `func` and `n_trials`.</span>
+<span class="sd">                See: https://optuna.readthedocs.io/en/stable/reference/generated/optuna.study.Study.html#optuna.study.Study.optimize</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># pylint: enable=line-too-long</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">FrozenDiot</span><span class="p">):</span>
+            <span class="n">config</span> <span class="o">=</span> <span class="n">FrozenDiot</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+        <span class="n">plkit_seed_everything</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data_class</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+        <span class="n">objective</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_objective</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">model_class</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">objective</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_trials</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_best_trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="o">.</span><span class="n">from_config</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trainers</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">best_trial</span><span class="o">.</span><span class="n">number</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_best_model</span> <span class="o">=</span> <span class="n">model_class</span><span class="o">.</span><span class="n">load_from_checkpoint</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trainers</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">best_trial</span><span class="o">.</span><span class="n">number</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+            <span class="c1"># https://github.com/PyTorchLightning/pytorch-lightning/issues/2550</span>
+            <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">trainers</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">best_trial</span><span class="o">.</span><span class="n">number</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;test_dataloader&#39;</span><span class="p">):</span>
+            <span class="n">test_dataloaders</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">test_dataloader</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span> <span class="c1"># pragma: no cover</span>
+            <span class="n">test_dataloaders</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">test_dataloaders</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;---------------------------------&#39;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Testing using best trial: #</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_trial</span><span class="o">.</span><span class="n">number</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;---------------------------------&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">best_trainer</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">best_model</span><span class="p">,</span>
+                                   <span class="n">test_dataloaders</span><span class="o">=</span><span class="n">test_dataloaders</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_trainer</span>
+
+    <span class="n">optimize</span> <span class="o">=</span> <span class="n">run</span>
+
+    <span class="nd">@property</span><span id="plkit.optuna.Optuna.best_params"></span><a class="mkapi-docs-link" title="plkit.optuna.Optuna.best_params" href="../../plkit.optuna/#plkit.optuna.Optuna.best_params">DOCS</a>
+    <span class="k">def</span> <span class="nf">best_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The best parameters from the study</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing parameters of the best trial.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">best_params</span>
+
+    <span class="nd">@property</span><span id="plkit.optuna.Optuna.best_trial"></span><a class="mkapi-docs-link" title="plkit.optuna.Optuna.best_trial" href="../../plkit.optuna/#plkit.optuna.Optuna.best_trial">DOCS</a>
+    <span class="k">def</span> <span class="nf">best_trial</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The best trial from the study</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            optuna.FrozenTrial: A FrozenTrial object of the best trial.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">best_trial</span>
+
+    <span class="nd">@property</span><span id="plkit.optuna.Optuna.trials"></span><a class="mkapi-docs-link" title="plkit.optuna.Optuna.trials" href="../../plkit.optuna/#plkit.optuna.Optuna.trials">DOCS</a>
+    <span class="k">def</span> <span class="nf">trials</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The trials</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list of FrozenTrial objects.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">trials</span>
+
+    <span class="nd">@property</span><span id="plkit.optuna.Optuna.best_trainer"></span><a class="mkapi-docs-link" title="plkit.optuna.Optuna.best_trainer" href="../../plkit.optuna/#plkit.optuna.Optuna.best_trainer">DOCS</a>
+    <span class="k">def</span> <span class="nf">best_trainer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the best trainer</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Trainer: The trainer object of the best trial.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_best_trainer</span>
+
+    <span class="nd">@property</span><span id="plkit.optuna.Optuna.best_model"></span><a class="mkapi-docs-link" title="plkit.optuna.Optuna.best_model" href="../../plkit.optuna/#plkit.optuna.Optuna.best_model">DOCS</a>
+    <span class="k">def</span> <span class="nf">best_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the model from best trainer</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Module: The model of the best trial</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_best_model</span>
+</code></pre></div>
+</div>
+</div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../../assets/javascripts/vendor.08c56446.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.6ced434e.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../../..",
+          features: [],
+          search: Object.assign({
+            worker: "../../../assets/javascripts/worker/search.8c7e0a7e.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+        <script src="../../../js/mkapi.js"></script>
+      
+    
+  </body>
+</html>

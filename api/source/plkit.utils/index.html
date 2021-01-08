@@ -1,0 +1,705 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="shortcut icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.3">
+    
+    
+      
+        <title>plkit.utils - plkit</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.3b61ea93.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.39b8e14a.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.1/css/all.css">
+    
+      <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css">
+    
+      <link rel="stylesheet" href="../../../css/mkapi-common.css">
+    
+      <link rel="stylesheet" href="../../../style.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#plkitutils" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="../../.." title="plkit" class="md-header-nav__button md-logo" aria-label="plkit">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      <div class="md-header-nav__ellipsis">
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
+            plkit
+          </span>
+        </div>
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
+            
+              plkit.utils
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="plkit" class="md-nav__button md-logo" aria-label="plkit">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    plkit
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../.." class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../../configurations/" class="md-nav__link">
+      Configurations
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../../datamodule/" class="md-nav__link">
+      DataModule
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../../module/" class="md-nav__link">
+      Module
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../../trainer/" class="md-nav__link">
+      Trainer
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../../runner/" class="md-nav__link">
+      Runner
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../../optuna/" class="md-nav__link">
+      Optuna integration
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  
+  <li class="md-nav__item md-nav__item--nested">
+    
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8" >
+    
+    <label class="md-nav__link" for="nav-8">
+      API
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="API" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        <span class="md-nav__icon md-icon"></span>
+        API
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+
+  
+  <li class="md-nav__item md-nav__item--nested">
+    
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8-1" type="checkbox" id="nav-8-1" >
+    
+    <label class="md-nav__link" for="nav-8-1">
+      plkit
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="plkit" data-md-level="2">
+      <label class="md-nav__title" for="nav-8-1">
+        <span class="md-nav__icon md-icon"></span>
+        plkit
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../plkit/" class="md-nav__link">
+      plkit
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../plkit.trainer/" class="md-nav__link">
+      plkit.trainer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../plkit.runner/" class="md-nav__link">
+      plkit.runner
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../plkit.exceptions/" class="md-nav__link">
+      plkit.exceptions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../plkit.module/" class="md-nav__link">
+      plkit.module
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../plkit.data/" class="md-nav__link">
+      plkit.data
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../plkit.optuna/" class="md-nav__link">
+      plkit.optuna
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../plkit.utils/" class="md-nav__link">
+      plkit.utils
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <div class="mkapi-node">
+<h1 id="" class="mkapi-object mkapi-object-code plain">
+<span class="mkapi-object-kind mkapi-object-kind-code">SOURCE CODE</span>
+<span class="mkapi-object-prefix">plkit.</span><span class="mkapi-object-name">utils</span>
+<span id="plkit.utils"></span><a class="mkapi-docs-link" href="../../plkit.utils">DOCS</a>
+</h1>
+
+<div class="mkapi-code">
+<div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;Utility functions for plkit&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span>
+<span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">contextmanager</span>
+
+<span class="kn">from</span> <span class="nn">rich.table</span> <span class="kn">import</span> <span class="n">Table</span>
+<span class="kn">from</span> <span class="nn">rich.console</span> <span class="kn">import</span> <span class="n">Console</span>
+<span class="kn">from</span> <span class="nn">rich.logging</span> <span class="kn">import</span> <span class="n">RichHandler</span>
+<span class="kn">from</span> <span class="nn">diot</span> <span class="kn">import</span> <span class="n">FrozenDiot</span>
+<span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">seed_everything</span><span class="p">,</span> <span class="n">_logger</span> <span class="k">as</span> <span class="n">logger</span>
+
+<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">PlkitConfigException</span>
+
+<span class="n">RatioType</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
+
+<span class="k">del</span> <span class="n">logger</span><span class="o">.</span><span class="n">handlers</span><span class="p">[:]</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">RichHandler</span><span class="p">(</span><span class="n">show_path</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;py.warnings&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">RichHandler</span><span class="p">(</span><span class="n">show_path</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">check_config</span><span class="p">(</span><span class="n">config</span><span class="p">,</span><span id="plkit.utils.check_config"></span><a class="mkapi-docs-link" title="plkit.utils.check_config" href="../../plkit.utils/#plkit.utils.check_config">DOCS</a>
+                 <span class="n">item</span><span class="p">,</span>
+                 <span class="n">how</span><span class="o">=</span><span class="k">lambda</span> <span class="n">conf</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">conf</span><span class="p">,</span>
+                 <span class="n">msg</span><span class="o">=</span><span class="s2">&quot;Configuration item </span><span class="si">{key}</span><span class="s2"> is required.&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Check configuration items</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        config (dict): The configuration dictionary</span>
+<span class="sd">        item (str): The configuration key to check</span>
+<span class="sd">        how (callable): How to check. Return False to fail the check.</span>
+<span class="sd">        msg (str): The message to show in the exception.</span>
+<span class="sd">            `{key}` is available to refer to the key checked.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        PlkitConfigException: When the check fails</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">checked</span> <span class="o">=</span> <span class="n">how</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">checked</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">PlkitConfigException</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">item</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">collapse_suggest_config</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span><span id="plkit.utils.collapse_suggest_config"></span><a class="mkapi-docs-link" title="plkit.utils.collapse_suggest_config" href="../../plkit.utils/#plkit.utils.collapse_suggest_config">DOCS</a>
+    <span class="sd">&quot;&quot;&quot;Use the default value of OptunaSuggest for config items.</span>
+<span class="sd">    So that the configs can be used in the case that optuna is opted out.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        config: The configuration dictionary</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The collapsed configuration</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">.optuna</span> <span class="kn">import</span> <span class="n">OptunaSuggest</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">collapsed</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">val</span><span class="o">.</span><span class="n">default</span>
+                 <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">OptunaSuggest</span><span class="p">)}</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">FrozenDiot</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">config</span><span class="o">.</span><span class="n">thaw</span><span class="p">():</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">collapsed</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">config</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">collapsed</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">FrozenDiot</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">normalize_tvt_ratio</span><span class="p">(</span><span id="plkit.utils.normalize_tvt_ratio"></span><a class="mkapi-docs-link" title="plkit.utils.normalize_tvt_ratio" href="../../plkit.utils/#plkit.utils.normalize_tvt_ratio">DOCS</a>
+        <span class="n">tvt_ratio</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">RatioType</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">RatioType</span><span class="p">]]]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">RatioType</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">RatioType</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">RatioType</span><span class="p">]]]:</span>
+    <span class="sd">&quot;&quot;&quot;Normalize the train-val-test data ratio into a format of</span>
+<span class="sd">    (.7, [.1, .1], [.05, .05]).</span>
+
+<span class="sd">    For `config.data_tvt`, the first element is required. If val or test ratios</span>
+<span class="sd">    are not provided, it will be filled with `None`</span>
+
+<span class="sd">    All numbers could be absolute numbers (&gt;1) or ratios (&lt;=1)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        tvt_ratio: The train-val-test ratio</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The normalized ratios</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        PlkitConfigException: When the passed-in tvt_ratio is in malformat</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">tvt_ratio</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="n">is_iter</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">container</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">container</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_iter</span><span class="p">(</span><span class="n">tvt_ratio</span><span class="p">):</span>
+        <span class="n">tvt_ratio</span> <span class="o">=</span> <span class="p">[</span><span class="n">tvt_ratio</span><span class="p">]</span>
+
+    <span class="n">tvt_ratio</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">tvt_ratio</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tvt_ratio</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">tvt_ratio</span> <span class="o">+=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">tvt_ratio</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">tvt_ratio</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">is_iter</span><span class="p">(</span><span class="n">tvt_ratio</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="n">tvt_ratio</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">tvt_ratio</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+    <span class="k">if</span> <span class="n">tvt_ratio</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">is_iter</span><span class="p">(</span><span class="n">tvt_ratio</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
+        <span class="n">tvt_ratio</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">tvt_ratio</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">tvt_ratio</span><span class="p">)</span>
+
+<span class="nd">@contextmanager</span><span id="plkit.utils.warning_to_logging"></span><a class="mkapi-docs-link" title="plkit.utils.warning_to_logging" href="../../plkit.utils/#plkit.utils.warning_to_logging">DOCS</a>
+<span class="k">def</span> <span class="nf">warning_to_logging</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Patch the warning message formatting to only show the message&quot;&quot;&quot;</span>
+    <span class="n">orig_format</span> <span class="o">=</span> <span class="n">warnings</span><span class="o">.</span><span class="n">formatwarning</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">captureWarnings</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">formatwarning</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">msg</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">category</span><span class="o">.</span><span class="vm">__name__</span><span class="si">!r}</span><span class="s1">: </span><span class="si">{</span><span class="n">msg</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="p">)</span>
+    <span class="k">yield</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">formatwarning</span> <span class="o">=</span> <span class="n">orig_format</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">captureWarnings</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nd">@contextmanager</span><span id="plkit.utils.capture_stdout"></span><a class="mkapi-docs-link" title="plkit.utils.capture_stdout" href="../../plkit.utils/#plkit.utils.capture_stdout">DOCS</a>
+<span class="k">def</span> <span class="nf">capture_stdout</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Capture the stdout&quot;&quot;&quot;</span>
+    <span class="n">_stdout</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">stringio</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+    <span class="k">yield</span> <span class="n">stringio</span>
+    <span class="k">del</span> <span class="n">stringio</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">_stdout</span>
+
+<span class="nd">@contextmanager</span><span id="plkit.utils.capture_stderr"></span><a class="mkapi-docs-link" title="plkit.utils.capture_stderr" href="../../plkit.utils/#plkit.utils.capture_stderr">DOCS</a>
+<span class="k">def</span> <span class="nf">capture_stderr</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Capture the stderr&quot;&quot;&quot;</span>
+    <span class="n">_stderr</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">stringio</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+    <span class="k">yield</span> <span class="n">stringio</span>
+    <span class="k">del</span> <span class="n">stringio</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">_stderr</span>
+
+<span class="nd">@contextmanager</span><span id="plkit.utils.output_to_logging"></span><a class="mkapi-docs-link" title="plkit.utils.output_to_logging" href="../../plkit.utils/#plkit.utils.output_to_logging">DOCS</a>
+<span class="k">def</span> <span class="nf">output_to_logging</span><span class="p">(</span><span class="n">stdout_level</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;info&#39;</span><span class="p">,</span> <span class="n">stderr_level</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;error&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Capture the stdout or stderr to logging&quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">capture_stderr</span><span class="p">()</span> <span class="k">as</span> <span class="n">err</span><span class="p">,</span> <span class="n">capture_stdout</span><span class="p">()</span> <span class="k">as</span> <span class="n">out</span><span class="p">:</span>
+        <span class="k">yield</span>
+
+    <span class="nb">getattr</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">stdout_level</span><span class="p">)(</span><span class="n">out</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span>
+    <span class="nb">getattr</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">stderr_level</span><span class="p">)(</span><span class="n">err</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span>
+
+
+<span class="k">def</span> <span class="nf">log_config</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Configurations&#39;</span><span class="p">,</span> <span class="n">items_per_row</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span><span id="plkit.utils.log_config"></span><a class="mkapi-docs-link" title="plkit.utils.log_config" href="../../plkit.utils/#plkit.utils.log_config">DOCS</a>
+    <span class="sd">&quot;&quot;&quot;Log the configurations in a table in terminal</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        config (dict): The configuration dictionary</span>
+<span class="sd">        title (str): The title of the table</span>
+<span class="sd">        items_per_row (int): The number of items to print per row</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">items_per_row</span><span class="p">):</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="s2">&quot;Item&quot;</span><span class="p">)</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="s2">&quot;Value&quot;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">),</span> <span class="n">items_per_row</span><span class="p">):</span>
+        <span class="n">row_items</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">items_per_row</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">row_items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">items</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">x</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">row_items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">items</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">x</span><span class="p">][</span><span class="mi">1</span><span class="p">]))</span>
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span> <span class="c1"># pragma: no cover</span>
+                <span class="n">row_items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+                <span class="n">row_items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+        <span class="n">table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="o">*</span><span class="n">row_items</span><span class="p">)</span>
+
+    <span class="n">console</span> <span class="o">=</span> <span class="n">Console</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="n">StringIO</span><span class="p">(),</span> <span class="n">markup</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">console</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">plkit_seed_everything</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">FrozenDiot</span><span class="p">):</span><span id="plkit.utils.plkit_seed_everything"></span><a class="mkapi-docs-link" title="plkit.utils.plkit_seed_everything" href="../../plkit.utils/#plkit.utils.plkit_seed_everything">DOCS</a>
+    <span class="sd">&quot;&quot;&quot;Try to seed everything and set deterministic to True</span>
+<span class="sd">    if seed in config has been set</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        config: The configurations</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;seed&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span>
+
+    <span class="n">seed_everything</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">config</span><span class="o">.</span><span class="n">thaw</span><span class="p">():</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;deterministic&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../../assets/javascripts/vendor.08c56446.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.6ced434e.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../../..",
+          features: [],
+          search: Object.assign({
+            worker: "../../../assets/javascripts/worker/search.8c7e0a7e.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+        <script src="../../../js/mkapi.js"></script>
+      
+    
+  </body>
+</html>

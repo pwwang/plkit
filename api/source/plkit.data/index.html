@@ -1,0 +1,796 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="shortcut icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.3">
+    
+    
+      
+        <title>plkit.data - plkit</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.3b61ea93.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.39b8e14a.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.1/css/all.css">
+    
+      <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css">
+    
+      <link rel="stylesheet" href="../../../css/mkapi-common.css">
+    
+      <link rel="stylesheet" href="../../../style.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#plkitdata" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="../../.." title="plkit" class="md-header-nav__button md-logo" aria-label="plkit">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      <div class="md-header-nav__ellipsis">
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
+            plkit
+          </span>
+        </div>
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
+            
+              plkit.data
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="plkit" class="md-nav__button md-logo" aria-label="plkit">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    plkit
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../.." class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../../configurations/" class="md-nav__link">
+      Configurations
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../../datamodule/" class="md-nav__link">
+      DataModule
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../../module/" class="md-nav__link">
+      Module
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../../trainer/" class="md-nav__link">
+      Trainer
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../../runner/" class="md-nav__link">
+      Runner
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../../../optuna/" class="md-nav__link">
+      Optuna integration
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  
+  <li class="md-nav__item md-nav__item--nested">
+    
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8" >
+    
+    <label class="md-nav__link" for="nav-8">
+      API
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="API" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        <span class="md-nav__icon md-icon"></span>
+        API
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+
+  
+  <li class="md-nav__item md-nav__item--nested">
+    
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8-1" type="checkbox" id="nav-8-1" >
+    
+    <label class="md-nav__link" for="nav-8-1">
+      plkit
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="plkit" data-md-level="2">
+      <label class="md-nav__title" for="nav-8-1">
+        <span class="md-nav__icon md-icon"></span>
+        plkit
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../plkit/" class="md-nav__link">
+      plkit
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../plkit.trainer/" class="md-nav__link">
+      plkit.trainer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../plkit.runner/" class="md-nav__link">
+      plkit.runner
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../plkit.exceptions/" class="md-nav__link">
+      plkit.exceptions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../plkit.module/" class="md-nav__link">
+      plkit.module
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../plkit.data/" class="md-nav__link">
+      plkit.data
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../plkit.optuna/" class="md-nav__link">
+      plkit.optuna
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../plkit.utils/" class="md-nav__link">
+      plkit.utils
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <div class="mkapi-node">
+<h1 id="" class="mkapi-object mkapi-object-code plain">
+<span class="mkapi-object-kind mkapi-object-kind-code">SOURCE CODE</span>
+<span class="mkapi-object-prefix">plkit.</span><span class="mkapi-object-name">data</span>
+<span id="plkit.data"></span><a class="mkapi-docs-link" href="../../plkit.data">DOCS</a>
+</h1>
+
+<div class="mkapi-code">
+<div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;Data module for plkit&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="n">GeneratorType</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">islice</span>
+<span class="kn">from</span> <span class="nn">diot</span> <span class="kn">import</span> <span class="n">FrozenDiot</span>
+<span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">LightningDataModule</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">DataLoader</span><span class="p">,</span>
+    <span class="n">Dataset</span> <span class="k">as</span> <span class="n">TorchDataset</span><span class="p">,</span>
+    <span class="n">IterableDataset</span> <span class="k">as</span> <span class="n">TorchIterableDataset</span><span class="p">,</span>
+    <span class="n">random_split</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">PlkitDataException</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">normalize_tvt_ratio</span><span class="p">,</span>
+    <span class="n">check_config</span><span class="p">,</span>
+    <span class="n">logger</span>
+<span class="p">)</span>
+
+<span class="c1"># pylint: disable=unused-argument</span>
+
+<span class="c1"># The ids or keys for the data</span>
+<span class="n">DatasetType</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">TorchDataset</span><span class="p">,</span> <span class="n">TorchIterableDataset</span><span class="p">]</span>
+
+<span class="k">class</span> <span class="nc">Dataset</span><span class="p">(</span><span class="n">TorchDataset</span><span class="p">):</span><span id="plkit.data.Dataset"></span><a class="mkapi-docs-link" title="plkit.data.Dataset" href="../../plkit.data/#plkit.data.Dataset">DOCS</a>
+    <span class="sd">&quot;&quot;&quot;The dataset that used internally by Data class</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">    &gt;&gt;&gt; ds = Dataset(data=[(&#39;a&#39;, &#39;x&#39;), (&#39;b&#39;, &#39;y&#39;), (&#39;c&#39;, &#39;z&#39;)], ids=[1, 2])</span>
+<span class="sd">    &gt;&gt;&gt; len(ds) == 2</span>
+<span class="sd">    &gt;&gt;&gt; ds[0] == (&#39;b&#39;, &#39;y&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; ds[1] == (&#39;c&#39;, &#39;z&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; # The features are what you get by</span>
+<span class="sd">    &gt;&gt;&gt; # x, y = batch</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data: The data for the dataset.</span>
+<span class="sd">            It could be a tuple of features. Each one should be an iterable,</span>
+<span class="sd">            which could be accessed by index</span>
+<span class="sd">        ids: The ids or keys of the data, which should be in the same order</span>
+<span class="sd">            of each feature in the iterable.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">data</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">tuple</span><span class="p">],</span>
+                 <span class="n">ids</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ids</span> <span class="o">=</span> <span class="n">ids</span> <span class="ow">or</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)))</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+        <span class="n">data_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">data_id</span><span class="p">]</span>
+
+<span class="k">class</span> <span class="nc">IterDataset</span><span class="p">(</span><span class="n">TorchIterableDataset</span><span class="p">):</span><span id="plkit.data.IterDataset"></span><a class="mkapi-docs-link" title="plkit.data.IterDataset" href="../../plkit.data/#plkit.data.IterDataset">DOCS</a>
+    <span class="sd">&quot;&quot;&quot;Iterable dataset</span>
+
+<span class="sd">    The iterable dataset where each feature of the data is an iterable</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">    &gt;&gt;&gt; feat1 = (x for x in range(10)</span>
+<span class="sd">    &gt;&gt;&gt; feat2 = (x for x in range(10)</span>
+<span class="sd">    &gt;&gt;&gt; ds = IterDataset(zip(feat1, feat2), ids=[4,3])</span>
+<span class="sd">    &gt;&gt;&gt; next(ds) == (0, 0)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data: a tuple of iterable features</span>
+<span class="sd">        length: The length of the iterables</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># pylint: disable=abstract-method</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">data</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">tuple</span><span class="p">],</span>
+                 <span class="n">length</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">length</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">DataModule</span><span class="p">(</span><span class="n">LightningDataModule</span><span class="p">):</span><span id="plkit.data.DataModule"></span><a class="mkapi-docs-link" title="plkit.data.DataModule" href="../../plkit.data/#plkit.data.DataModule">DOCS</a>
+    <span class="sd">&quot;&quot;&quot;Data module for plkit&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">train_transforms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">val_transforms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">test_transforms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">FrozenDiot</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">train_transforms</span><span class="o">=</span><span class="n">train_transforms</span><span class="p">,</span>
+                         <span class="n">val_transforms</span><span class="o">=</span><span class="n">val_transforms</span><span class="p">,</span>
+                         <span class="n">test_transforms</span><span class="o">=</span><span class="n">test_transforms</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span> <span class="ow">or</span> <span class="n">FrozenDiot</span><span class="p">()</span>
+
+        <span class="n">check_config</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="s1">&#39;batch_size&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;data_num_workers&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tvt_ratio</span> <span class="o">=</span> <span class="n">normalize_tvt_ratio</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;data_tvt&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">splits</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_length</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span><span id="plkit.data.DataModule.length"></span><a class="mkapi-docs-link" title="plkit.data.DataModule.length" href="../../plkit.data/#plkit.data.DataModule.length">DOCS</a>
+    <span class="k">def</span> <span class="nf">length</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;The length of the data</span>
+
+<span class="sd">        This is required when `self.data_reader()` yields (it is a generator)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The length of the data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_length</span>
+
+    <span class="k">def</span> <span class="nf">data_reader</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Iterable</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Iterator</span><span class="p">[</span><span class="n">Any</span><span class="p">]]]:</span><span id="plkit.data.DataModule.data_reader"></span><a class="mkapi-docs-link" title="plkit.data.DataModule.data_reader" href="../../plkit.data/#plkit.data.DataModule.data_reader">DOCS</a>
+        <span class="sd">&quot;&quot;&quot;Read the data</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A tuple of iterables of features. Or it yields the following</span>
+
+<span class="sd">        Yields:</span>
+<span class="sd">            An iterable of tuple of features. In such a case, self.length</span>
+<span class="sd">            property is required to be defined.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span> <span class="c1"># pragma: no cover</span>
+
+    <span class="k">def</span> <span class="nf">_split_data_generator</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="n">TorchIterableDataset</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">TorchIterableDataset</span><span class="p">]]]:</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">is_ratio</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tvt_ratio</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mf">1.0</span>
+        <span class="k">if</span> <span class="n">is_ratio</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">PlkitDataException</span><span class="p">(</span>
+                <span class="s1">&#39;Got generator from `data_reader` and ratios from &#39;</span>
+                <span class="s1">&#39;`config.data_tvt`, `self.length` should be recorded &#39;</span>
+                <span class="s1">&#39;in `data_reader`.&#39;</span>
+            <span class="p">)</span>
+        <span class="c1"># split using islice</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">train_len</span> <span class="o">=</span> <span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tvt_ratio</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">))</span>
+                     <span class="k">if</span> <span class="n">is_ratio</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">tvt_ratio</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">IterDataset</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">train_len</span><span class="p">),</span> <span class="n">train_len</span><span class="p">)</span>
+        <span class="n">start</span> <span class="o">+=</span> <span class="n">train_len</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tvt_ratio</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;val&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">val_ratio</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tvt_ratio</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="n">val_len</span> <span class="o">=</span> <span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">val_ratio</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">))</span>
+                           <span class="k">if</span> <span class="n">is_ratio</span> <span class="k">else</span> <span class="n">val_ratio</span><span class="p">)</span>
+                <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;val&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">IterDataset</span><span class="p">(</span>
+                    <span class="n">islice</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">start</span> <span class="o">+</span> <span class="n">val_len</span><span class="p">),</span> <span class="n">val_len</span>
+                <span class="p">))</span>
+                <span class="n">start</span> <span class="o">+=</span> <span class="n">val_len</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tvt_ratio</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">test_ratio</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tvt_ratio</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+                <span class="n">test_len</span> <span class="o">=</span> <span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">test_ratio</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">))</span>
+                            <span class="k">if</span> <span class="n">is_ratio</span> <span class="k">else</span> <span class="n">test_ratio</span><span class="p">)</span>
+                <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">IterDataset</span><span class="p">(</span>
+                    <span class="n">islice</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">start</span> <span class="o">+</span> <span class="n">test_len</span><span class="p">),</span> <span class="n">test_len</span>
+                <span class="p">))</span>
+                <span class="n">start</span> <span class="o">+=</span> <span class="n">test_len</span>
+        <span class="k">return</span> <span class="n">ret</span>
+
+    <span class="k">def</span> <span class="nf">_split_data_list</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="n">IterDataset</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">IterDataset</span><span class="p">]]]:</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">is_ratio</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tvt_ratio</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mf">1.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">all_ids</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
+        <span class="n">train_len</span> <span class="o">=</span> <span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tvt_ratio</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">))</span>
+                     <span class="k">if</span> <span class="n">is_ratio</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">tvt_ratio</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">train_ids</span><span class="p">,</span> <span class="n">rest_ids</span> <span class="o">=</span> <span class="n">random_split</span><span class="p">(</span>
+            <span class="n">all_ids</span><span class="p">,</span> <span class="p">[</span><span class="n">train_len</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_ids</span><span class="p">)</span> <span class="o">-</span> <span class="n">train_len</span><span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">train_ids</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tvt_ratio</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;val&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">val_ratio</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tvt_ratio</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="n">val_len</span> <span class="o">=</span> <span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">val_ratio</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">))</span>
+                           <span class="k">if</span> <span class="n">is_ratio</span> <span class="k">else</span> <span class="n">val_ratio</span><span class="p">)</span>
+                <span class="n">val_ids</span><span class="p">,</span> <span class="n">rest_ids</span> <span class="o">=</span> <span class="n">random_split</span><span class="p">(</span>
+                    <span class="n">rest_ids</span><span class="p">,</span> <span class="p">[</span><span class="n">val_len</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">rest_ids</span><span class="p">)</span> <span class="o">-</span> <span class="n">val_len</span><span class="p">]</span>
+                <span class="p">)</span>
+                <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;val&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Dataset</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">val_ids</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tvt_ratio</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">test_ratio</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tvt_ratio</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+                <span class="n">test_len</span> <span class="o">=</span> <span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">test_ratio</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">))</span>
+                            <span class="k">if</span> <span class="n">is_ratio</span> <span class="k">else</span> <span class="n">test_ratio</span><span class="p">)</span>
+                <span class="n">test_ids</span><span class="p">,</span> <span class="n">rest_ids</span> <span class="o">=</span> <span class="n">random_split</span><span class="p">(</span>
+                    <span class="n">rest_ids</span><span class="p">,</span> <span class="p">[</span><span class="n">test_len</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">rest_ids</span><span class="p">)</span> <span class="o">-</span> <span class="n">test_len</span><span class="p">]</span>
+                <span class="p">)</span>
+                <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Dataset</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">test_ids</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">ret</span>
+
+    <span class="k">def</span> <span class="nf">data_splits</span><span class="p">(</span> <span class="c1"># pylint: disable=unused-argument</span><span id="plkit.data.DataModule.data_splits"></span><a class="mkapi-docs-link" title="plkit.data.DataModule.data_splits" href="../../plkit.data/#plkit.data.DataModule.data_splits">DOCS</a>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">stage</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="n">DatasetType</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">DatasetType</span><span class="p">]]]:</span>
+        <span class="sd">&quot;&quot;&quot;Split data from data_source for each dataloader</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data: The data read by self.data_reader()</span>
+<span class="sd">            stage: The stage argument same as the one from</span>
+<span class="sd">                `LightningDataModule.setup(...)`</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A dictionary with keys `train`, `val` and `test`, and values a</span>
+<span class="sd">            Dataset or an IterDataset (config.data_tvt will be ignored)</span>
+
+<span class="sd">            Or if config.data_tvt is specified, one could just return an</span>
+<span class="sd">            iterable of features, then the dataset will be automatically</span>
+<span class="sd">            split by config.data_tvt</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">tvt_ratio</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">GeneratorType</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_split_data_generator</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_split_data_list</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">prepare_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span><span id="plkit.data.DataModule.prepare_data"></span><a class="mkapi-docs-link" title="plkit.data.DataModule.prepare_data" href="../../plkit.data/#plkit.data.DataModule.prepare_data">DOCS</a>
+        <span class="sd">&quot;&quot;&quot;Prepare data&quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Reading data ...&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_reader</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stage</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span><span id="plkit.data.DataModule.setup"></span><a class="mkapi-docs-link" title="plkit.data.DataModule.setup" href="../../plkit.data/#plkit.data.DataModule.setup">DOCS</a>
+        <span class="sd">&quot;&quot;&quot;Setup data&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">stage</span> <span class="o">==</span> <span class="s1">&#39;fit&#39;</span><span class="p">:</span>
+            <span class="c1"># Only do it once.</span>
+            <span class="c1"># If you want it to be separate</span>
+            <span class="c1"># redefine this method</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Splitting data ...&#39;</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">splits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_splits</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">stage</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">tvt_ratio</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">splits</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">PlkitDataException</span><span class="p">(</span>
+                    <span class="s1">&#39;No train-val-test ratio (data-tvt) specified in &#39;</span>
+                    <span class="s1">&#39;configuration, then `data_splits` method should be &#39;</span>
+                    <span class="s1">&#39;implemented for DataModule.&#39;</span>
+                <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">train_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataLoader</span><span class="p">:</span><span id="plkit.data.DataModule.train_dataloader"></span><a class="mkapi-docs-link" title="plkit.data.DataModule.train_dataloader" href="../../plkit.data/#plkit.data.DataModule.train_dataloader">DOCS</a>
+        <span class="sd">&quot;&quot;&quot;Train data loaders&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s1">&#39;train&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">splits</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">DataLoader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">splits</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">],</span>
+                          <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span>
+                          <span class="n">num_workers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">val_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span id="plkit.data.DataModule.val_dataloader"></span><a class="mkapi-docs-link" title="plkit.data.DataModule.val_dataloader" href="../../plkit.data/#plkit.data.DataModule.val_dataloader">DOCS</a>
+                       <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+                       <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">DataLoader</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">DataLoader</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;Validation data loaders&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s1">&#39;val&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">splits</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">val_data</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">splits</span><span class="p">[</span><span class="s1">&#39;val&#39;</span><span class="p">]:</span>
+            <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">val_data</span><span class="p">,</span>
+                                  <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span>
+                                  <span class="n">num_workers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">ret</span>
+
+    <span class="k">def</span> <span class="nf">test_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span id="plkit.data.DataModule.test_dataloader"></span><a class="mkapi-docs-link" title="plkit.data.DataModule.test_dataloader" href="../../plkit.data/#plkit.data.DataModule.test_dataloader">DOCS</a>
+                        <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+                        <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">DataLoader</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">DataLoader</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;Test data loaders&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s1">&#39;test&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">splits</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">test_data</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">splits</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]:</span>
+            <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">test_data</span><span class="p">,</span>
+                                  <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span>
+                                  <span class="n">num_workers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">ret</span>
+</code></pre></div>
+</div>
+</div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../../assets/javascripts/vendor.08c56446.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.6ced434e.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../../..",
+          features: [],
+          search: Object.assign({
+            worker: "../../../assets/javascripts/worker/search.8c7e0a7e.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+        <script src="../../../js/mkapi.js"></script>
+      
+    
+  </body>
+</html>
